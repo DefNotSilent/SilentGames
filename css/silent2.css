@@ -1,0 +1,732 @@
+:root {
+  --primary-color: #ffffff;
+  --secondary-color: #cccccc;
+  --bg-color: #000000;
+  --header-bg: #2a2a2a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: all 0.4s ease;
+}
+
+body {
+  font-family: 'Fredoka', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--secondary-color);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Particles */
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  transition: background 0.4s ease;
+}
+
+.title {
+  text-align: center;
+  position: relative;
+  color: var(--primary-color);
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+/* Navbar */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: var(--header-bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+header h1 {
+  color: var(--primary-color);
+  font-size: 32px;
+  letter-spacing: 1px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+}
+
+#nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+nav a {
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 10px;
+  transition: 0.3s;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+nav a i {
+  margin-right: 8px;
+}
+
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--primary-color);
+}
+
+/* --- Hamburger Icon Animation --- */
+#hamburger {
+    display: none;
+    font-size: 24px;
+    color: var(--primary-color);
+    cursor: pointer;
+    z-index: 101;
+    transition: transform 0.3s ease;
+}
+
+#hamburger.active {
+    transform: rotate(90deg); /* Rotates icon when menu is open */
+}
+
+/* --- Mobile Navigation Menu --- */
+@media screen and (max-width: 768px) {
+    #hamburger { display: block; }
+
+    #nav-links {
+        display: flex; /* Keep flex but hide visually */
+        flex-direction: column;
+        gap: 5px;
+        
+        /* Glassmorphism Styling */
+        background: rgba(10, 10, 10, 0.9);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 15px;
+        
+        /* Positioning */
+        position: absolute;
+        top: 80px;
+        right: 20px;
+        width: 220px;
+        padding: 10px;
+
+        /* Smooth Animation Logic */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(30px); /* Starts slightly off-screen to the right */
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        pointer-events: none;
+    }
+
+    /* When menu is toggled OPEN */
+    #nav-links.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+        pointer-events: auto;
+    }
+
+    #nav-links a {
+        padding: 15px 20px;
+        border-radius: 10px;
+        border: none;
+        width: 100%;
+        transition: background 0.2s;
+    }
+
+    #nav-links a:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--primary-color);
+    }
+}
+
+
+/* Hamburger 
+#hamburger {
+  display: none;
+  font-size: 28px;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+
+@media screen and (max-width:768px) {
+  #nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    background-color: var(--header-bg);
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: right 0.3s ease;
+  }
+
+  #nav-links.show {
+    display: flex;
+  }
+
+  #nav-links a {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  #hamburger {
+    display: block;
+  }
+} */
+
+/* Hero */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 100px 20px;
+  position: relative;
+  overflow: visible;
+}
+
+.hero h2 {
+  font-size: 60px;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 22px;
+  color: var(--secondary-color);
+  margin-bottom: 40px;
+}
+
+.hero button {
+  font-family: 'Fredoka', sans-serif;
+  padding: 18px 40px;
+  font-size: 20px;
+  color: #000;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.hero button:hover {
+  background-color: var(--secondary-color);
+  color: #000;
+}
+
+/* Hero Button Layout */
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap; /* Ensures buttons stack on mobile */
+}
+
+
+/* Primary "Start Playing" Button */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #000;
+    border: none;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px var(--primary-color);
+}
+
+/* Secondary "Trending" Button */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    backdrop-filter: blur(5px);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: #000;
+}
+
+/* Glass "Discord" Button */
+.btn-glass {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Features */
+/* Enhanced Game Cards */
+/* Glassmorphism Feature Grid */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.card {
+    /* The Glass Effect */
+    background: rgba(255, 255, 255, 0.03); /* Very light transparent white */
+    backdrop-filter: blur(10px);            /* This blurs the particles behind */
+    -webkit-backdrop-filter: blur(10px);    /* Support for Safari */
+    
+    /* Border & Shape */
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 24px;
+    padding: 40px 25px;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    
+    /* Smooth Transitions */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.4s ease, 
+                border-color 0.4s ease,
+                background 0.4s ease;
+}
+
+/* Hover State: The Glass Becomes Brighter */
+.card:hover {
+    transform: translateY(-12px) scale(1.02);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--primary-color);
+    
+    /* Neon Glow using your theme variable */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 
+                0 0 20px var(--primary-color);
+}
+
+/* Inner card elements */
+.card i { 
+    font-size: 45px; 
+    color: var(--primary-color); 
+    margin-bottom: 20px; 
+    filter: drop-shadow(0 0 5px var(--primary-color));
+}
+
+.card h3 { 
+    color: var(--primary-color); 
+    font-size: 24px; 
+    margin-bottom: 15px; 
+}
+
+.card p {
+  color: var(--secondary-color);
+  line-height: 1.6;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.card button {
+  padding: 12px 30px;
+  background-color: var(--primary-color);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.card button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 25px;
+  background-color: #111;
+  color: var(--secondary-color);
+  margin-top: 50px;
+  transition: background 0.4s, color 0.4s;
+}
+
+/* Settings Panel */
+#settings-panel {
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 350px;
+  height: 100%;
+  background-color: #111;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  transition: right 0.4s ease;
+  z-index: 200;
+  overflow-y: auto;
+}
+
+#settings-panel.open {
+  right: 0;
+}
+
+#settings-panel h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.setting-item {
+  margin-bottom: 25px;
+}
+
+.setting-item label {
+  display: block;
+  color: var(--primary-color);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.setting-item select,
+.setting-item input[type=range],
+.setting-item input[type=checkbox] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #222;
+  color: #fff;
+  font-size: 14px;
+}
+
+.setting-item input[type=checkbox] {
+  width: auto;
+  transform: scale(1.5);
+}
+
+#settings-panel button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* Small Settings Button */
+#open-settings {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--primary-color);
+  color: #000;
+  cursor: pointer;
+  z-index: 201;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+#open-settings:hover {
+  background-color: var(--secondary-color);
+  color: #000;
+}
+
+/* Moves Nav links right next to the logo */
+.logo-nav-group {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Adjust this number to make them even closer */
+}
+
+.content {
+    flex-direction: column;
+    align-items: left;
+    padding: 7vw;
+    padding-top: 0vw;
+}
+
+.content hr {
+    border: 0;
+    height: 4px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--primary-color), rgba(0, 0, 0, 0));
+    margin: 1vw 0;
+}
+
+#games {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: .6vw;
+    padding-bottom: 5vw;
+
+}
+ 
+#games img {    
+    height: 15.6vw;
+    width: 15.6vw;
+    border-radius: 1vw;
+    margin: .5vw;
+    user-select: none;
+    transition: transform .2s;
+}
+
+#games img:hover {
+  transform: translateY(-14px) scale(1.05);
+  border-radius: 14px;
+  padding: 4px;
+  box-sizing: border-box;
+  background: radial-gradient(circle at 80% 10%, var(--primary-color) 0%, transparent 100%),
+              radial-gradient(circle at 20% 80%, var(--primary-color) 0%, transparent 100%),
+              radial-gradient(circle at center, var(--primary-color) 0%, transparent 100%);
+  transition: transform 0.3s, background 0.4s;
+}
+
+
+#sub {
+ opacity: 0;
+ animation: fadeInScale 1.2s ease 0.9s forwards;
+ text-align: center;
+ font-size: 1.2rem;
+ color: #d1d1d1;
+ line-height: 1.7;
+ margin-bottom: 3;
+ font-weight: 300;
+}
+
+
+.hero-search-wrapper {
+    width: 100%;
+    max-width: 600px; /* Wider for a hero section */
+    margin: 30px auto; /* Centers it and gives it space */
+    padding: 0 10px;
+}
+
+.hero-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px; /* Modern "squircle" shape */
+    padding: 15px 25px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hero-search-box i {
+    color: var(--primary-color);
+    font-size: 18px;
+    margin-right: 15px;
+    opacity: 0.8;
+}
+
+#game-search {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    width: 100%;
+    font-size: 18px; /* Larger font for main search */
+    font-family: 'Fredoka', sans-serif;
+}
+
+#game-search::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Glowing Accent Line at the bottom */
+.search-accent-line {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: var(--primary-color);
+    box-shadow: 0 0 20px var(--primary-color);
+    transition: all 0.5s ease;
+    transform: translateX(-50%);
+    border-radius: 5px;
+}
+
+/* Hover and Focus States */
+.hero-search-box:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.hero-search-box:focus-within {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.hero-search-box:focus-within .search-accent-line {
+    width: 60%; /* The glow line expands when typing */
+}
+
+/*
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    padding: 5px 15px;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+
+.search-container:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px var(--primary-color);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.search-icon {
+    color: var(--primary-color);
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+#game-search {
+    background: none;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 14px;
+    width: 150px; 
+    transition: width 0.4s ease;
+}
+
+
+#game-search:focus {
+    width: 250px;
+}
+
+#game-search::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+} 
+*/
+
+/* --- Roadmap Timeline --- */
+.roadmap-section {
+    padding: 50px 20px;
+    position: relative;
+}
+
+/* --- Vertical Roadmap Line --- */
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px 0;
+}
+
+/* The Main Vertical Line (The "Cable") */
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 3px; /* Slightly thicker for a "cable" look */
+    background: var(--primary-color); /* Matches your theme */
+    background: linear-gradient(to bottom, transparent, var(--primary-color), var(--primary-color), transparent);
+    box-shadow: 0 0 15px var(--primary-color); /* Neon glow for the line */
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1.5px; /* Centers the line perfectly */
+    z-index: 0;
+}
+
+.timeline-item {
+    padding: 20px 40px;
+    position: relative;
+    width: 50%;
+    z-index: 2; /* Keeps text above the line */
+}
+
+/* Dot positioning on the line */
+.timeline-dot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--bg-color); /* Hollow center */
+    border: 3px solid var(--primary-color);
+    border-radius: 50%;
+    top: 30px;
+    z-index: 5; /* Ensures dot is on top of the line */
+    box-shadow: 0 0 10px var(--primary-color), inset 0 0 5px var(--primary-color);
+}
+
+/* Logic for Left/Right sides */
+.timeline-item:nth-child(odd) { left: 0; text-align: right; }
+.timeline-item:nth-child(even) { left: 50%; text-align: left; }
+
+.timeline-item:nth-child(odd) .timeline-dot { right: -10px; }
+.timeline-item:nth-child(even) .timeline-dot { left: -10px; }
+
+
+/* Date Badge */
+.date {
+    display: inline-block;
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Mobile Responsiveness for Timeline */
+@media screen and (max-width: 768px) {
+    .timeline::after { left: 31px; }
+    .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left !important; }
+    .timeline-dot { left: 22px !important; }
+}
+
+@keyframes fadeInScale {
+     from {
+         opacity: 0;
+         transform: scale(0.95);
+    }
+     to {
+         opacity: 1;
+         transform: scale(1);
+    }
+}
