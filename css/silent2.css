@@ -22,13 +22,14 @@ body {
 
 /* Particles */
 #particles-js {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-  transition: background 0.4s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Keep it behind text/iframes */
+    pointer-events: none; /* Allows you to click things through the dots */
+    background-color: var(--bg-color); /* Connects to your theme */
 }
 
 .title {
