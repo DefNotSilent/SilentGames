@@ -22,7 +22,7 @@ particlesJS("particles-js", {
       }
     },
     "color": {
-      "value": color,
+      "value":  getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ffffff'
     },
     "shape": {
       "type": "circle"
@@ -66,17 +66,6 @@ particlesJS("particles-js", {
   "retina_detect": true
 });
 
-  window.addEventListener("load", () => {
-    const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ffffff';
-    setTimeout(() => {
-        initParticles(themeColor);
-    }, 100); 
-});
-
-  // Inside your theme-option click listener:
-const newColor = option.getAttribute('data-color');
-document.documentElement.style.setProperty('--primary-color', newColor);
-initParticles(newColor); // This re-draws them in the new color
 
 // Helper
 function hexToRgb(hex) {
