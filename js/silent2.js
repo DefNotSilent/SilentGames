@@ -1,16 +1,3 @@
-function initParticles(color = "#ffffff") {
-    // Check if the container actually exists
-    if (!document.getElementById('particles-js')) {
-        console.error("Particle container not found!");
-        return;
-    }
-
-    // If particles are already running, kill them first
-    if (window.pJSDom && window.pJSDom.length > 0) {
-        window.pJSDom[0].pJS.fn.vendors.destroypJS();
-        window.pJSDom = [];
-    }
-
 // Initialize particles
 particlesJS("particles-js", {
   "particles": {
