@@ -1,3 +1,16 @@
+function initParticles(color = "#ffffff") {
+    // Check if the container actually exists
+    if (!document.getElementById('particles-js')) {
+        console.error("Particle container not found!");
+        return;
+    }
+
+    // If particles are already running, kill them first
+    if (window.pJSDom && window.pJSDom.length > 0) {
+        window.pJSDom[0].pJS.fn.vendors.destroypJS();
+        window.pJSDom = [];
+    }
+
 // Initialize particles
 particlesJS("particles-js", {
   "particles": {
@@ -9,7 +22,7 @@ particlesJS("particles-js", {
       }
     },
     "color": {
-      "value": getComputedStyle(document.documentElement).getPropertyValue('--primary-color') || "#ffffff"
+      "value": color,
     },
     "shape": {
       "type": "circle"
@@ -52,6 +65,18 @@ particlesJS("particles-js", {
   },
   "retina_detect": true
 });
+
+  window.addEventListener("load", () => {
+    const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ffffff';
+    setTimeout(() => {
+        initParticles(themeColor);
+    }, 100); 
+});
+
+  // Inside your theme-option click listener:
+const newColor = option.getAttribute('data-color');
+document.documentElement.style.setProperty('--primary-color', newColor);
+initParticles(newColor); // This re-draws them in the new color
 
 // Helper
 function hexToRgb(hex) {
