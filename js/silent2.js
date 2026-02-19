@@ -53,6 +53,35 @@ particlesJS("particles-js", {
   "retina_detect": true
 });
 
+async function loadParticlesWithTheme() {
+    // 1. Get the current theme color from your NightByte CSS
+    const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ffffff';
+
+    try {
+        // 2. Fetch your external JSON file (Change the path to match yours)
+        const response = await fetch('/particlesjs-config.json');
+        const config = await response.json();
+
+        // 3. Force the JSON colors to match the theme
+        config.particles.color.value = themeColor;
+        if (config.particles.line_linked) {
+            config.particles.line_linked.color = themeColor;
+        }
+
+        // 4. Initialize particles with the modified config
+        particlesJS('particles-js', config);
+        
+    } catch (error) {
+        console.error("Error loading particle JSON:", error);
+    }
+}
+
+// Inside your theme-option click listener
+const newColor = option.getAttribute('data-color');
+document.documentElement.style.setProperty('--primary-color', newColor);
+
+// RE-LOAD PARTICLES WITH THE NEW COLOR
+loadParticlesWithTheme();
 
 // Helper
 function hexToRgb(hex) {
@@ -155,6 +184,9 @@ if (localStorage.getItem('nightbyte-theme')) {
   document.documentElement.style.setProperty('--bg-color', saved[1]);
   document.documentElement.style.setProperty('--header-bg', saved[2]);
   themeSelector.value = localStorage.getItem('nightbyte-theme');
+const newColor = option.getAttribute('data-color');
+document.documentElement.style.setProperty('--primary-color', newColor);
+loadParticlesWithTheme();
   updateParticlesColorSmooth(saved[0]);
 }
 if (localStorage.getItem('nightbyte-particles')) {
@@ -242,6 +274,11 @@ document.getElementById('reset-settings').addEventListener('click', () => {
   localStorage.setItem('nightbyte-theme', `${defaultPrimary},${defaultBg},${defaultHeader}`);
   localStorage.setItem('nightbyte-particles', defaultParticles);
   localStorage.setItem('nightbyte-speed', defaultSpeed);
+});
+
+window.addEventListener('load', () => {
+    // Wait a tiny bit to ensure CSS variables are processed
+    setTimeout(loadParticlesWithTheme, 100);
 });
 
 // Settings panel toggle
