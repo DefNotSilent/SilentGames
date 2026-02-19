@@ -1259,24 +1259,5 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', showUpdatePopup);
 </script>
 
-  <script>function forceShowUpdate() {
-    // Optional: Close the settings panel first so it's not in the way
-    const panel = document.getElementById('settings-panel');
-    if (panel) panel.classList.remove('open');
-    
-    // Call the original function but tell it to ignore the "seen" check
-    // We modify showUpdatePopup slightly or just copy the logic:
-    showUpdatePopup(true); 
-}
-</script>
-
-<script>function showUpdatePopup(force = false) {
-    const updateVersion = "v2.0_silent_games"; 
-    // If NOT forced and already seen, then return
-    if (!force && localStorage.getItem("seenUpdate") === updateVersion) return;
-
-    // ... (rest of the code I gave you previously stays exactly the same) ...
-}</script>
-
 </body>
 </html>
