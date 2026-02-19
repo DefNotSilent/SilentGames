@@ -138,33 +138,6 @@ function datalink() {
     document.getElementById('close-modal').onclick = () => modal.remove();
 }
 
-function showUpdatePopup(force = false) {
-    if (!force && localStorage.getItem("seenUpdate") === UPDATE_VERSION) return;
-    const themeColor = getCurrentPrimaryColor();
-
-    const overlay = document.createElement('div');
-    Object.assign(overlay.style, {
-        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(15px)',
-        zIndex: '2000000', display: 'flex', justifyContent: 'center', alignItems: 'center'
-    });
-
-    overlay.innerHTML = `
-        <div style="background:rgba(15,15,15,0.9); padding:40px; border-radius:24px; border:1px solid ${themeColor}44; width:90%; max-width:420px; text-align:center; font-family:'Fredoka',sans-serif; color:#fff;">
-            <div style="font-size:40px; margin-bottom:10px;">🚀</div>
-            <h2 style="color:${themeColor}; margin-bottom:10px;">Silent Games Update</h2>
-            <p style="opacity:0.7; margin-bottom:25px; line-height:1.6;">New games, smooth particle themes, and enhanced stealth features are now live!</p>
-            <button id="close-update" style="width:100%; padding:15px; border-radius:12px; border:none; background:${themeColor}; color:#000; font-weight:bold; cursor:pointer; box-shadow: 0 0 15px ${themeColor}66;">Got it!</button>
-        </div>
-    `;
-    document.body.appendChild(overlay);
-
-    document.getElementById('close-update').onclick = () => {
-        localStorage.setItem("seenUpdate", UPDATE_VERSION);
-        overlay.remove();
-    };
-}
-
 // --- 5. INITIALIZATION ---
 
 document.addEventListener('DOMContentLoaded', () => {
