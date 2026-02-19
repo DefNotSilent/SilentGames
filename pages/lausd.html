@@ -970,7 +970,7 @@
 
 </div>
   
-<footer>&copy; 2025 NightByte. All rights reserved.</footer>
+<footer>&copy; 2026 Silent Games All rights reserved.</footer>
 
 <!-- Settings Panel -->
 <div id="settings-panel">
@@ -988,7 +988,6 @@
   <option value="#ffff00,#1a1a00,#333300">Yellow</option>
   <option value="#ff6600,#1a0d00,#331a00">Orange</option>
   <option value="#ff0000,#1a0000,#330000">Red</option>
-  <option value="#ffffff,#000000,#2a2a2a">Black</option>
 
   <!-- Neon / Cyber -->
   <option value="#ff00ff,#1a001a,#330033">Magenta</option>
@@ -1044,90 +1043,6 @@
         <button id="setkeybind" style="background: #444; color: white; border: none;">Set Keybind</button>
         <div id="output" style="color: #aaa; font-size: 12px; margin-top: 5px; text-align: center;">Current key: none</div>
     </div>
-  <button id="reset-settings">Reset to Default</button>
-</div>
-
-
-<!-- Settings Panel -->
-<div id="settings-panel">
-  <h2>Settings</h2>
-  <div class="setting-item">
-    <label for="theme-selector">Choose Theme:</label>
-    <select id="theme-selector">
-  <!-- Default -->
-  <option value="#ffffff,#000000,#2a2a2a"> Night Black (Default)</option>
-
-  <!-- Bright -->
-  <option value="#ff3fa8,#1a001a,#330033">Pink</option>
-  <option value="#00d0ff,#001a1a,#003333">Blue</option>
-  <option value="#00ff00,#001a00,#003300">Green</option>
-  <option value="#ffff00,#1a1a00,#333300">Yellow</option>
-  <option value="#ff6600,#1a0d00,#331a00">Orange</option>
-  <option value="#ff0000,#1a0000,#330000">Red</option>
-  <option value="#ffffff,#000000,#2a2a2a">Black</option>
-
-  <!-- Neon / Cyber -->
-  <option value="#ff00ff,#1a001a,#330033">Magenta</option>
-  <option value="#00ffff,#001a1a,#003333">Cyan</option>
-  <option value="#ffcc00,#1a1400,#332800">Cyber Gold</option>
-  <option value="#ffa500,#000000,#1a0d00">CornHub</option>
-  <option value="#39ff14,#001a00,#003300">Neon Lime</option>
-  <option value="#00ffcc,#001a1a,#003333">Vaporwave</option>
-
-  <!-- Dark / Night -->
-  <option value="#7f5cff,#0b061a,#241133">Night Purple</option>
-  <option value="#5c7cff,#050b1a,#121e33">Midnight Blue</option>
-  <option value="#00ff41,#000f05,#00330f">Matrix</option>
-  <option value="#8b0000,#120000,#2b0000">Blood Red</option>
-  <option value="#4fd1c5,#061a1a,#0f3333">Ocean Dark</option>
-
-</select>
-
-  </div>
-  <div class="setting-item">
-    <label for="particles-toggle">Enable Particle Effects:</label>
-    <input type="checkbox" id="particles-toggle" checked>
-  </div>
-  <div class="setting-item">
-    <label for="particle-speed">Particle Animation Speed:</label>
-    <input type="range" id="particle-speed" min="1" max="20" value="9">
-  </div>
-  <div class="setting-item">
-        <label>Privacy Tools</label>
-        <button id="abcloak" style="background: #333; color: white; border: none;">Open in about:blank</button>
-        <button onclick="datalink()" style="background: #333; color: white; border: none;">Data Link</button>
-    </div>
-
-    <div class="setting-item">
-        <label>Tab Disguise</label>
-        <select id="faviconDropdown">
-            <option disabled selected>Select Disguise</option>
-        </select>
-    </div>
-
-    <div class="setting-item">
-        <label>Panic Redirect</label>
-        <select id="tabselect">
-            <option value="https://lms.lausd.net">Schoology</option>
-            <option value="https://classroom.google.com">Google Classroom</option>
-            <option value="https://clever.com">Clever</option>
-            <option value="https://canvas.instructure.com">Canvas</option>
-            <option value="https://google.com">Google</option>
-        </select>
-        <button onclick="confirmtab()" style="background: var(--primary-color); color: black; border: none; font-weight: bold;">Confirm Panic Site</button>
-    </div>
-
-    <div class="setting-item">
-        <label>Panic Keybind</label>
-        <button id="setkeybind" style="background: #444; color: white; border: none;">Set Keybind</button>
-        <div id="output" style="color: #aaa; font-size: 12px; margin-top: 5px; text-align: center;">Current key: none</div>
-    </div>
-  <div class="setting-item">
-    <label>Information</label>
-    <button class="settings-btn" onclick="forceShowUpdate()" style="background: rgba(255,255,255,0.1); border: 1px solid var(--primary-color); color: #fff;">
-        <i class="fa-solid fa-circle-info"></i> View Latest Patch Notes
-    </button>
-</div>
   <button id="reset-settings">Reset to Default</button>
 </div>
 
