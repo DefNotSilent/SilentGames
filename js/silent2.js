@@ -1,287 +1,149 @@
-// Initialize particles
-particlesJS("particles-js", {
-  "particles": {
-    "number": {
-      "value": 80,
-      "density": {
-        "enable": true,
-        "value_area": 800
-      }
-    },
-    "color": {
-      "value":  getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ffffff'
-    },
-    "shape": {
-      "type": "circle"
-    },
-    "opacity": {
-      "value": 0.5
-    },
-    "size": {
-      "value": 3.9,
-      "random": true,
-      "anim": {
-        "enable": true,
-        "speed": 14,
-        "size_min": 0.1,
-        "sync": false
-      }
-    },
-    "line_linked": {
-      "enable": false
-    },
-    "move": {
-      "enable": true,
-      "speed": 9,
-      "direction": "bottom-right"
-    }
-  },
-  "interactivity": {
-    "detect_on": "canvas",
-    "events": {
-      "onhover": {
-        "enable": true,
-        "mode": "repulse"
-      },
-      "onclick": {
-        "enable": true,
-        "mode": "push"
-      },
-      "resize": true
-    }
-  },
-  "retina_detect": true
-});
+// --- GLOBAL VARIABLES ---
+var win;
+const UPDATE_VERSION = "v2.0_silent_games"; 
 
-async function loadParticlesWithTheme() {
-    // 1. Get the current theme color from your NightByte CSS
-    const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ffffff';
-
-    try {
-        // 2. Fetch your external JSON file (Change the path to match yours)
-        const response = await fetch('/particlesjs-config.json');
-        const config = await response.json();
-
-        // 3. Force the JSON colors to match the theme
-        config.particles.color.value = themeColor;
-        if (config.particles.line_linked) {
-            config.particles.line_linked.color = themeColor;
-        }
-
-        // 4. Initialize particles with the modified config
-        particlesJS('particles-js', config);
-        
-    } catch (error) {
-        console.error("Error loading particle JSON:", error);
-    }
-}
-
-// Inside your theme-option click listener
-const newColor = option.getAttribute('data-color');
-document.documentElement.style.setProperty('--primary-color', newColor);
-
-// RE-LOAD PARTICLES WITH THE NEW COLOR
-loadParticlesWithTheme();
-
-// Helper
+// --- 1. CORE UTILITIES ---
 function hexToRgb(hex) {
-  hex = hex.replace('#', '');
-  if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
-  const bigint = parseInt(hex, 16);
-  return {
-    r: (bigint >> 16) & 255,
-    g: (bigint >> 8) & 255,
-    b: bigint & 255
-  };
+    hex = hex.replace('#', '');
+    if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+    const bigint = parseInt(hex, 16);
+    return { r: (bigint >> 16) & 255, g: (bigint >> 8) & 255, b: bigint & 255 };
 }
 
 function getCurrentPrimaryColor() {
-  return getComputedStyle(document.documentElement)
-    .getPropertyValue('--primary-color')
-    .trim();
+    return getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ffffff';
+}
+
+// --- 2. PARTICLE ENGINE ---
+async function loadParticlesWithTheme() {
+    const themeColor = getCurrentPrimaryColor();
+    try {
+        const response = await fetch('/particlesjs-config.json');
+        const config = await response.json();
+
+        // Inject theme color into JSON config
+        config.particles.color.value = themeColor;
+        if (config.particles.line_linked) config.particles.line_linked.color = themeColor;
+
+        particlesJS('particles-js', config);
+    } catch (error) {
+        console.error("Error loading particle JSON, falling back to default:", error);
+        // Fallback if JSON fails
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80 },
+                "color": { "value": themeColor },
+                "move": { "enable": true, "speed": 9, "direction": "bottom-right" }
+            }
+        });
+    }
 }
 
 function updateParticlesColorSmooth(colorHex) {
-  if (!window.pJSDom || !window.pJSDom.length) return;
+    if (!window.pJSDom || !window.pJSDom.length) return;
+    const pJS = window.pJSDom[0].pJS;
+    const target = hexToRgb(colorHex);
+    pJS.particles.color.value = colorHex;
 
-  const pJS = window.pJSDom[0].pJS;
-  const target = hexToRgb(colorHex);
-
-  // Update base config (IMPORTANT)
-  pJS.particles.color.value = colorHex;
-
-  // Smoothly update existing particles
-  pJS.particles.array.forEach(p => {
-    if (!p.color || !p.color.rgb) return;
-
-    let steps = 25;
-    let count = 0;
-
-    const interval = setInterval(() => {
-      p.color.rgb.r += (target.r - p.color.rgb.r) / steps;
-      p.color.rgb.g += (target.g - p.color.rgb.g) / steps;
-      p.color.rgb.b += (target.b - p.color.rgb.b) / steps;
-
-      count++;
-      if (count >= steps) {
-        p.color.rgb.r = target.r;
-        p.color.rgb.g = target.g;
-        p.color.rgb.b = target.b;
-        clearInterval(interval);
-      }
-    }, 16);
-  });
-}
-
-
-let resizeTimeout;
-
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimeout);
-
-  resizeTimeout = setTimeout(() => {
-    const currentColor = getCurrentPrimaryColor();
-    updateParticlesColorSmooth(currentColor);
-  }, 150);
-});
-
-
-// Settings
-const themeSelector = document.getElementById('theme-selector');
-const particlesToggle = document.getElementById('particles-toggle');
-const particleSpeed = document.getElementById('particle-speed');
-const settingsPanel = document.getElementById('settings-panel');
-const openSettings = document.getElementById('open-settings');
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('nav-links');
-
-hamburger.addEventListener('click', () => {
-    // Toggle the classes
-    navLinks.classList.toggle('show');
-    hamburger.classList.toggle('active');
-    
-    // Optional: Switch icon from Bars to X
-    const icon = hamburger.querySelector('i');
-    if (navLinks.classList.contains('show')) {
-        icon.classList.replace('fa-bars', 'fa-times');
-    } else {
-        icon.classList.replace('fa-times', 'fa-bars');
-    }
-});
-
-// Close menu if a link is clicked
-document.querySelectorAll('#nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('show');
-        hamburger.classList.remove('active');
-        hamburger.querySelector('i').classList.replace('fa-times', 'fa-bars');
+    pJS.particles.array.forEach(p => {
+        if (!p.color || !p.color.rgb) return;
+        p.color.rgb = { ...target }; // Direct update for performance on hosted sites
     });
-});
-
-if (localStorage.getItem('nightbyte-theme')) {
-  const saved = localStorage.getItem('nightbyte-theme').split(',');
-  document.documentElement.style.setProperty('--primary-color', saved[0]);
-  document.documentElement.style.setProperty('--bg-color', saved[1]);
-  document.documentElement.style.setProperty('--header-bg', saved[2]);
-  themeSelector.value = localStorage.getItem('nightbyte-theme');
-const newColor = option.getAttribute('data-color');
-document.documentElement.style.setProperty('--primary-color', newColor);
-loadParticlesWithTheme();
-  updateParticlesColorSmooth(saved[0]);
-}
-if (localStorage.getItem('nightbyte-particles')) {
-  particlesToggle.checked = localStorage.getItem('nightbyte-particles') === 'true';
-  document.getElementById('particles-js').style.display = particlesToggle.checked ? 'block' : 'none';
-}
-if (localStorage.getItem('nightbyte-speed')) {
-  particleSpeed.value = localStorage.getItem('nightbyte-speed');
-  if (window.pJSDom && window.pJSDom.length)
-    window.pJSDom[0].pJS.particles.move.speed = particleSpeed.value;
 }
 
-// Theme change
-themeSelector.addEventListener('change', e => {
-  const [primary, bg, header] = e.target.value.split(',');
-  document.documentElement.style.setProperty('--primary-color', primary);
-  document.documentElement.style.setProperty('--bg-color', bg);
-  document.documentElement.style.setProperty('--header-bg', header);
-  localStorage.setItem('nightbyte-theme', e.target.value);
-  updateParticlesColorSmooth(primary);
-});
+// --- 3. MODALS (DataLink & Update Notification) ---
+function datalink() {
+    const html = `<!DOCTYPE html><html><head><title>Home | Schoology</title><style>body,html{margin:0;padding:0;height:100%;overflow:hidden;}iframe{border:none;width:100%;height:100%;}</style></head><body><iframe src="${window.location.href}"></iframe></body></html>`;
+    const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
+    const themeColor = getCurrentPrimaryColor();
 
-// Particle toggle and speed
-particlesToggle.addEventListener('change', e => {
-  document.getElementById('particles-js').style.display = e.target.checked ? 'block' : 'none';
-  localStorage.setItem('nightbyte-particles', e.target.checked);
-});
-particleSpeed.addEventListener('input', e => {
-  if (window.pJSDom && window.pJSDom.length)
-    window.pJSDom[0].pJS.particles.move.speed = e.target.value;
-  localStorage.setItem('nightbyte-speed', e.target.value);
-});
-
-// Reset button: fully fixed header
-document.getElementById('reset-settings').addEventListener('click', () => {
-  const defaultPrimary = "#ffffff";
-  const defaultBg = "#000000";
-  const defaultHeader = "#2a2a2a";
-  const defaultParticles = true;
-  const defaultSpeed = 9;
-  const root = document.documentElement;
-
-  // Reset particles
-  const particlesContainer = document.getElementById('particles-js');
-  particlesContainer.style.display = defaultParticles ? 'block' : 'none';
-  if (window.pJSDom && window.pJSDom.length) {
-    const p = window.pJSDom[0].pJS.particles;
-    p.move.speed = defaultSpeed;
-    p.array.forEach(particle => particle.color.rgb = {
-      r: 255,
-      g: 255,
-      b: 255
+    const modal = document.createElement('div');
+    Object.assign(modal.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)', backdropFilter: 'blur(12px)',
+        zIndex: '1000000', display: 'flex', justifyContent: 'center', alignItems: 'center'
     });
-  }
 
-  // Animate primary and background
-  const currentPrimary = getComputedStyle(root).getPropertyValue('--primary-color').trim();
-  const currentBg = getComputedStyle(root).getPropertyValue('--bg-color').trim();
+    modal.innerHTML = `
+        <div style="background:#111; padding:35px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); width:90%; max-width:500px; text-align:center; font-family:'Fredoka',sans-serif; color:#fff;">
+            <h2 style="color:${themeColor}; text-shadow:0 0 10px ${themeColor};">Stealth Link</h2>
+            <p style="opacity:0.6; font-size:14px; margin-bottom:20px;">Copy the link below to open in a new tab.</p>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="data-url-input" value="${dataUrl}" readonly style="flex:1; padding:12px; border-radius:10px; border:1px solid #333; background:#000; color:#fff;">
+                <button id="copy-btn" style="padding:12px 20px; border-radius:10px; border:none; background:${themeColor}; color:#000; font-weight:bold; cursor:pointer;">Copy</button>
+            </div>
+            <button id="close-modal" style="margin-top:20px; background:none; border:none; color:#555; cursor:pointer;">Close</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
 
-  function animateColor(varName, fromHex, toHex, duration = 400) {
-    const start = Date.now();
-    const from = hexToRgb(fromHex);
-    const to = hexToRgb(toHex);
-    const step = () => {
-      let now = Date.now();
-      let progress = Math.min((now - start) / duration, 1);
-      const r = Math.round(from.r + (to.r - from.r) * progress);
-      const g = Math.round(from.g + (to.g - from.g) * progress);
-      const b = Math.round(from.b + (to.b - from.b) * progress);
-      root.style.setProperty(varName, `rgb(${r},${g},${b})`);
-      if (progress < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-  animateColor('--primary-color', currentPrimary, defaultPrimary);
-  animateColor('--bg-color', currentBg, defaultBg);
+    document.getElementById('copy-btn').onclick = function() {
+        document.getElementById('data-url-input').select();
+        document.execCommand('copy');
+        this.textContent = "Copied!";
+    };
+    document.getElementById('close-modal').onclick = () => document.body.removeChild(modal);
+}
 
-  // Reset header instantly
-  root.style.setProperty('--header-bg', defaultHeader);
+function showUpdatePopup(force = false) {
+    if (!force && localStorage.getItem("seenUpdate") === UPDATE_VERSION) return;
+    const themeColor = getCurrentPrimaryColor();
 
-  // Update inputs and localStorage
-  themeSelector.value = `${defaultPrimary},${defaultBg},${defaultHeader}`;
-  particlesToggle.checked = defaultParticles;
-  particleSpeed.value = defaultSpeed;
-  localStorage.setItem('nightbyte-theme', `${defaultPrimary},${defaultBg},${defaultHeader}`);
-  localStorage.setItem('nightbyte-particles', defaultParticles);
-  localStorage.setItem('nightbyte-speed', defaultSpeed);
-});
+    const overlay = document.createElement('div');
+    Object.assign(overlay.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(15px)', zIndex: '2000000',
+        display: 'flex', justifyContent: 'center', alignItems: 'center'
+    });
 
-window.addEventListener('load', () => {
-    // Wait a tiny bit to ensure CSS variables are processed
-    setTimeout(loadParticlesWithTheme, 100);
-});
+    overlay.innerHTML = `
+        <div style="background:rgba(20,20,20,0.9); padding:40px; border-radius:24px; border:1px solid ${themeColor}33; width:90%; max-width:400px; text-align:center; color:#fff; font-family:'Fredoka',sans-serif;">
+            <div style="font-size:40px; margin-bottom:15px;">🚀</div>
+            <h2 style="color:${themeColor}; margin-bottom:10px;">New Updates!</h2>
+            <p style="opacity:0.8; margin-bottom:20px;">New games, smoother particles, and custom NightByte themes added! 🎮</p>
+            <button id="close-update" style="width:100%; padding:15px; border-radius:12px; border:none; background:${themeColor}; color:#000; font-weight:bold; cursor:pointer;">Got it!</button>
+        </div>
+    `;
+    document.body.appendChild(overlay);
 
-// Settings panel toggle
-openSettings.addEventListener('click', () => {
-  settingsPanel.classList.toggle('open');
+    document.getElementById('close-update').onclick = () => {
+        localStorage.setItem("seenUpdate", UPDATE_VERSION);
+        document.body.removeChild(overlay);
+    };
+}
+
+// --- 4. SETTINGS & NAVIGATION ---
+document.addEventListener('DOMContentLoaded', () => {
+    const themeSelector = document.getElementById('theme-selector');
+    const particlesToggle = document.getElementById('particles-toggle');
+    const particleSpeed = document.getElementById('particle-speed');
+    const settingsPanel = document.getElementById('settings-panel');
+    const openSettings = document.getElementById('open-settings');
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    // Hamburger Menu
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+        const icon = hamburger.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
+
+    // Theme Logic
+    themeSelector.addEventListener('change', e => {
+        const [primary, bg, header] = e.target.value.split(',');
+        document.documentElement.style.setProperty('--primary-color', primary);
+        document.documentElement.style.setProperty('--bg-color', bg);
+        document.documentElement.style.setProperty('--header-bg', header);
+        localStorage.setItem('nightbyte-theme', e.target.value);
+        updateParticlesColorSmooth(primary);
+    });
+
+    // Toggle Settings
+    openSettings.addEventListener('click', () => settingsPanel.classList.toggle('open'));
+
+    // Initialize Particles and Modals
+    setTimeout(loadParticlesWithTheme, 200);
+    setTimeout(showUpdatePopup, 1000);
 });
