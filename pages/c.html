@@ -1,135 +1,408 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Home | Schoology</title>
-<link rel="icon" type="image/x-icon" href="https://www.powerschool.com/favicon.ico" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/silent.css">
-  <script src="/js/randomSentence.js"></script>
-  <script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silent Games - Credits</title>
+<link rel="stylesheet" href="/css/silent2.css">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script src="/js/randomSentence.js"></script>
+  <script src="/js/cursors.js"></script>
+  <script src="/js/index.js"></script>
+   <script src="/js/tabcloak.js"></script>
+  <script src="/js/panic.js"></script>
+  <script src="/js/tabconfirm.js"></script>
+  <script src="/js/usesettings.js"></script>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--bg-color);
+            color: white;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 90%;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px var(--primary-color);
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+            margin-bottom: 40px;
+        }
+
+        .back-link:hover { transform: scale(1.1); filter: brightness(1.2); }
+
+        /* Credits Grid */
+        .credits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .credit-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .credit-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--primary-color)33;
+        }
+
+        .credit-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .credit-card h2 {
+            margin: 10px 0;
+            font-size: 1.5rem;
+        }
+
+        .credit-card p {
+            opacity: 0.6;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .special-thanks {
+            margin-top: 60px;
+            padding: 40px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            opacity: 0.5;
+        }
+    </style>
 </head>
 <body>
-  <canvas id="particles"></canvas>
-  <header>
-    <nav>
-      <div class="logo"><div class="mark">SG</div>Silent Games</div>
-    <div class="nav-links">
-        <a href="/"><i class="fa-solid fa-house"></i> Home</a>
-        <a href="/pages/lausd.html"><i class="fa-solid fa-gamepad"></i> Games</a>
-        <a href="/pages/c.html"><i class="fa-solid fa-circle-user"></i> Credits</a>
-        <a href="/pages/u.html"><i class="fa-solid fa-list"></i> Updates</a>
-        <a href=""><i class="fa-solid fa-envelope"></i> Contact</a>
-      <div class="dropdown">
-        <a href="#" class="dropbtn"><i class="fa-solid fa-ellipsis-vertical"></i> More</a>
-       <div class="dropdown-content">
-          <a href="/pages/chat.html"><i class="fa-solid fa-message"></i> Chat (Discontinued)</a>
-         <a href="/pages/faq.html"><i class="fa-solid fa-circle-question"></i> FAQ</a>
-    </div>
-  </div>
-        <button id="theme-toggle" class="theme-toggle"><i class="fa-solid fa-palette"></i></button>
-        <div id="theme-menu" class="theme-menu">
-        <div class="theme-option" data-color="#64d2ff" data-bg="#05060a"><div class="color-circle" style="background:#64d2ff;"></div>Blue</div>
-      <div class="theme-option" data-color="#ff66cc" data-bg="#1a001a"><div class="color-circle" style="background:#ff66cc;"></div>Pink</div>
-      <div class="theme-option" data-color="#00ffaa" data-bg="#001a10"><div class="color-circle" style="background:#00ffaa;"></div>Green</div>
-      <div class="theme-option" data-color="#ffa500" data-bg="#1a0f00"><div class="color-circle" style="background:#ffa500;"></div>Orange</div>
-      <div class="theme-option" data-color="#a78bfa" data-bg="#0f001a"><div class="color-circle" style="background:#a78bfa;"></div>Purple</div>
-      <div class="theme-option" data-color="#ff0000" data-bg="#1a0000"><div class="color-circle" style="background:#ff0000;"></div>Red</div>
-      <div class="theme-option" data-color="#00ccff" data-bg="#00111a"><div class="color-circle" style="background:#00ccff;"></div>Cyan</div>
-      <div class="theme-option" data-color="#00ffcc" data-bg="#00201a"><div class="color-circle" style="background:#00ffcc;"></div>Teal</div>
-      <div class="theme-option" data-color="#ffff00" data-bg="#1a1a00"><div class="color-circle" style="background:#ffff00;"></div>Yellow</div>
-      <div class="theme-option" data-color="#ff00ff" data-bg="#1a001a"><div class="color-circle" style="background:#ff00ff;"></div>Magenta</div>
-      <div class="theme-option" data-color="#00ff00" data-bg="#001a00"><div class="color-circle" style="background:#00ff00;"></div>Lime</div>
-      <div class="theme-option" data-color="#FFA500" data-bg="#000000"><div class="color-circle" style="background:#FFA500;"></div>CornHub</div>
-      <div class="theme-option" data-color="#ff7f50" data-bg="#1a0a05"><div class="color-circle" style="background:#ff7f50;"></div>Coral</div>
-      <div class="theme-option" data-color="#8a2be2" data-bg="#0f0015"><div class="color-circle" style="background:#8a2be2;"></div>BlueViolet</div>
-      <div class="theme-option" data-color="#1e90ff" data-bg="#00111a"><div class="color-circle" style="background:#1e90ff;"></div>DodgerBlue</div>
-      <div class="theme-option" data-color="#ff1493" data-bg="#1a0010"><div class="color-circle" style="background:#ff1493;"></div>DeepPink</div>
-      <div class="theme-option" data-color="#7fff00" data-bg="#001a05"><div class="color-circle" style="background:#7fff00;"></div>Chartreuse</div>
-      <div class="theme-option" data-color="#00fa9a" data-bg="#001a0a"><div class="color-circle" style="background:#00fa9a;"></div>SpringGreen</div>
-      <div class="theme-option" data-color="#ff4500" data-bg="#1a0500"><div class="color-circle" style="background:#ff4500;"></div>OrangeRed</div>
-      <div class="theme-option" data-color="#adff2f" data-bg="#101a00"><div class="color-circle" style="background:#adff2f;"></div>GreenYellow</div>
-      <div class="theme-option" data-color="#00bfff" data-bg="#00121a"><div class="color-circle" style="background:#00bfff;"></div>DeepSkyBlue</div>
-      <div class="theme-option" data-color="#ff69b4" data-bg="#1a0010"><div class="color-circle" style="background:#ff69b4;"></div>HotPink</div>
-      <div class="theme-option" data-color="#7b68ee" data-bg="#0f0015"><div class="color-circle" style="background:#7b68ee;"></div>MediumSlateBlue</div>
-      <div class="theme-option" data-color="#32cd32" data-bg="#001a05"><div class="color-circle" style="background:#32cd32;"></div>LimeGreen</div>
-      <div class="theme-option" data-color="#ff8c00" data-bg="#1a0500"><div class="color-circle" style="background:#ff8c00;"></div>DarkOrange</div>
-      <div class="theme-option" data-color="#ff6347" data-bg="#1a0500"><div class="color-circle" style="background:#ff6347;"></div>Tomato</div>
-      <div class="theme-option" data-color="#40e0d0" data-bg="#00121a"><div class="color-circle" style="background:#40e0d0;"></div>Turquoise</div>
-      <div class="theme-option" data-color="#ffb6c1" data-bg="#1a0010"><div class="color-circle" style="background:#ffb6c1;"></div>LightPink</div>
-      <div class="theme-option" data-color="#9370db" data-bg="#0f0015"><div class="color-circle" style="background:#9370db;"></div>MediumPurple</div>
-      <div class="theme-option" data-color="#3cb371" data-bg="#001a05"><div class="color-circle" style="background:#3cb371;"></div>MediumSeaGreen</div>
-      <div class="theme-option" data-color="#8b0000" data-bg="#1a0000"><div class="color-circle" style="background:#8b0000;"></div>DarkRed</div>
-      <div class="theme-option" data-color="#006400" data-bg="#001400"><div class="color-circle" style="background:#006400;"></div>DarkGreen</div>
-      <div class="theme-option" data-color="#00008b" data-bg="#00000f"><div class="color-circle" style="background:#00008b;"></div>DarkBlue</div>
-      <div class="theme-option" data-color="#4b0082" data-bg="#0f0010"><div class="color-circle" style="background:#4b0082;"></div>Indigo</div>
-      <div class="theme-option" data-color="#1ca9c9" data-bg="#00111a"><div class="color-circle" style="background:#1ca9c9;"></div>BrightBlue</div>
-      <div class="theme-option" data-color="#daa520" data-bg="#1a1200"><div class="color-circle" style="background:#daa520;"></div>Goldenrod</div>
-      <div class="theme-option" data-color="#7fffd4" data-bg="#00121a"><div class="color-circle" style="background:#7fffd4;"></div>Aquamarine</div>
-      <div class="theme-option" data-color="#f0e68c" data-bg="#1a1a0a"><div class="color-circle" style="background:#f0e68c;"></div>Khaki</div>
-      <div class="theme-option" data-color="#ffdab9" data-bg="#1a0f05"><div class="color-circle" style="background:#ffdab9;"></div>PeachPuff</div>
-      <div class="theme-option" data-color="#ba55d3" data-bg="#0f0015"><div class="color-circle" style="background:#ba55d3;"></div>MediumOrchid</div>
-      <div class="theme-option" data-color="#7cfc00" data-bg="#001a00"><div class="color-circle" style="background:#7cfc00;"></div>LawnGreen</div>
-      <div class="theme-option" data-color="#dc143c" data-bg="#1a000a"><div class="color-circle" style="background:#dc143c;"></div>Crimson</div>
-      <div class="theme-option" data-color="#4682b4" data-bg="#00111a"><div class="color-circle" style="background:#4682b4;"></div>SteelBlue</div>
-      <div class="theme-option" data-color="#dda0dd" data-bg="#0f0015"><div class="color-circle" style="background:#dda0dd;"></div>Plum</div>
-      <div class="theme-option" data-color="#ffd700" data-bg="#1a1500"><div class="color-circle" style="background:#ffd700;"></div>Gold</div>
-      <div class="theme-option" data-color="#00ffff" data-bg="#00111a"><div class="color-circle" style="background:#00ffff;"></div>Aqua</div>
-        </div>
-      </div>
-    </div>
-  </nav>
-  </header>
-  <main>
-    <section id="team" class="fade-in">
-      <h1 class="title">Team Credits</h1>
-      <div class="features">
-        <div class="feature-card">
-          <h3><i class="fa-solid fa-user"></i> Owner/Founder/Design</h3>
-          <p>RefinedSilent</p>
-        </div>
-        <div class="feature-card">
-          <h3><i class="fa-solid fa-user"></i> Games Layout</h3>
-          <p>BlazerHm</p>
-        </div>
-        <div class="feature-card">
-          <h3><i class="fa-solid fa-gamepad"></i> Games</h3>
-          <p>gn-math</p>
-        </div>
-        <div class="feature-card">
-          <h3><i class="fa-solid fa-gamepad"></i> More Games</h3>
-          <p>UGS</p>
-        </div>
-      </div>
-    </section>
-    <section id="special-thanks" class="fade-in">
-      <h1 class="title">Special Thanks</h1>
-      <div class="glass-card">
-        <p>Thanks to all our contributors, beta testers, and supporters who made Silent Games possible.</p>
-      </div>
-    </section>
-  </main>
-  <footer>
-    <p>© Silent Games • Built with care • <span>refinesilent@gmail.com</span></p>
-  </footer>
-  <script src="/js/silent.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const sections = document.querySelectorAll('section.fade-in');
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.2 });
 
-      sections.forEach(sec => observer.observe(sec));
+    <div id="particles-js"></div>
+
+  <header>
+  <h1>Silent Games</h1>
+  <nav>
+    <div id="nav-links">
+      <a href="/"><i class="fas fa-home"></i>Home</a>
+      <a href="/pages/lausd.html/"><i class="fas fa-gamepad"></i>Games</a>
+      <a href="/pages/u.html/"><i class="fa-solid fa-list"></i>Updates</a>
+      <a href="/pages/c.html/"><i class="fa-solid circle-user"></i>Credits</a>
+      <a href="/"><i class="fas fa-info-circle"></i>About</a>
+      <a href="/"><i class="fas fa-envelope"></i>Contact</a>
+    </div>
+    <div id="hamburger"><i class="fas fa-bars"></i></div>
+  </nav>
+</header>
+
+    <div class="container">
+        <a href="/" class="back-link"><i class="fas fa-chevron-left"></i> Return Home</a>
+        
+        <header>
+            <h1>The Team</h1>
+            <p>The minds behind the Silent Games experience.</p>
+        </header>
+
+        <div class="credits-grid">
+            <div class="credit-card">
+                <i class="fas fa-crown"></i>
+                <h2>RefinedSilent</h2>
+                <p>Project Lead & Lead Developer. Created the Silent UI and system architecture.</p>
+            </div>
+
+            <div class="credit-card">
+                <i class="fas fa-code"></i>
+                <h2>Gemini</h2>
+                <p>AI Collaborator. Assisted with script logic, particle transitions, and theme persistence.</p>
+            </div>
+
+             <div class="credit-card">
+                <i class="fas fa-code"></i>
+                <h2>gn-math</h2>
+                <p>A Game provider for all the games.</p>
+            </div>
+
+            <div class="credit-card">
+                <i class="fas fa-vial"></i>
+                <h2>UGS</h2>
+                <p>Another Game provider for all the games.</p>
+            </div>
+        </div>
+
+        <div class="special-thanks">
+            <h3>Powered By</h3>
+            <div class="tech-stack">
+                <i class="fab fa-html5" title="HTML5"></i>
+                <i class="fab fa-js-square" title="JavaScript"></i>
+                <i class="fab fa-css3-alt" title="CSS3"></i>
+                <i class="fas fa-atom" title="Particles.js"></i>
+                <i class="fab fa-font-awesome" title="FontAwesome"></i>
+            </div>
+            <p style="margin-top: 20px; opacity: 0.4; font-size: 0.8rem;">
+               Silent Games is an open-source educational project. All games belong to their respective creators.
+            </p>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 Silent Games All rights reserved.</footer>
+
+<!-- Settings Panel -->
+<div id="settings-panel">
+  <h2>Settings</h2>
+  <div class="setting-item">
+    <label for="theme-selector">Choose Theme:</label>
+    <select id="theme-selector">
+  <!-- Default -->
+  <option value="#ffffff,#000000,#2a2a2a"> Night Black (Default)</option>
+
+  <!-- Bright -->
+  <option value="#ff3fa8,#1a001a,#330033">Pink</option>
+  <option value="#00d0ff,#001a1a,#003333">Blue</option>
+  <option value="#00ff00,#001a00,#003300">Green</option>
+  <option value="#ffff00,#1a1a00,#333300">Yellow</option>
+  <option value="#ff6600,#1a0d00,#331a00">Orange</option>
+  <option value="#ff0000,#1a0000,#330000">Red</option>
+
+  <!-- Neon / Cyber -->
+  <option value="#ff00ff,#1a001a,#330033">Magenta</option>
+  <option value="#00ffff,#001a1a,#003333">Cyan</option>
+  <option value="#ffcc00,#1a1400,#332800">Cyber Gold</option>
+  <option value="#ffa500,#000000,#1a0d00">CornHub</option>
+  <option value="#39ff14,#001a00,#003300">Neon Lime</option>
+  <option value="#00ffcc,#001a1a,#003333">Vaporwave</option>
+
+  <!-- Dark / Night -->
+  <option value="#7f5cff,#0b061a,#241133">Night Purple</option>
+  <option value="#5c7cff,#050b1a,#121e33">Midnight Blue</option>
+  <option value="#00ff41,#000f05,#00330f">Matrix</option>
+  <option value="#8b0000,#120000,#2b0000">Blood Red</option>
+  <option value="#4fd1c5,#061a1a,#0f3333">Ocean Dark</option>
+
+</select>
+
+  </div>
+  <div class="setting-item">
+    <label for="particles-toggle">Enable Particle Effects:</label>
+    <input type="checkbox" id="particles-toggle" checked>
+  </div>
+  <div class="setting-item">
+    <label for="particle-speed">Particle Animation Speed:</label>
+    <input type="range" id="particle-speed" min="1" max="20" value="9">
+  </div>
+  <div class="setting-item">
+        <label>Privacy Tools</label>
+        <button id="abcloak" style="background: #333; color: white; border: none;">Open in about:blank</button>
+        <button onclick="datalink()" style="background: #333; color: white; border: none;">Data Link</button>
+    </div>
+
+    <div class="setting-item">
+        <label>Tab Disguise</label>
+        <select id="faviconDropdown">
+            <option disabled selected>Select Disguise</option>
+        </select>
+    </div>
+
+    <div class="setting-item">
+        <label>Panic Redirect</label>
+        <select id="tabselect">
+            <option value="https://classroom.google.com">Google Classroom</option>
+            <option value="https://canvas.instructure.com">Canvas</option>
+            <option value="https://google.com">Google</option>
+        </select>
+        <button onclick="confirmtab()" style="background: var(--primary-color); color: black; border: none; font-weight: bold;">Confirm Panic Site</button>
+    </div>
+
+    <div class="setting-item">
+        <label>Panic Keybind</label>
+        <button id="setkeybind" style="background: #444; color: white; border: none;">Set Keybind</button>
+        <div id="output" style="color: #aaa; font-size: 12px; margin-top: 5px; text-align: center;">Current key: none</div>
+    </div>
+  <button id="reset-settings">Reset to Default</button>
+</div>
+
+<!-- Small Settings Button -->
+<button id="open-settings"><i class="fas fa-cog"></i></button>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="/js/silent2.js"></script>
+       <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const setkeybind = document.getElementById('setkeybind');
+            const output = document.getElementById('output');
+            let keybind = localStorage.getItem('keybind') || 'none'; 
+    
+            output.textContent = `Current key: ${keybind}`;
+    
+            setkeybind.addEventListener('click', () => {
+                output.textContent = 'Listening...';
+                document.removeEventListener('keydown', keydownHandler);
+                document.addEventListener('keydown', keydownHandler);
+            });
+    
+            function keydownHandler(event) {
+                keybind = event.key;
+                localStorage.setItem('keybind', keybind);
+                output.textContent = `Selected Key: ${keybind}`;
+                document.removeEventListener('keydown', keydownHandler);
+                location.reload()
+            }
+        });
+    </script>
+    
+    <script>
+       // Define global variables
+var win;
+
+// 1. About:Blank Cloak Function
+function openAbCloak() {
+    const url = window.location.href;
+    if (win) {
+        win.focus();
+    } else {
+        win = window.open();
+        win.document.body.style.margin = '0';
+        win.document.body.style.height = '100vh';
+        var iframe = win.document.createElement('iframe');
+        Object.assign(iframe.style, {
+            border: 'none', width: '100%', height: '100%', margin: '0'
+        });
+        iframe.src = url;
+        win.document.body.appendChild(iframe);
+        window.location.replace("https://www.khanacademy.org");
+    }
+}
+
+// 2. Data URL Link Function (NightByte Premium Style)
+function datalink() {
+    const html = `<!DOCTYPE html><html><head><title>Home | Schoology</title><style>body,html{margin:0;padding:0;height:100%;overflow:hidden;}iframe{border:none;width:100%;height:100%;}</style></head><body><iframe src="${window.location.href}"></iframe></body></html>`;
+    const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
+
+    // Get current theme color from NightByte variables
+    const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ffffff';
+
+    // Create Modal Overlay (Heavy Blur)
+    const modal = document.createElement('div');
+    Object.assign(modal.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(15px)',
+        webkitBackdropFilter: 'blur(15px)', zIndex: '1000000', 
+        display: 'flex', justifyContent: 'center', alignItems: 'center',
+        opacity: '0', transition: 'opacity 0.3s ease'
     });
-  </script>
+
+    // Content Box (Glassmorphism)
+    const contentBox = document.createElement('div');
+    Object.assign(contentBox.style, {
+        backgroundColor: 'rgba(20, 20, 20, 0.8)',
+        padding: '40px', borderRadius: '24px',
+        border: `1px solid rgba(255, 255, 255, 0.1)`,
+        boxShadow: `0 25px 50px rgba(0,0,0,0.5), 0 0 15px ${themeColor}22`,
+        position: 'relative', width: '90%', maxWidth: '500px',
+        textAlign: 'center', fontFamily: "'Fredoka', sans-serif", color: '#fff',
+        transform: 'scale(0.9)', transition: 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+    });
+
+    contentBox.innerHTML = `
+        <button id="close-modal" style="position:absolute; top:20px; right:20px; background:none; border:none; color:#fff; font-size:24px; cursor:pointer; opacity:0.5; transition:0.2s;">&times;</button>
+        <div style="width: 50px; height: 50px; background: ${themeColor}; color: #000; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 24px; box-shadow: 0 0 20px ${themeColor}66;">
+            <i class="fa-solid fa-link"></i>
+        </div>
+        <h2 style="color:#fff; font-size: 24px; margin-bottom:8px; letter-spacing: -0.5px;">Stealth Link Ready</h2>
+        <p style="color: rgba(255,255,255,0.5); font-size:15px; margin-bottom:25px;">Copy this link to open a stealth tab that stays hidden from history.</p>
+        
+        <div style="background: rgba(0,0,0,0.4); padding: 8px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); display:flex; gap:10px; align-items: center;">
+            <input type="text" id="data-url-input" value="${dataUrl}" readonly style="flex:1; padding:10px 15px; border:none; background:transparent; color:#fff; font-size:14px; outline:none; font-family: monospace; opacity: 0.8;">
+            <button id="copy-data-btn" style="padding:12px 25px; border-radius:10px; border:none; background:${themeColor}; color:#000; font-weight:bold; cursor:pointer; font-family: 'Fredoka', sans-serif; transition: 0.3s; white-space: nowrap;">Copy Link</button>
+        </div>
+    `;
+
+    modal.appendChild(contentBox);
+    document.body.appendChild(modal);
+
+    // Trigger Animation
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        contentBox.style.transform = 'scale(1)';
+    }, 10);
+
+    // Functionality
+    const closeModal = () => {
+        modal.style.opacity = '0';
+        contentBox.style.transform = 'scale(0.9)';
+        setTimeout(() => document.body.removeChild(modal), 300);
+    };
+
+    document.getElementById('close-modal').onclick = closeModal;
+    modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+    
+    const copyBtn = document.getElementById('copy-data-btn');
+    copyBtn.onclick = () => {
+        const input = document.getElementById('data-url-input');
+        input.select();
+        document.execCommand('copy');
+        copyBtn.textContent = 'Copied!';
+        copyBtn.style.boxShadow = `0 0 20px ${themeColor}`;
+        setTimeout(() => { 
+            copyBtn.textContent = 'Copy Link'; 
+            copyBtn.style.boxShadow = 'none';
+        }, 2000);
+    };
+
+    // Close Modal hover effect
+    const closeX = document.getElementById('close-modal');
+    closeX.onmouseover = () => closeX.style.opacity = '1';
+    closeX.onmouseout = () => closeX.style.opacity = '0.5';
+}
+
+// 3. Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    const abBtn = document.querySelector('#abcloak');
+    if (abBtn) abBtn.onclick = openAbCloak;
+});
+    </script>
+
+
+  <script src="/js/script.js"></script>
 </body>
 </html>
