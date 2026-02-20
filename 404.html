@@ -1,88 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Home | Schoology</title>
-<link rel="icon" type="image/x-icon" href="https://www.powerschool.com/favicon.ico" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/silent.css">
-  <script src="https://kit.fontawesome.com/a2e0f1f0bb.js" crossorigin="anonymous"></script>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      height: 100vh;
-      background: var(--bg);
-      color: var(--text);
-      overflow: hidden;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Lost in the Void | NightByte</title>
+ <link rel="stylesheet" href="/css/silent2.css">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script src="randomSentence.js"></script>
+  <script src="/js/cursors.js"></script>
+  <script src="/js/index.js"></script>
+   <script src="/js/tabcloak.js"></script>
+  <script src="/js/panic.js"></script>
+  <script src="/js/tabconfirm.js"></script>
+  <script src="/js/usesettings.js"></script>
+    <style>
+        :root {
+            --primary-color: #7f5cff;
+            --bg-color: #0b061a;
+        }
 
-    .error-container {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 18px;
-      padding: 50px 60px;
-      box-shadow: var(--shadow);
-      max-width: 450px;
-      animation: fadeIn 1.2s ease forwards;
-    }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--bg-color);
+            color: white;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .error-code {
-      font-size: 6rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-    }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
 
-    .error-message {
-      font-size: 1.3rem;
-      color: var(--muted);
-      margin-bottom: 25px;
-    }
+        .error-container {
+            text-align: center;
+            z-index: 1;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            max-width: 500px;
+        }
 
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 22px;
-      border-radius: 12px;
-      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-      color: #041627;
-      font-weight: 600;
-      text-decoration: none;
-      transition: transform 0.3s ease;
-    }
+        /* Glitch Effect */
+        .error-code {
+            font-size: 8rem;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1;
+            color: var(--primary-color);
+            text-shadow: 0 0 20px var(--primary-color);
+            animation: glitch 3s infinite;
+        }
 
-    .back-btn:hover {
-      transform: scale(1.05);
-    }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        h1 {
+            font-size: 2rem;
+            margin: 10px 0;
+            opacity: 0.9;
+        }
 
-   
-  </style>
+        p {
+            opacity: 0.6;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary-color);
+            color: #000;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px var(--primary-color)44;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--primary-color)88;
+            filter: brightness(1.1);
+        }
+
+        .code-snippet {
+            margin-top: 30px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            opacity: 0.4;
+        }
+    </style>
 </head>
-
 <body>
-  <canvas id="particles"></canvas>
 
-  <div class="error-container">
-    <div class="error-code">404</div>
-    <div class="error-message">Oops! The page you're looking for doesn't exist.</div>
-    <a href="index.html" class="back-btn"><i class="fa-solid fa-house"></i> Go Home</a>
-  </div>
+    <div id="particles-js"></div>
 
- 
-  <script src="/js/silent.js"></script>
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <h1>Connection Lost</h1>
+        <p>The page you are looking for has been moved, deleted, or never existed in this timeline.</p>
+        
+        <a href="/" class="home-btn">
+            <i class="fas fa-house"></i> Return to Safety
+        </a>
+
+        <div class="code-snippet">
+            status_code: 0x404 <br>
+            location: void_sector_7
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+   <script src="/js/silent2.js"></script>
 </body>
 </html>
