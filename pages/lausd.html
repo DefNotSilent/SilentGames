@@ -10,7 +10,7 @@
 <script src="/js/randomSentence.js"></script>
   <script src="/js/cursors.js"></script>
   <script src="/js/index.js"></script>
-   <script src="/js/tabcloak.js"></script>
+   <script src="/js/tabdisguise.js"></script>
   <script src="/js/panic.js"></script>
   <script src="/js/tabconfirm.js"></script>
   <script src="/js/usesettings.js"></script>
@@ -362,6 +362,10 @@
 
   <a href="/game.html?url=L2dhbWVzL2RyaXZlLW1hZC8=">
     <img src="/images/drive-mad.jpg" alt="drive mad">
+  </a>
+
+  <a href="/game.html?url=L2dhbWVzL2R1bmUtZGFzaC8=">
+    <img src="/games/dune-dash/unnamed.webp" alt="dune dash">
   </a>
 
   <a href="/game.html?url=L2dhbWVzL2VzY2FwZXJvYWQv">
@@ -728,8 +732,16 @@
     <img src="/games/Roblox/splash.png" alt="Roblox">
   </a>
 
+  <a href="/game.html?url=L2dhbWVzL3JvY2tldC1nb2FsLw==">
+    <img src="/games/rocket-goal/og-image.png" alt="rocket goal io">
+  </a>
+
   <a href="/game.html?url=L2dhbWVzL3JvY2tldC1zb2NjZXIv">
     <img src="/games/rocket-soccer/splash.png" alt="rocket soccer">
+  </a>
+
+  <a href="/game.html?url=L2dhbWVzL3Jvb2Z0b3AtcnVuLw==">
+    <img src="/games/rooftop-run/images.jpg" alt="rooftop run">
   </a>
 
   <a href="/game.html?url=L2dhbWVzL3Jvb2Z0b3Atc25pcGVycy8=">
@@ -758,6 +770,10 @@
 
   <a href="/game.html?url=L2dhbWVzL3NnbXMv">
     <img src="/games/sgms/sgms.png" alt="stone grass mowing simulator">
+  </a>
+
+  <a href="/game.html?url=L2dhbWVzL3NoYXB5LXJ1bm5lci8=">
+    <img src="/games/shapy-runner/unnamed.jpg" alt="Shape Shifter Transform Race">
   </a>
 
   <a href="/game.html?url=L2dhbWVzL3Nob290aW5nLW1hc3Rlci8=">
@@ -846,6 +862,10 @@
 
   <a href="/game.html?url=L2dhbWVzL3N1YndheS1zdXJmZXJzLXNmLw==">
     <img src="/games/subway-surfers-sf/SanFrancisco2024Icon.webp" alt="subway Surfers">
+  </a>
+
+  <a href="/game.html?url=L2dhbWVzL3N1cGVyY2Fycy1yb3lhbGUv">
+    <img src="/games/supercars-royale/images.jpg" alt="supercars royale">
   </a>
 
   <a href="/game.html?url=L2dhbWVzL3N1cGVyaG90Lw==">
@@ -1059,7 +1079,7 @@
   </div>
   <div class="setting-item">
         <label>Privacy Tools</label>
-        <button id="abcloak" style="background: #333; color: white; border: none;">Open in about:blank</button>
+        <button id="abdisguise" style="background: #333; color: white; border: none;">Open in about:blank</button>
         <button onclick="datalink()" style="background: #333; color: white; border: none;">Data Link</button>
     </div>
 
@@ -1120,8 +1140,8 @@
        // Define global variables
 var win;
 
-// 1. About:Blank Cloak Function
-function openAbCloak() {
+// 1. About:Blank disguise Function
+function openAbdisguise() {
     const url = window.location.href;
     if (win) {
         win.focus();
@@ -1223,8 +1243,8 @@ function datalink() {
 
 // 3. Initialization
 document.addEventListener('DOMContentLoaded', () => {
-    const abBtn = document.querySelector('#abcloak');
-    if (abBtn) abBtn.onclick = openAbCloak;
+    const abBtn = document.querySelector('#abdisguise');
+    if (abBtn) abBtn.onclick = openAbdisguise;
 });
     </script>
 
