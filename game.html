@@ -10,7 +10,7 @@
 <script src="/js/randomSentence.js"></script>
   <script src="/js/cursors.js"></script>
   <script src="/js/index.js"></script>
-   <script src="/js/tabcloak.js"></script>
+   <script src="/js/tabdisguise.js"></script>
   <script src="/js/settings.js"></script>
   <script src="/js/panic.js"></script>
   <script src="/js/tabconfirm.js"></script>
@@ -198,7 +198,7 @@
   </div>
   <div class="setting-item">
         <label>Privacy Tools</label>
-        <button id="abcloak" style="background: #333; color: white; border: none;">Open in about:blank</button>
+        <button id="abdisguise" style="background: #333; color: white; border: none;">Open in about:blank</button>
         <button onclick="datalink()" style="background: #333; color: white; border: none;">Data Link</button>
     </div>
 
@@ -263,7 +263,7 @@
         if (url) {
             var win;
     
-            document.querySelector('#abcloak').onclick = function() {
+            document.querySelector('#abdisguise').onclick = function() {
                 if (win) {
                     win.focus();
                 } else {
