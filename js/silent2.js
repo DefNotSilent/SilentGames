@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         location.reload();
     });
 
-    // About:Blank Cloak
+    /* About:Blank Cloak
     document.getElementById('abcloak').onclick = () => {
         let win = window.open();
         win.document.body.style.margin = '0';
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         iframe.src = window.location.href;
         win.document.body.appendChild(iframe);
         window.location.replace("https://google.com");
-    };
+    }; */
 
     // FINAL BOOTUP
     loadSettings();
