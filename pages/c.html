@@ -10,7 +10,7 @@
 <script src="/js/randomSentence.js"></script>
   <script src="/js/cursors.js"></script>
   <script src="/js/index.js"></script>
-   <script src="/js/tabcloak.js"></script>
+   <script src="/js/tabdisguise.js"></script>
   <script src="/js/panic.js"></script>
   <script src="/js/tabconfirm.js"></script>
   <script src="/js/usesettings.js"></script>
@@ -239,7 +239,7 @@
   </div>
   <div class="setting-item">
         <label>Privacy Tools</label>
-        <button id="abcloak" style="background: #333; color: white; border: none;">Open in about:blank</button>
+        <button id="abdisguise" style="background: #333; color: white; border: none;">Open in about:blank</button>
         <button onclick="datalink()" style="background: #333; color: white; border: none;">Data Link</button>
     </div>
 
@@ -300,8 +300,8 @@
        // Define global variables
 var win;
 
-// 1. About:Blank Cloak Function
-function openAbCloak() {
+// 1. About:Blank disguise Function
+function openAbdisguise() {
     const url = window.location.href;
     if (win) {
         win.focus();
@@ -403,8 +403,8 @@ function datalink() {
 
 // 3. Initialization
 document.addEventListener('DOMContentLoaded', () => {
-    const abBtn = document.querySelector('#abcloak');
-    if (abBtn) abBtn.onclick = openAbCloak;
+    const abBtn = document.querySelector('#abdisguise');
+    if (abBtn) abBtn.onclick = openAbdisguise;
 });
     </script>
 
