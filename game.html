@@ -132,7 +132,7 @@
     const decodedUrl = encodedUrl ? decodeBase64(encodedUrl) : null;
 
     // Load decoded URL or fallback
-    iframe.src = decodedUrl || "https://silentgames.netlify.app/404.html/";
+    iframe.src = decodedUrl || "/404.html/";
 
     function refreshIframe() {
       iframe.src = iframe.src;
