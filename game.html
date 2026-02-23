@@ -231,8 +231,8 @@
 
 <!-- Small Settings Button -->
 <button id="open-settings"><i class="fas fa-cog"></i></button>
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-<script src="/js/silent2.js"></script>
+  <script src="/particles.min.js"></script>
+ <script src="/js/silent2.js"></script>
        <script>
         document.addEventListener('DOMContentLoaded', function() {
             const setkeybind = document.getElementById('setkeybind');
@@ -258,190 +258,116 @@
     </script>
     
     <script>
-        var urlObj = new window.URL(window.location.href);
-        var url = window.location.href;
-        if (url) {
-            var win;
-    
-            document.querySelector('#abdisguise').onclick = function() {
-                if (win) {
-                    win.focus();
-                } else {
-                    win = window.open();
-                    win.document.body.style.margin = '0';
-                    win.document.body.style.height = '100vh';
-                    var iframe = win.document.createElement('iframe');
-                    iframe.style.border = 'none';
-                    iframe.style.width = '100%';
-                    iframe.style.height = '100%';
-                    iframe.style.margin = '0';
-                    iframe.src = url;
-                    win.document.body.appendChild(iframe);
-                    window.location.replace("https://www.khanacademy.org");
-                }
-            };
-    
-            function datalink() {
-    const html = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>New Tab</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
-        iframe {
-            border: none;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
-</head>
-<body>
-    <iframe src="${window.location.href}"></iframe>
-</body>
-</html>`;
+// Define global variables
+var win;
+
+// 1. About:Blank disguise Function
+function openAbdisguise() {
+    const url = window.location.href;
+    if (win) {
+        win.focus();
+    } else {
+        win = window.open();
+        win.document.body.style.margin = '0';
+        win.document.body.style.height = '100vh';
+        var iframe = win.document.createElement('iframe');
+        Object.assign(iframe.style, {
+            border: 'none', width: '100%', height: '100%', margin: '0'
+        });
+        iframe.src = url;
+        win.document.body.appendChild(iframe);
+        window.location.replace("https://www.khanacademy.org");
+    }
+}
+
+// 2. Data URL Link Function (NightByte Premium Style)
+function datalink() {
+    const html = `<!DOCTYPE html><html><head><title>Home | Schoology</title><style>body,html{margin:0;padding:0;height:100%;overflow:hidden;}iframe{border:none;width:100%;height:100%;}</style></head><body><iframe src="${window.location.href}"></iframe></body></html>`;
     const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
-    
-    const container = document.createElement('div');
-    container.style.margin = '20px auto';
-    container.style.maxWidth = '800px';
-    container.style.textAlign = 'center';
-    
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.value = dataUrl;
-    input.readOnly = true;
-    input.style.width = 'calc(100% - 120px)';
-    input.style.padding = '12px 15px';
-    input.style.marginRight = '10px';
-    input.style.borderRadius = '8px';
-    input.style.border = `2px solid var(--border-primary)`;
-    input.style.backgroundColor = 'var(--secondary-bg)';
-    input.style.color = 'var(--text-white)';
-    input.style.fontFamily = 'notitle';
-    input.style.fontSize = '16px';
-    
-    const copyBtn = document.createElement('button');
-    copyBtn.textContent = 'Copy';
-    copyBtn.style.padding = '12px 20px';
-    copyBtn.style.borderRadius = '8px';
-    copyBtn.style.border = 'none';
-    copyBtn.style.backgroundColor = 'var(--accent-dark)';
-    copyBtn.style.color = 'var(--text-white)';
-    copyBtn.style.fontFamily = 'notitle';
-    copyBtn.style.cursor = 'pointer';
-    copyBtn.style.transition = 'all 0.2s ease-in-out';
-    
-    copyBtn.onmouseover = function() {
-        this.style.backgroundColor = 'var(--accent-hover)';
-        this.style.boxShadow = '0 0 10px var(--shadow-primary)';
-    };
-    copyBtn.onmouseout = function() {
-        this.style.backgroundColor = 'var(--accent-dark)';
-        this.style.boxShadow = 'none';
-    };
-    
-    copyBtn.onclick = function() {
-        input.select();
-        document.execCommand('copy');
-        const originalText = this.textContent;
-    };
-    
-    const closeBtn = document.createElement('button');
-    closeBtn.innerHTML = '&times;';
-    closeBtn.style.position = 'absolute';
-    closeBtn.style.top = '10px';
-    closeBtn.style.right = '10px';
-    closeBtn.style.background = 'none';
-    closeBtn.style.border = 'none';
-    closeBtn.style.color = 'var(--text-white)';
-    closeBtn.style.fontSize = '20px';
-    closeBtn.style.cursor = 'pointer';
-    
+
+    // Get current theme color from NightByte variables
+    const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ffffff';
+
+    // Create Modal Overlay (Heavy Blur)
     const modal = document.createElement('div');
-    modal.style.position = 'fixed';
-    modal.style.top = '0';
-    modal.style.left = '0';
-    modal.style.width = '100%';
-    modal.style.height = '100%';
-    modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
-    modal.style.zIndex = '99999';
-    modal.style.display = 'flex';
-    modal.style.justifyContent = 'center';
-    modal.style.alignItems = 'center';
-    
+    Object.assign(modal.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(15px)',
+        webkitBackdropFilter: 'blur(15px)', zIndex: '1000000', 
+        display: 'flex', justifyContent: 'center', alignItems: 'center',
+        opacity: '0', transition: 'opacity 0.3s ease'
+    });
+
+    // Content Box (Glassmorphism)
     const contentBox = document.createElement('div');
-    contentBox.style.backgroundColor = 'var(--primary-bg)';
-    contentBox.style.padding = '30px';
-    contentBox.style.borderRadius = '12px';
-    contentBox.style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)';
-    contentBox.style.position = 'relative';
-    contentBox.style.width = '80%';
-    contentBox.style.maxWidth = '700px';
-    
-    const title = document.createElement('h2');
-    title.textContent = 'Data URL Generated';
-    title.style.color = 'var(--text-white)';
-    title.style.fontFamily = 'title';
-    title.style.marginBottom = '20px';
-    title.style.textAlign = 'center';
-    
-    const desc = document.createElement('p');
-    desc.textContent = 'here is your data link:';
-    desc.style.color = 'var(--text-gray)';
-    desc.style.fontFamily = 'notitle';
-    desc.style.marginBottom = '20px';
-    desc.style.textAlign = 'center';
-    
-    container.appendChild(input);
-    container.appendChild(copyBtn);
-    
-    contentBox.appendChild(closeBtn);
-    contentBox.appendChild(title);
-    contentBox.appendChild(desc);
-    contentBox.appendChild(container);
-    
+    Object.assign(contentBox.style, {
+        backgroundColor: 'rgba(20, 20, 20, 0.8)',
+        padding: '40px', borderRadius: '24px',
+        border: `1px solid rgba(255, 255, 255, 0.1)`,
+        boxShadow: `0 25px 50px rgba(0,0,0,0.5), 0 0 15px ${themeColor}22`,
+        position: 'relative', width: '90%', maxWidth: '500px',
+        textAlign: 'center', fontFamily: "'Fredoka', sans-serif", color: '#fff',
+        transform: 'scale(0.9)', transition: 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+    });
+
+    contentBox.innerHTML = `
+        <button id="close-modal" style="position:absolute; top:20px; right:20px; background:none; border:none; color:#fff; font-size:24px; cursor:pointer; opacity:0.5; transition:0.2s;">&times;</button>
+        <div style="width: 50px; height: 50px; background: ${themeColor}; color: #000; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 24px; box-shadow: 0 0 20px ${themeColor}66;">
+            <i class="fa-solid fa-link"></i>
+        </div>
+        <h2 style="color:#fff; font-size: 24px; margin-bottom:8px; letter-spacing: -0.5px;">Stealth Link Ready</h2>
+        <p style="color: rgba(255,255,255,0.5); font-size:15px; margin-bottom:25px;">Copy this link to open a stealth tab that stays hidden from history.</p>
+        
+        <div style="background: rgba(0,0,0,0.4); padding: 8px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); display:flex; gap:10px; align-items: center;">
+            <input type="text" id="data-url-input" value="${dataUrl}" readonly style="flex:1; padding:10px 15px; border:none; background:transparent; color:#fff; font-size:14px; outline:none; font-family: monospace; opacity: 0.8;">
+            <button id="copy-data-btn" style="padding:12px 25px; border-radius:10px; border:none; background:${themeColor}; color:#000; font-weight:bold; cursor:pointer; font-family: 'Fredoka', sans-serif; transition: 0.3s; white-space: nowrap;">Copy Link</button>
+        </div>
+    `;
+
     modal.appendChild(contentBox);
     document.body.appendChild(modal);
-    
-    closeBtn.onclick = function() {
-        document.body.removeChild(modal);
-    };
-    
-    modal.onclick = function(e) {
-        if (e.target === modal) {
-            document.body.removeChild(modal);
-        }
+
+    // Trigger Animation
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        contentBox.style.transform = 'scale(1)';
+    }, 10);
+
+    // Functionality
+    const closeModal = () => {
+        modal.style.opacity = '0';
+        contentBox.style.transform = 'scale(0.9)';
+        setTimeout(() => document.body.removeChild(modal), 300);
     };
 
-    function updateAnticloseHandler() {
-     if (anticloseCheckbox.checked) {
-       window.addEventListener('beforeunload', handleBeforeUnload);
-     } else {
-       window.removeEventListener('beforeunload', handleBeforeUnload);
-     }
-   }
+    document.getElementById('close-modal').onclick = closeModal;
+    modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+    
+    const copyBtn = document.getElementById('copy-data-btn');
+    copyBtn.onclick = () => {
+        const input = document.getElementById('data-url-input');
+        input.select();
+        document.execCommand('copy');
+        copyBtn.textContent = 'Copied!';
+        copyBtn.style.boxShadow = `0 0 20px ${themeColor}`;
+        setTimeout(() => { 
+            copyBtn.textContent = 'Copy Link'; 
+            copyBtn.style.boxShadow = 'none';
+        }, 2000);
+    };
 
-    updateAnticloseHandler();
- 
-   anticloseCheckbox.addEventListener('change', () => {
-     localStorage.setItem(ANTICLOSE_STORAGE_KEY, anticloseCheckbox.checked.toString());
-     updateAnticloseHandler();
-   });
- 
-   function handleBeforeUnload(e) {
-     e.preventDefault();
-     e.returnValue = 'test';
-     return e.returnValue;
-   }
-}}
+    // Close Modal hover effect
+    const closeX = document.getElementById('close-modal');
+    closeX.onmouseover = () => closeX.style.opacity = '1';
+    closeX.onmouseout = () => closeX.style.opacity = '0.5';
+}
+
+// 3. Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    const abBtn = document.querySelector('#abdisguise');
+    if (abBtn) abBtn.onclick = openAbdisguise;
+});    
     </script>
-
   
 </body>
 </html>
