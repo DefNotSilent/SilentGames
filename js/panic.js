@@ -5,7 +5,7 @@ async function loadPanicSites() {
     if (!tabselectElement) return;
 
     try {
-        const response = await fetch('/panic.json');
+        const response = await fetch('/json/panic.json');
         const sites = await response.json();
 
         tabselectElement.innerHTML = ''; // Clear
