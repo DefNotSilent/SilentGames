@@ -112,8 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const openSettings = document.getElementById('open-settings');
     const resetBtn = document.getElementById('reset-settings');
 
-    loadThemes();
-
     // Toggle Panel
     openSettings?.addEventListener('click', () => {
         settingsPanel.classList.toggle('open');
@@ -162,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }; */
 
     // FINAL BOOTUP
+    loadThemes();
     loadSettings();
     setTimeout(showUpdatePopup, 1500);
 });
