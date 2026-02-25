@@ -102,43 +102,7 @@ function loadSettings() {
     }, 500);
 }
 
-// --- 4. MODALS & TOOLS ---
-
-function datalink() {
-    const html = `<!DOCTYPE html><html><head><title>Home | Schoology</title><style>body,html{margin:0;padding:0;height:100%;overflow:hidden;}iframe{border:none;width:100%;height:100%;}</style></head><body><iframe src="${window.location.href}"></iframe></body></html>`;
-    const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
-    const themeColor = getCurrentPrimaryColor();
-
-    const modal = document.createElement('div');
-    Object.assign(modal.style, {
-        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(15px)',
-        zIndex: '1000000', display: 'flex', justifyContent: 'center', alignItems: 'center'
-    });
-
-    modal.innerHTML = `
-        <div style="background:rgba(20,20,20,0.8); padding:40px; border-radius:24px; border:1px solid rgba(255,255,255,0.1); width:90%; max-width:500px; text-align:center; font-family:'Fredoka',sans-serif; color:#fff; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
-            <h2 style="color:${themeColor}; text-shadow: 0 0 10px ${themeColor}; margin-bottom:10px;">Stealth Link Ready</h2>
-            <p style="opacity:0.5; font-size:14px; margin-bottom:20px;">Copy the URL below to bypass filters.</p>
-            <div style="display:flex; gap:10px; background:rgba(0,0,0,0.3); padding:10px; border-radius:12px;">
-                <input type="text" id="data-url-input" value="${dataUrl}" readonly style="flex:1; background:transparent; border:none; color:#fff; outline:none; font-family:monospace; font-size:12px;">
-                <button id="copy-btn" style="background:${themeColor}; color:#000; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">Copy</button>
-            </div>
-            <button id="close-modal" style="margin-top:20px; background:none; border:none; color:#fff; opacity:0.3; cursor:pointer;">Close</button>
-        </div>
-    `;
-    document.body.appendChild(modal);
-
-    document.getElementById('copy-btn').onclick = function() {
-        document.getElementById('data-url-input').select();
-        document.execCommand('copy');
-        this.textContent = "Copied!";
-        setTimeout(() => this.textContent = "Copy", 2000);
-    };
-    document.getElementById('close-modal').onclick = () => modal.remove();
-}
-
-// --- 5. INITIALIZATION ---
+// --- 4. INITIALIZATION ---
 
 document.addEventListener('DOMContentLoaded', () => {
     const themeSelector = document.getElementById('theme-selector');
