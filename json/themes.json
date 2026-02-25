@@ -1,0 +1,36 @@
+[
+  { "name": "Night Black (Default)", "colors": "#ffffff,#000000,#2a2a2a" },
+  
+  { "category": "Bright" },
+  { "name": "Pink", "colors": "#ff3fa8,#1a001a,#330033" },
+  { "name": "Blue", "colors": "#00d0ff,#001a1a,#003333" },
+  { "name": "Green", "colors": "#00ff00,#001a00,#003300" },
+  { "name": "Yellow", "colors": "#ffff00,#1a1a00,#333300" },
+  { "name": "Orange", "colors": "#ff6600,#1a0d00,#331a00" },
+  { "name": "Red", "colors": "#ff0000,#1a0000,#330000" },
+  { "name": "Pure White", "colors": "#000000,#ffffff,#f0f0f0" },
+
+  { "category": "Neon / Cyber" },
+  { "name": "Magenta", "colors": "#ff00ff,#1a001a,#330033" },
+  { "name": "Cyan", "colors": "#00ffff,#001a1a,#003333" },
+  { "name": "Cyber Gold", "colors": "#ffcc00,#1a1400,#332800" },
+  { "name": "CornHub", "colors": "#ffa500,#000000,#1a0d00" },
+  { "name": "Neon Lime", "colors": "#39ff14,#001a00,#003300" },
+  { "name": "Vaporwave", "colors": "#00ffcc,#001a1a,#003333" },
+  { "name": "Retrowave", "colors": "#ff0055,#0d0221,#261447" },
+
+  { "category": "Dark / Night" },
+  { "name": "Night Purple", "colors": "#7f5cff,#0b061a,#241133" },
+  { "name": "Midnight Blue", "colors": "#5c7cff,#050b1a,#121e33" },
+  { "name": "Matrix", "colors": "#00ff41,#000f05,#00330f" },
+  { "name": "Blood Red", "colors": "#8b0000,#120000,#2b0000" },
+  { "name": "Ocean Dark", "colors": "#4fd1c5,#061a1a,#0f3333" },
+  { "name": "Void Walker", "colors": "#333333,#050505,#111111" },
+
+  { "category": "Premium / Exclusive" },
+  { "name": "Nordic Ice", "colors": "#88c0d0,#2e3440,#3b4252" },
+  { "name": "Rose Gold", "colors": "#e2979c,#2d1b1e,#442b2d" },
+  { "name": "Deep Sea", "colors": "#0077be,#001219,#00202e" },
+  { "name": "Emerald City", "colors": "#50fa7b,#282a36,#44475a" },
+  { "name": "Pumpkin Spice", "colors": "#d08770,#2e3440,#3b4252" }
+]
