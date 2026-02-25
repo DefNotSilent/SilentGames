@@ -162,6 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // FINAL BOOTUP
     loadThemes();
     loadSettings();
+    loadPanicSites(); // New
+    initPanicSystem(); // New
     setTimeout(showUpdatePopup, 1500);
 });
 
