@@ -3,6 +3,6 @@ function confirmtab() {
     const selectedValue = selectElement.value;
     localStorage.setItem('sitefortab', selectedValue);
     localStorage.setItem('tabselectIndex', selectElement.selectedIndex);
-    alert("panic site set to " + localStorage.getItem('sitefortab'));
+    alert("Panic Site Updated To " + localStorage.getItem('sitefortab'));
     location.reload()
 }
