@@ -141,10 +141,14 @@
     </div>
 
     <div class="setting-item">
-        <label>Panic Redirect</label>
-        <select id="tabselect">
-        </select>
-        <button onclick="confirmtab()" style="background: var(--primary-color); color: black; border: none; font-weight: bold;">Confirm Panic Site</button>
+    <label>Panic Redirect</label>
+    <select id="tabselect" onchange="checkCustomPanic(this.value)">
+        <option value="custom">-- Custom URL --</option>
+      </select>
+    
+      <input type="text" id="custom-panic-input" placeholder="Paste school link here..." style="display:none; margin-top:10px; width:100%; padding:8px; border-radius:5px; background:#111; border:1px solid var(--primary-color); color:white;">
+      
+      <button onclick="confirmtab()" style="background: var(--primary-color); color: black; border: none; font-weight: bold;">Confirm Panic Site</button>
     </div>
 
     <div class="setting-item">
@@ -298,6 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
 
 
 
