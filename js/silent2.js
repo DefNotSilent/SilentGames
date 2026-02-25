@@ -89,7 +89,7 @@ function loadSettings() {
     if (!selector) return;
 
     try {
-        const response = await fetch('themes.json');
+        const response = await fetch('/json/themes.json');
         const themes = await response.json();
         selector.innerHTML = '';
 
