@@ -8,7 +8,7 @@
   { "name": "Yellow", "colors": "#ffff00,#1a1a00,#333300" },
   { "name": "Orange", "colors": "#ff6600,#1a0d00,#331a00" },
   { "name": "Red", "colors": "#ff0000,#1a0000,#330000" },
-  { "name": "Pure White", "colors": "#000000,#ffffff,#f0f0f0" },
+  { "name": "Pure White (Look's Funky)", "colors": "#000000,#ffffff,#f0f0f0" },
 
   { "category": "Neon / Cyber" },
   { "name": "Magenta", "colors": "#ff00ff,#1a001a,#330033" },
@@ -32,5 +32,16 @@
   { "name": "Rose Gold", "colors": "#e2979c,#2d1b1e,#442b2d" },
   { "name": "Deep Sea", "colors": "#0077be,#001219,#00202e" },
   { "name": "Emerald City", "colors": "#50fa7b,#282a36,#44475a" },
-  { "name": "Pumpkin Spice", "colors": "#d08770,#2e3440,#3b4252" }
+  { "name": "Pumpkin Spice", "colors": "#d08770,#2e3440,#3b4252" },
+
+  { "category": "Silent Special Edition" },
+  { "name": "Glitch Protocol", "colors": "#ff003c,#050505,#1a1a1a" },
+  { "name": "Solarized Dark", "colors": "#268bd2,#002b36,#073642" },
+  { "name": "Dracula Pro", "colors": "#bd93f9,#282a36,#44475a" },
+  { "name": "Amethyst", "colors": "#9d50bb,#0f0817,#1a0b2e" },
+  { "name": "Toxic Waste", "colors": "#a3ff00,#0a0f00,#141f00" },
+  { "name": "Cyberpunk 2077", "colors": "#fcee0a,#000000,#1a1a1a" },
+  { "name": "Lava Lamp", "colors": "#ff4500,#1a0500,#330a00" },
+  { "name": "Ice Cream", "colors": "#ffb7d5,#2a1b21,#3d2a30" },
+  { "name": "Hacker Blue", "colors": "#00ffff,#000a1a,#001a33" }
 ]
