@@ -1,10 +1,10 @@
-# 🌙 Silent Games | The NightByte Ecosystem
+# 🌙 Silent Games | The New Ecosystem
 
 ![Version](https://img.shields.io/badge/version-2.0-blueviolet?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/platform-Web-orange?style=for-the-badge)
 
-**Silent Games** is a high-performance, privacy-focused gaming hub built with the **NightByte** design philosophy. It combines a library of premium HTML5 games with advanced stealth features designed for bypass, privacy, and speed.
+**Silent Games** is a high-performance, privacy-focused gaming hub built with the **Awesome Sleek** design philosophy. It combines a library of premium HTML5 games with advanced stealth features designed for bypass, privacy, and speed.
 
 
 
