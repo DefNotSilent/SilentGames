@@ -116,35 +116,22 @@
 
   <script>
   const iframe = document.getElementById('game-frame');
-const params = new URLSearchParams(window.location.search);
-const encodedUrl = params.get("url");
+  const params = new URLSearchParams(window.location.search);
+  const encodedUrl = params.get("url");
 
-function decodeBase64(str) {
-    try { return atob(str); } catch (e) { return null; }
-}
-
-async function loadGameStealth(url) {
-    if (!url) {
-        iframe.src = "/404.html/";
-        return;
+    function decodeBase64(str) {
+      try {
+        return atob(str);
+      } catch (e) {
+        console.error("Invalid Link:", e);
+        return null;
+      }
     }
 
-    try {
-        // We fetch the site content
-        const response = await fetch(url);
-        const blob = await response.blob();
-        // Create a unique temporary URL that GoGuardian doesn't recognize
-        const stealthUrl = URL.createObjectURL(blob);
-        iframe.src = stealthUrl;
-    } catch (e) {
-        // Fallback: If Fetch is blocked, try direct loading
-        iframe.src = url;
-    }
-}
+    const decodedUrl = encodedUrl ? decodeBase64(encodedUrl) : null;
 
-const decodedUrl = decodeBase64(encodedUrl);
-loadGameStealth(decodedUrl);;
-
+    // Load URL or fallback
+    iframe.src = decodedUrl || "/404.html/";
     function refreshIframe() {
       iframe.src = iframe.src;
     }
