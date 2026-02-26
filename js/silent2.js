@@ -20,7 +20,7 @@ function hexToRgb(hex) {
 
 // Gets the current primary color from CSS variables
 function getCurrentPrimaryColor() {
-    return getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ffffff';
+    return getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ff0055';
 }
 
 // --- 2. PARTICLE ENGINE (Smooth Transitions) ---
@@ -77,7 +77,7 @@ function loadSettings() {
     } else {
         // Defaults
         config = { 
-            theme: "#ffffff,#000000,#2a2a2a", 
+            theme: "#ff0055,#0d0221,#261447", 
             particlesEnabled: true, 
             particleSpeed: 9,
             panicUrl: "https://classroom.google.com"
