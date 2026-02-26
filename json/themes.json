@@ -18,6 +18,16 @@
   { "name": "Vaporwave", "colors": "#00ffcc,#001a1a,#003333" },
   { "name": "Retrowave", "colors": "#ff0055,#0d0221,#261447" },
 
+  { "category": "Retrowave & Synth" },
+  { "name": "Outrun 1984", "colors": "#ff00ff,#0b0116,#1b0332" },
+  { "name": "Miami Nights", "colors": "#00f3ff,#120024,#25003e" },
+  { "name": "Electric Sunset", "colors": "#f2ff00,#24001e,#4a003c" },
+  { "name": "Cyber Noir", "colors": "#00ff9f,#0d0d0d,#1a1a1a" },
+  { "name": "Glitch Pop", "colors": "#ff71ce,#01cdfe,#05ffa1" },
+  { "name": "Tokyo Neon", "colors": "#3dff00,#000000,#111111" },
+  { "name": "Radical Blue", "colors": "#2de2e6,#0d0221,#261447" },
+  { "name": "Cassette Future", "colors": "#ff9100,#1a0f00,#331d00" }
+
   { "category": "Dark / Night" },
   { "name": "Night Purple", "colors": "#7f5cff,#0b061a,#241133" },
   { "name": "Midnight Blue", "colors": "#5c7cff,#050b1a,#121e33" },
