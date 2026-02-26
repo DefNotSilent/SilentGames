@@ -26,7 +26,7 @@
   { "name": "Glitch Pop", "colors": "#ff71ce,#01cdfe,#05ffa1" },
   { "name": "Tokyo Neon", "colors": "#3dff00,#000000,#111111" },
   { "name": "Radical Blue", "colors": "#2de2e6,#0d0221,#261447" },
-  { "name": "Cassette Future", "colors": "#ff9100,#1a0f00,#331d00" }
+  { "name": "Cassette Future", "colors": "#ff9100,#1a0f00,#331d00" },
 
   { "category": "Dark / Night" },
   { "name": "Night Purple", "colors": "#7f5cff,#0b061a,#241133" },
