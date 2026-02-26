@@ -119,7 +119,7 @@
   const params = new URLSearchParams(window.location.search);
   const encodedUrl = params.get("url");
 
-    function decodeBase64(str) {
+    function decodeLink(str) {
       try {
         return atob(str);
       } catch (e) {
@@ -128,7 +128,7 @@
       }
     }
 
-    const decodedUrl = encodedUrl ? decodeBase64(encodedUrl) : null;
+    const decodedUrl = encodedUrl ? decodeLink(encodedUrl) : null;
 
     // Load URL or fallback
     iframe.src = decodedUrl || "/404.html/";
