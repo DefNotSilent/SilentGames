@@ -77,6 +77,21 @@
             backdrop-filter: blur(10px);
         }
 
+        .btn-locked {
+    cursor: not-allowed !important;
+    opacity: 0.6;
+    filter: grayscale(1);
+    background: #222 !important;
+    border: 1px dashed var(--primary-color) !important;
+}
+
+/* Optional: Subtle pulse for the cooldown state */
+@keyframes pulse-gray {
+    0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
         .input-group {
             margin-bottom: 25px;
         }
@@ -232,13 +247,14 @@
     <div class="input-group">
         <label>Encrypted Message</label>
         <div class="terminal-container">
-            <span class="terminal-prefix">></span>
+            <span class="terminal-prefix"></span>
             <textarea name="Message" id="message" rows="6" placeholder="Awaiting input..." required></textarea>
         </div>
     </div>
 
     <button type="submit" class="game-btn" id="submit-btn">SEND SIGNAL</button>
 </form>
+          
             <div class="contact-info">
                 <a href="#" class="info-card">
                     <i class="fab fa-discord"></i>
@@ -274,11 +290,23 @@
 <script>
     const form = document.getElementById('contact-form');
 const btn = document.getElementById('submit-btn');
+const COOLDOWN_TIME = 60000; // 60 seconds in milliseconds
 
 form.onsubmit = async (e) => {
     e.preventDefault();
+
+    // 1. Check for existing Cooldown
+    const lastSignal = localStorage.getItem('last-signal-sent');
+    const currentTime = Date.now();
+
+    if (lastSignal && (currentTime - lastSignal < COOLDOWN_TIME)) {
+        const remaining = Math.ceil((COOLDOWN_TIME - (currentTime - lastSignal)) / 1000);
+        btn.textContent = `SYSTEM COOLING: ${remaining}s`;
+        btn.style.background = "#555";
+        return;
+    }
     
-    // UI Feedback: Start Transmission
+    // 2. UI Feedback: Start Transmission
     btn.disabled = true;
     btn.textContent = "ENCRYPTING SIGNAL...";
     btn.style.background = "#444";
@@ -293,24 +321,22 @@ form.onsubmit = async (e) => {
         });
 
         if (response.ok) {
-            // Success State
+            // 3. Set the Cooldown in LocalStorage
+            localStorage.setItem('last-signal-sent', Date.now());
+            
             btn.textContent = "SIGNAL RECEIVED";
             btn.style.background = "#2ecc71";
             btn.style.boxShadow = "0 0 20px #2ecc71";
             form.reset();
         } else {
-            // Formspree error
-            throw new Error('Formspree Error');
+            throw new Error('Relay Error');
         }
     } catch (error) {
-        // Firewall or Network Error
         btn.textContent = "TRANSMISSION BLOCKED";
         btn.style.background = "#ff4b2b";
-        btn.style.boxShadow = "0 0 20px #ff4b2b";
-        console.error("Transmission Error:", error);
     }
 
-    // Revert button after 4 seconds
+    // 4. Reset button text after 4 seconds
     setTimeout(() => {
         btn.disabled = false;
         btn.textContent = "SEND SIGNAL";
