@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="/css/silent2.css">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<script src="randomSentence.js"></script>
   <script src="/js/cursors.js"></script>
   <script src="/js/index.js"></script>
    <script src="/js/tabdisguise.js"></script>
@@ -209,24 +208,24 @@
  <main>
         <div class="contact-header">
             <span class="version-badge">Secure Line</span>
-            <h2>Transmission Portal</h2>
-            <p>Send a signal to the developers. All transmissions are end-to-end encrypted.</p>
+            <h2>Message Portal</h2>
+            <p>Send a message to the developer(s). All messages are end-to-end encrypted.</p>
         </div>
 
         <div class="contact-grid">
             <form class="contact-form" id="contact-form">
                 <div class="input-group">
                     <label>Alias / Codename</label>
-                    <input type="text" id="alias" placeholder="Enter Name" required>
+                    <input type="text" id="alias" placeholder="Enter Username" required>
                 </div>
                 
                 <div class="input-group">
-                    <label>Transmission Type</label>
+                    <label>Message Type</label>
                     <select id="type">
-                        <option value="game-request">Game Request</option>
-                        <option value="bug-report">Bug Report</option>
+                        <option value="Game Request">Game Request</option>
+                        <option value="Bug Report">Bug Report</option>
                         <option value="mirror">Domain Mirror Request</option>
-                        <option value="other">General Feedback</option>
+                        <option value="Other">General Feedback</option>
                     </select>
                 </div>
 
@@ -235,7 +234,7 @@
                     <textarea id="message" rows="6" placeholder="Type your message here..." required></textarea>
                 </div>
 
-                <button type="submit" class="game-btn" id="submit-btn">SEND SIGNAL</button>
+                <button type="submit" class="game-btn" id="submit-btn">SEND MESSAGE</button>
             </form>
 
             <div class="contact-info">
@@ -286,21 +285,21 @@
 
     // 1. UI Animation: Encrypting
     btn.disabled = true;
-    btn.textContent = "SENDING SIGNAL...";
+    btn.textContent = "SENDING MESSAGE...";
     btn.style.background = "#444";
 
     // 2. Prepare the Data for Discord
     const data = {
         username: "Silent Signal Relay",
         embeds: [{
-            title: `New Transmission: ${type.toUpperCase()}`,
+            title: `New Message: ${type.toUpperCase()}`,
             color: 16711765, // This is hex #ff0055 in decimal
             fields: [
                 { name: "Sender Alias", value: alias, inline: true },
                 { name: "Category", value: type, inline: true },
                 { name: "Message", value: message }
             ],
-            footer: { text: "Ghost Signal Protocol v2.1" },
+            footer: { text: "Silent Signal Protocol v2.1" },
             timestamp: new Date()
         }]
     };
@@ -313,14 +312,14 @@
     })
     .then(() => {
         // 4. Success State
-        btn.textContent = "SIGNAL RECEIVED, " + alias.toUpperCase();
+        btn.textContent = "MESSAGE RECEIVED, " + alias.toUpperCase();
         btn.style.background = "#2ecc71"; 
         btn.style.boxShadow = "0 0 20px #2ecc71";
         document.getElementById('contact-form').reset();
     })
     .catch((err) => {
         // 5. Error State
-        btn.textContent = "TRANSMISSION FAILED";
+        btn.textContent = "MESSAGE FAILED";
         btn.style.background = "#e74c3c";
         console.error(err);
     })
@@ -328,7 +327,7 @@
         // Revert button after 4 seconds
         setTimeout(() => {
             btn.disabled = false;
-            btn.textContent = "SEND SIGNAL";
+            btn.textContent = "SEND MESSAGE";
             btn.style.background = "";
             btn.style.boxShadow = "";
         }, 4000);
@@ -357,7 +356,7 @@
   </div>
   <div class="setting-item">
     <label for="particle-speed">Particle Animation Speed:</label>
-    <input type="range" id="particle-speed" min="1" max="20" value="9">
+    <input type="range" id="particle-speed" min="1" max="30" value="9">
   </div>
   <div class="setting-item">
         <label>Privacy Tools</label>
