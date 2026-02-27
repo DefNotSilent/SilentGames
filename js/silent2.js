@@ -123,7 +123,7 @@ document.getElementById('reset-settings').addEventListener('click', () => {
     // 3. Reset UI Elements (Sliders/Checkboxes/Selects)
     document.getElementById('particles-toggle').checked = defaults.particles;
     document.getElementById('particle-speed').value = defaults.speed;
-    document.getElementById('theme-selector').value = "Retrowave (Default)"; 
+    document.getElementById('theme-selector').value = "RetroWave (Default)"; 
     // ^ Ensure this matches the text/value in your JSON
 
     // 4. Update Particles engine in real-time
