@@ -102,6 +102,53 @@ function loadSettings() {
     }, 500);
 }
 
+document.getElementById('reset-settings').addEventListener('click', () => {
+    // 1. Define the Default "Ghost Signal" Values
+    const defaults = {
+        primary: '#ff0055',
+        secondary: '#ff71ce',
+        bg: '#0d0221',
+        header: '#261447',
+        particles: true,
+        speed: 9
+    };
+
+    // 2. Smoothly Update CSS Variables
+    const root = document.documentElement;
+    root.style.setProperty('--primary-color', defaults.primary);
+    root.style.setProperty('--secondary-color', defaults.secondary);
+    root.style.setProperty('--bg-color', defaults.bg);
+    root.style.setProperty('--header-bg', defaults.header);
+
+    // 3. Reset UI Elements (Sliders/Checkboxes/Selects)
+    document.getElementById('particles-toggle').checked = defaults.particles;
+    document.getElementById('particle-speed').value = defaults.speed;
+    document.getElementById('theme-selector').value = "Retrowave (Default)"; 
+    // ^ Ensure this matches the text/value in your JSON
+
+    // 4. Update Particles engine in real-time
+    if (window.pJSDom && window.pJSDom[0]) {
+        const pJS = window.pJSDom[0].pJS;
+        pJS.particles.move.speed = defaults.speed;
+        pJS.particles.color.value = defaults.primary;
+        pJS.particles.line_linked.color = defaults.primary;
+        pJS.fn.particlesRefresh();
+    }
+
+    // 5. Clear LocalStorage so it stays reset
+    localStorage.removeItem('nightbyte-settings');
+    localStorage.removeItem('particle-speed');
+    
+    // Optional: Add a small "Success" pulse to the button
+    const resetBtn = document.getElementById('reset-settings');
+    resetBtn.textContent = "RESET COMPLETED";
+    resetBtn.style.background = "#2ecc71"; // Green
+    setTimeout(() => {
+        resetBtn.textContent = "Reset to Default";
+        resetBtn.style.background = ""; // Back to normal
+    }, 2000);
+});
+
 // --- 4. INITIALIZATION ---
 
 document.addEventListener('DOMContentLoaded', () => {
