@@ -158,6 +158,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsPanel = document.getElementById('settings-panel');
     const openSettings = document.getElementById('open-settings');
     const resetBtn = document.getElementById('reset-settings');
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', () => {
+            // Toggle the 'active' class on the links
+            navLinks.classList.toggle('active');
+            
+            // Optional: Change icon to an "X" when open
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+});
 
     // Toggle Panel
     openSettings?.addEventListener('click', () => {
