@@ -1,6 +1,6 @@
 # 🌙 Silent Games | The New Ecosystem
 
-![Version](https://img.shields.io/badge/version-2.0-blueviolet?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-2.1-blueviolet?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/platform-Web-orange?style=for-the-badge)
 
