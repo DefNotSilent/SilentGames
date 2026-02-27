@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveSettings();
     });
 
-    // Reset Button
+    /* Reset Button
     resetBtn?.addEventListener('click', () => {
         localStorage.removeItem(STORAGE_KEY);
         location.reload();
