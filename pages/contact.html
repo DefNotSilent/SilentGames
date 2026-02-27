@@ -213,30 +213,32 @@
         </div>
 
         <div class="contact-grid">
-            <form class="contact-form" id="contact-form">
-                <div class="input-group">
-                    <label>Alias / Codename</label>
-                    <input type="text" id="alias" placeholder="Enter Username" required>
-                </div>
-                
-                <div class="input-group">
-                    <label>Message Type</label>
-                    <select id="type">
-                        <option value="Game Request">Game Request</option>
-                        <option value="Bug Report">Bug Report</option>
-                        <option value="mirror">Domain Mirror Request</option>
-                        <option value="Other">General Feedback</option>
-                    </select>
-                </div>
+            <form id="contact-form" action="https://formspree.io/f/maqdkpka" method="POST">
+    <div class="input-group">
+        <label>Alias / Codename</label>
+        <input type="text" name="Alias" id="alias" placeholder="Ghost_User_01" required>
+    </div>
+    
+    <div class="input-group">
+        <label>Transmission Type</label>
+        <select name="Category" id="type">
+            <option value="Game Request">Game Request</option>
+            <option value="Bug Report">Bug Report</option>
+            <option value="Mirror Request">Domain Mirror Request</option>
+            <option value="General Feedback">General Feedback</option>
+        </select>
+    </div>
 
-                <div class="input-group">
-                    <label>Message</label>
-                    <textarea id="message" rows="6" placeholder="Type your message here..." required></textarea>
-                </div>
+    <div class="input-group">
+        <label>Encrypted Message</label>
+        <div class="terminal-container">
+            <span class="terminal-prefix">></span>
+            <textarea name="Message" id="message" rows="6" placeholder="Awaiting input..." required></textarea>
+        </div>
+    </div>
 
-                <button type="submit" class="game-btn" id="submit-btn">SEND MESSAGE</button>
-            </form>
-
+    <button type="submit" class="game-btn" id="submit-btn">SEND SIGNAL</button>
+</form>
             <div class="contact-info">
                 <a href="#" class="info-card">
                     <i class="fab fa-discord"></i>
@@ -269,73 +271,54 @@
             </div>
         </div>
     </main>
+<script>
+    const form = document.getElementById('contact-form');
+const btn = document.getElementById('submit-btn');
 
-    <script>
-        // FORM SUBMISSION LOGIC
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
+form.onsubmit = async (e) => {
     e.preventDefault();
     
-    const btn = document.getElementById('submit-btn');
-    const alias = document.getElementById('alias').value;
-    const type = document.getElementById('type').value;
-    const message = document.getElementById('message').value;
-    
-    // The Webhook URL from Discord
-    const webhookURL = "https://discord.com/api/webhooks/1476761176829595688/AwK92g-FOHFMoO6BFAMZvA4w21kC_B6AKppeCj4EAnWxUZMPXLOOWfCNkH27i09p_WYO";
-
-    // 1. UI Animation: Encrypting
+    // UI Feedback: Start Transmission
     btn.disabled = true;
-    btn.textContent = "SENDING MESSAGE...";
+    btn.textContent = "ENCRYPTING SIGNAL...";
     btn.style.background = "#444";
 
-    // 2. Prepare the Data for Discord
-    const data = {
-        username: "Silent Signal Relay",
-        embeds: [{
-            title: `New Message: ${type.toUpperCase()}`,
-            color: 16711765, // This is hex #ff0055 in decimal
-            fields: [
-                { name: "Sender Alias", value: alias, inline: true },
-                { name: "Category", value: type, inline: true },
-                { name: "Message", value: message }
-            ],
-            footer: { text: "Silent Signal Protocol v2.1" },
-            timestamp: new Date()
-        }]
-    };
+    const data = new FormData(form);
 
-    // 3. Send the Data
-    fetch(webhookURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    })
-    .then(() => {
-        // 4. Success State
-        btn.textContent = "MESSAGE RECEIVED, " + alias.toUpperCase();
-        btn.style.background = "#2ecc71"; 
-        btn.style.boxShadow = "0 0 20px #2ecc71";
-        document.getElementById('contact-form').reset();
-    })
-    .catch((err) => {
-        // 5. Error State
-        btn.textContent = "MESSAGE FAILED";
-        btn.style.background = "#e74c3c";
-        console.error(err);
-    })
-    .finally(() => {
-        // Revert button after 4 seconds
-        setTimeout(() => {
-            btn.disabled = false;
-            btn.textContent = "SEND MESSAGE";
-            btn.style.background = "";
-            btn.style.boxShadow = "";
-        }, 4000);
-    });
-});
-    </script>
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+        });
 
+        if (response.ok) {
+            // Success State
+            btn.textContent = "SIGNAL RECEIVED";
+            btn.style.background = "#2ecc71";
+            btn.style.boxShadow = "0 0 20px #2ecc71";
+            form.reset();
+        } else {
+            // Formspree error
+            throw new Error('Formspree Error');
+        }
+    } catch (error) {
+        // Firewall or Network Error
+        btn.textContent = "TRANSMISSION BLOCKED";
+        btn.style.background = "#ff4b2b";
+        btn.style.boxShadow = "0 0 20px #ff4b2b";
+        console.error("Transmission Error:", error);
+    }
 
+    // Revert button after 4 seconds
+    setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = "SEND SIGNAL";
+        btn.style.background = "";
+        btn.style.boxShadow = "";
+    }, 4000);
+};
+</script>
 
 
 
