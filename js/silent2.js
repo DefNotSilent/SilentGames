@@ -106,7 +106,7 @@ document.getElementById('reset-settings').addEventListener('click', () => {
     // 1. Define the Default "Ghost Signal" Values
     const defaults = {
         primary: '#ff0055',
-        secondary: '#ff71ce',
+        secondary: '#ffffff',
         bg: '#0d0221',
         header: '#261447',
         particles: true,
