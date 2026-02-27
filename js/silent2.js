@@ -175,28 +175,26 @@ window.addEventListener('load', () => {
     }, 800);
 });
 
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
     const loader = document.getElementById('loader-wrapper');
     const tipDisplay = document.getElementById('loader-tip');
 
-    const tips = [
-        "Pro Tip: Press '`' to instantly redirect to safety.",
-        "Loading Ghost Signal protocol...",
-        "Bypassing educational restrictions...",
-        "Encrypting session data...",
-        "Did you know? You can change your tab icon in settings.",
-        "Establishing secure tunnel...",
-        "Cleaning browser history traces...",
-        "Optimizing for Chromebook performance...",
-        "Loading stealth assets...",
-        "Ready to stay silent?"
-    ];
+    try {
+        // Fetch the tips from your new JSON file
+        const response = await fetch('/json/quotes.json');
+        const tips = await response.json();
 
-    // Pick a random tip
-    const randomTip = tips[Math.floor(Math.random() * tips.length)];
-    if (tipDisplay) tipDisplay.textContent = randomTip;
+        // Pick a random tip from the JSON array
+        const randomTip = tips[Math.floor(Math.random() * tips.length)];
+        if (tipDisplay) tipDisplay.textContent = randomTip;
 
-    // Hide the loader after a short delay
+    } catch (e) {
+        // Fallback tip if the JSON fails to load
+        if (tipDisplay) tipDisplay.textContent = "Protocol Initialized.";
+        console.error("Tips JSON failed to load:", e);
+    }
+
+    // Hide the loader after a short delay for smooth transition
     setTimeout(() => {
         loader.classList.add('loader-hidden');
     }, 800); 
