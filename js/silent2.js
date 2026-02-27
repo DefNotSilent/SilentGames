@@ -1,5 +1,5 @@
 /**
- * NightByte Unified Script
+ * SilentGames Unified Script
  * Features: Persistent Themes, Smooth Particles, Privacy Tools, Update System
  */
 
@@ -161,24 +161,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('nav-links');
 
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', () => {
-            // Toggle the 'active' class on the links
-            navLinks.classList.toggle('active');
-            
-            // Optional: Change icon to an "X" when open
-            const icon = hamburger.querySelector('i');
-            if (navLinks.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
+hamburger.addEventListener('click', () => {
+    // Toggle the classes
+    navLinks.classList.toggle('show');
+    hamburger.classList.toggle('active');
+    
+    // Optional: Switch icon from Bars to X
+    const icon = hamburger.querySelector('i');
+    if (navLinks.classList.contains('show')) {
+        icon.classList.replace('fa-bars', 'fa-times');
+    } else {
+        icon.classList.replace('fa-times', 'fa-bars');
     }
 });
 
+// Close menu if a link is clicked
+document.querySelectorAll('#nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('show');
+        hamburger.classList.remove('active');
+        hamburger.querySelector('i').classList.replace('fa-times', 'fa-bars');
+    });
+});
     // Toggle Panel
     openSettings?.addEventListener('click', () => {
         settingsPanel.classList.toggle('open');
