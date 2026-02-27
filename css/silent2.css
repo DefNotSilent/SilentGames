@@ -652,7 +652,7 @@ footer {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: var(--bg-color); /* Correctly link default bg */
+    background: var(--bg-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -661,49 +661,44 @@ footer {
 }
 
 .spinner {
-    /* Was 60px, now 90px for more presence */
-    width: 90px;
-    height: 90px;
+    width: 100px; /* Slightly wider */
+    height: 100px;
     
-    /* Slightly thicker border to match the larger size */
-    border: 5px solid rgba(255, 0, 85, 0.1);
-    
-    /* Matches your primary-color */
+    /* Much thicker border for a bold look */
+    border: 10px solid rgba(255, 0, 85, 0.1); 
     border-left-color: var(--primary-color);
     
     border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 25px;
+    animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite; /* Smoother easing */
+    margin: 0 auto 30px;
     
-    /* Glow effect matching the theme */
-    box-shadow: 0 0 20px var(--primary-color);
+    /* Heavier glow to match thickness */
+    box-shadow: 0 0 30px var(--primary-color);
 }
 
 .loader-text {
-    /* Use the primary theme color for text */
     color: var(--primary-color);
-    
     font-family: 'Fredoka', sans-serif;
-    font-weight: 700; /* Bold for "initializing" */
-    
-    /* Removed heavy letter-spacing, set to small visual buffer */
+    font-weight: 700;
     letter-spacing: 1px;
     
-    font-size: 1.2rem; /* Slightly larger text */
-    text-shadow: 0 0 10px var(--primary-color);
-    margin: 0 0 10px 0;
+    /* Bigger text size */
+    font-size: 2rem; 
+    
+    text-shadow: 0 0 15px var(--primary-color);
+    margin: 0 0 15px 0;
+    text-transform: uppercase; /* Makes it look more official */
 }
 
 #loader-tip {
-    /* Make the tip color subtle but still on-theme */
     color: var(--secondary-color);
-    opacity: 0.7;
-    
-    font-size: 0.9rem;
+    opacity: 0.8;
+    font-size: 1.1rem; /* Scaled up to match title */
     font-family: 'Fredoka', sans-serif;
     font-weight: 400;
-    max-width: 300px;
-    margin-top: 5px;
+    max-width: 400px;
+    margin-top: 10px;
+    line-height: 1.2;
 }
 
 .loader-content {
