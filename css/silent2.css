@@ -683,6 +683,16 @@ footer {
     text-shadow: 0 0 10px #ff0055;
 }
 
+#loader-tip {
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.5); /* Faded white */
+    font-size: 0.85rem;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 400;
+    max-width: 250px;
+    line-height: 1.4;
+}
+
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
