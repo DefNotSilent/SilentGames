@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silent Games - Updates</title>
+<link rel="stylesheet" href="/css/silent2.css">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script src="randomSentence.js"></script>
+  <script src="/js/cursors.js"></script>
+  <script src="/js/index.js"></script>
+   <script src="/js/tabdisguise.js"></script>
+  <script src="/js/panic.js"></script>
+  <script src="/js/themes.js"></script>
+  <script src="/js/tabconfirm.js"></script>
+  <script src="/js/usesettings.js"></script>
+
+  <style>
+        /* CSS VARIABLES - Matches your Ghost Signal defaults */
+        :root {
+            --shadow: 0 0 15px rgba(255, 0, 85, 0.3);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styling */
+        .contact-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .version-badge {
+            background: var(--primary-color);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .contact-header h2 {
+            font-size: 2.5rem;
+            margin: 15px 0;
+            text-shadow: var(--shadow);
+        }
+
+        .contact-header p {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Layout Grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 40px;
+        }
+
+        /* Form Styling */
+        .contact-form {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            outline: none;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: 0.3s ease;
+        }
+
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
+        }
+
+        .game-btn {
+            width: 100%;
+            background: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .game-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        /* Sidebar Info Cards */
+        .info-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .info-card:hover {
+            border-color: var(--primary-color);
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .info-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            text-shadow: var(--shadow);
+        }
+
+        .info-card span {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .info-card p {
+            margin: 5px 0 0 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 850px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-header h2 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+
+
+   <div id="loader-wrapper">
+    <div class="loader-content">
+        <div class="spinner"></div>
+        <h1 class="loader-text">Page Loading</h1>
+        <p id="loader-tip"></p>
+    </div>
+</div>
+
+  <header>
+  <h1>Silent Games</h1>
+  <nav>
+    <div id="nav-links">
+      <a href="/"><i class="fas fa-home"></i>Home</a>
+      <a href="/pages/lausd.html"><i class="fas fa-gamepad"></i>Games</a>
+      <a href="/pages/u.html"><i class="fa-solid fa-list"></i>Updates</a>
+      <a href="/pages/c.html"><i class="fa-solid fa-circle-user"></i>Credits</a>
+      <a href="/pages/contact.html"><i class="fas fa-info-circle"></i>Contact</a>
+    </div>
+    <div id="hamburger"><i class="fas fa-bars"></i></div>
+  </nav>
+</header>
+
+    <div id="particles-js"></div>
+
+
+ <main>
+        <div class="contact-header">
+            <span class="version-badge">Secure Line</span>
+            <h2>Transmission Portal</h2>
+            <p>Send a signal to the developers. All transmissions are end-to-end encrypted.</p>
+        </div>
+
+        <div class="contact-grid">
+            <form class="contact-form" id="contact-form">
+                <div class="input-group">
+                    <label>Alias / Codename</label>
+                    <input type="text" id="alias" placeholder="Ghost_User_01" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Transmission Type</label>
+                    <select id="type">
+                        <option value="request">Game Request</option>
+                        <option value="bug">Bug Report</option>
+                        <option value="mirror">Domain Mirror Request</option>
+                        <option value="other">General Feedback</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Encrypted Message</label>
+                    <textarea id="message" rows="6" placeholder="Type your secure message here..." required></textarea>
+                </div>
+
+                <button type="submit" class="game-btn" id="submit-btn">SEND SIGNAL</button>
+            </form>
+
+            <div class="contact-info">
+                <a href="#" class="info-card">
+                    <i class="fab fa-discord"></i>
+                    <div>
+                        <span>Discord Community</span>
+                        <p>Join the secure hideout</p>
+                    </div>
+                </a>
+
+                <a href="#" class="info-card">
+                    <i class="fab fa-github"></i>
+                    <div>
+                        <span>Source Code</span>
+                        <p>Contribute on GitHub</p>
+                    </div>
+                </a>
+
+                <div class="info-card">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <span>Direct Email</span>
+                        <p>silentgames@proton.me</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; border-radius: 15px; background: rgba(255,0,85,0.05); border: 1px dashed var(--primary-color);">
+                    <small style="color: var(--primary-color); text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 5px;">Notice</small>
+                    <small style="color: rgba(255,255,255,0.5);">Messages are processed through our secure relay. Response times may vary depending on admin surveillance levels.</small>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // FORM SUBMISSION LOGIC
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const btn = document.getElementById('submit-btn');
+    const alias = document.getElementById('alias').value;
+    const type = document.getElementById('type').value;
+    const message = document.getElementById('message').value;
+    
+    // The Webhook URL from Discord
+    const webhookURL = "https://discord.com/api/webhooks/1476761176829595688/AwK92g-FOHFMoO6BFAMZvA4w21kC_B6AKppeCj4EAnWxUZMPXLOOWfCNkH27i09p_WYO";
+
+    // 1. UI Animation: Encrypting
+    btn.disabled = true;
+    btn.textContent = "ENCRYPTING SIGNAL...";
+    btn.style.background = "#444";
+
+    // 2. Prepare the Data for Discord
+    const data = {
+        username: "Silent Signal Relay",
+        embeds: [{
+            title: `New Transmission: ${type.toUpperCase()}`,
+            color: 16711765, // This is hex #ff0055 in decimal
+            fields: [
+                { name: "Sender Alias", value: alias, inline: true },
+                { name: "Category", value: type, inline: true },
+                { name: "Message", value: message }
+            ],
+            footer: { text: "Ghost Signal Protocol v2.1" },
+            timestamp: new Date()
+        }]
+    };
+
+    // 3. Send the Data
+    fetch(webhookURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(() => {
+        // 4. Success State
+        btn.textContent = "SIGNAL RECEIVED, " + alias.toUpperCase();
+        btn.style.background = "#2ecc71"; 
+        btn.style.boxShadow = "0 0 20px #2ecc71";
+        document.getElementById('contact-form').reset();
+    })
+    .catch((err) => {
+        // 5. Error State
+        btn.textContent = "TRANSMISSION FAILED";
+        btn.style.background = "#e74c3c";
+        console.error(err);
+    })
+    .finally(() => {
+        // Revert button after 4 seconds
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = "SEND SIGNAL";
+            btn.style.background = "";
+            btn.style.boxShadow = "";
+        }, 4000);
+    });
+});
+    </script>
+
+
+
+
+
+
+
+  <!-- Settings Panel -->
+<div id="settings-panel">
+  <h2>Settings</h2>
+  <div class="setting-item">
+    <label for="theme-selector">Choose Theme:</label>
+    <select id="theme-selector">
+</select>
+
+  </div>
+  <div class="setting-item">
+    <label for="particles-toggle">Enable Particle Effects:</label>
+    <input type="checkbox" id="particles-toggle" checked>
+  </div>
+  <div class="setting-item">
+    <label for="particle-speed">Particle Animation Speed:</label>
+    <input type="range" id="particle-speed" min="1" max="20" value="9">
+  </div>
+  <div class="setting-item">
+        <label>Privacy Tools</label>
+        <button id="abdisguise" style="background: #333; color: white; border: none;">Open in about:blank</button>
+        <button onclick="datalink()" style="background: #333; color: white; border: none;">Data Link</button>
+    </div>
+
+    <div class="setting-item">
+        <label>Tab Disguise</label>
+        <select id="faviconDropdown">
+            <option disabled selected>Select Disguise</option>
+        </select>
+    </div>
+
+    <div class="setting-item">
+        <label>Panic Redirect</label>
+        <select id="tabselect">
+            <option value="https://classroom.google.com">Google Classroom</option>
+            <option value="https://canvas.instructure.com">Canvas</option>
+            <option value="https://google.com">Google</option>
+        </select>
+        <button onclick="confirmtab()" style="background: var(--primary-color); color: black; border: none; font-weight: bold;">Confirm Panic Site</button>
+    </div>
+
+    <div class="setting-item">
+        <label>Panic Keybind</label>
+        <button id="setkeybind" style="background: #444; color: white; border: none;">Set Keybind</button>
+        <div id="output" style="color: #aaa; font-size: 12px; margin-top: 5px; text-align: center;">Current key: none</div>
+    </div>
+  <button id="reset-settings">Reset to Default</button>
+</div>
+
+<!-- Small Settings Button -->
+<button id="open-settings"><i class="fas fa-cog"></i></button>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="/js/silent2.js"></script>
+       <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const setkeybind = document.getElementById('setkeybind');
+            const output = document.getElementById('output');
+            let keybind = localStorage.getItem('keybind') || 'none'; 
+    
+            output.textContent = `Current key: ${keybind}`;
+    
+            setkeybind.addEventListener('click', () => {
+                output.textContent = 'Listening...';
+                document.removeEventListener('keydown', keydownHandler);
+                document.addEventListener('keydown', keydownHandler);
+            });
+    
+            function keydownHandler(event) {
+                keybind = event.key;
+                localStorage.setItem('keybind', keybind);
+                output.textContent = `Selected Key: ${keybind}`;
+                document.removeEventListener('keydown', keydownHandler);
+                location.reload()
+            }
+        });
+    </script>
+    
+    <script>
+       // Define global variables
+var win;
+
+// 1. About:Blank disguise Function
+function openAbdisguise() {
+    const url = window.location.href;
+    if (win) {
+        win.focus();
+    } else {
+        win = window.open();
+        win.document.body.style.margin = '0';
+        win.document.body.style.height = '100vh';
+        var iframe = win.document.createElement('iframe');
+        Object.assign(iframe.style, {
+            border: 'none', width: '100%', height: '100%', margin: '0'
+        });
+        iframe.src = url;
+        win.document.body.appendChild(iframe);
+        window.location.replace("https://www.khanacademy.org");
+    }
+}
+
+// 2. Data URL Link Function (NightByte Premium Style)
+function datalink() {
+    const html = `<!DOCTYPE html><html><head><title>Home | Schoology</title><style>body,html{margin:0;padding:0;height:100%;overflow:hidden;}iframe{border:none;width:100%;height:100%;}</style></head><body><iframe src="${window.location.href}"></iframe></body></html>`;
+    const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
+
+    // Get current theme color from NightByte variables
+    const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ffffff';
+
+    // Create Modal Overlay (Heavy Blur)
+    const modal = document.createElement('div');
+    Object.assign(modal.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(15px)',
+        webkitBackdropFilter: 'blur(15px)', zIndex: '1000000', 
+        display: 'flex', justifyContent: 'center', alignItems: 'center',
+        opacity: '0', transition: 'opacity 0.3s ease'
+    });
+
+    // Content Box (Glassmorphism)
+    const contentBox = document.createElement('div');
+    Object.assign(contentBox.style, {
+        backgroundColor: 'rgba(20, 20, 20, 0.8)',
+        padding: '40px', borderRadius: '24px',
+        border: `1px solid rgba(255, 255, 255, 0.1)`,
+        boxShadow: `0 25px 50px rgba(0,0,0,0.5), 0 0 15px ${themeColor}22`,
+        position: 'relative', width: '90%', maxWidth: '500px',
+        textAlign: 'center', fontFamily: "'Fredoka', sans-serif", color: '#fff',
+        transform: 'scale(0.9)', transition: 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+    });
+
+    contentBox.innerHTML = `
+        <button id="close-modal" style="position:absolute; top:20px; right:20px; background:none; border:none; color:#fff; font-size:24px; cursor:pointer; opacity:0.5; transition:0.2s;">&times;</button>
+        <div style="width: 50px; height: 50px; background: ${themeColor}; color: #000; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 24px; box-shadow: 0 0 20px ${themeColor}66;">
+            <i class="fa-solid fa-link"></i>
+        </div>
+        <h2 style="color:#fff; font-size: 24px; margin-bottom:8px; letter-spacing: -0.5px;">Stealth Link Ready</h2>
+        <p style="color: rgba(255,255,255,0.5); font-size:15px; margin-bottom:25px;">Copy this link to open a stealth tab that stays hidden from history.</p>
+        
+        <div style="background: rgba(0,0,0,0.4); padding: 8px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); display:flex; gap:10px; align-items: center;">
+            <input type="text" id="data-url-input" value="${dataUrl}" readonly style="flex:1; padding:10px 15px; border:none; background:transparent; color:#fff; font-size:14px; outline:none; font-family: monospace; opacity: 0.8;">
+            <button id="copy-data-btn" style="padding:12px 25px; border-radius:10px; border:none; background:${themeColor}; color:#000; font-weight:bold; cursor:pointer; font-family: 'Fredoka', sans-serif; transition: 0.3s; white-space: nowrap;">Copy Link</button>
+        </div>
+    `;
+
+    modal.appendChild(contentBox);
+    document.body.appendChild(modal);
+
+    // Trigger Animation
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        contentBox.style.transform = 'scale(1)';
+    }, 10);
+
+    // Functionality
+    const closeModal = () => {
+        modal.style.opacity = '0';
+        contentBox.style.transform = 'scale(0.9)';
+        setTimeout(() => document.body.removeChild(modal), 300);
+    };
+
+    document.getElementById('close-modal').onclick = closeModal;
+    modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+    
+    const copyBtn = document.getElementById('copy-data-btn');
+    copyBtn.onclick = () => {
+        const input = document.getElementById('data-url-input');
+        input.select();
+        document.execCommand('copy');
+        copyBtn.textContent = 'Copied!';
+        copyBtn.style.boxShadow = `0 0 20px ${themeColor}`;
+        setTimeout(() => { 
+            copyBtn.textContent = 'Copy Link'; 
+            copyBtn.style.boxShadow = 'none';
+        }, 2000);
+    };
+
+    // Close Modal hover effect
+    const closeX = document.getElementById('close-modal');
+    closeX.onmouseover = () => closeX.style.opacity = '1';
+    closeX.onmouseout = () => closeX.style.opacity = '0.5';
+}
+
+// 3. Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    const abBtn = document.querySelector('#abdisguise');
+    if (abBtn) abBtn.onclick = openAbdisguise;
+});
+    </script>
+
+
+  <script src="/js/script.js"></script>
+
+</body>
+</html>
