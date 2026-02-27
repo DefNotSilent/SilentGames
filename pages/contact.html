@@ -217,22 +217,22 @@
             <form class="contact-form" id="contact-form">
                 <div class="input-group">
                     <label>Alias / Codename</label>
-                    <input type="text" id="alias" placeholder="Ghost_User_01" required>
+                    <input type="text" id="alias" placeholder="Enter Name" required>
                 </div>
                 
                 <div class="input-group">
                     <label>Transmission Type</label>
                     <select id="type">
-                        <option value="request">Game Request</option>
-                        <option value="bug">Bug Report</option>
+                        <option value="game-request">Game Request</option>
+                        <option value="bug-report">Bug Report</option>
                         <option value="mirror">Domain Mirror Request</option>
                         <option value="other">General Feedback</option>
                     </select>
                 </div>
 
                 <div class="input-group">
-                    <label>Encrypted Message</label>
-                    <textarea id="message" rows="6" placeholder="Type your secure message here..." required></textarea>
+                    <label>Message</label>
+                    <textarea id="message" rows="6" placeholder="Type your message here..." required></textarea>
                 </div>
 
                 <button type="submit" class="game-btn" id="submit-btn">SEND SIGNAL</button>
@@ -242,12 +242,12 @@
                 <a href="#" class="info-card">
                     <i class="fab fa-discord"></i>
                     <div>
-                        <span>Discord Community</span>
-                        <p>Join the secure hideout</p>
+                        <span>Discord Community (SOON)</span>
+                        <p>Join the secure hideout soon</p>
                     </div>
                 </a>
 
-                <a href="#" class="info-card">
+                <a href="https://github.com/DefNotSilent/SilentGames" class="info-card">
                     <i class="fab fa-github"></i>
                     <div>
                         <span>Source Code</span>
@@ -259,7 +259,7 @@
                     <i class="fas fa-envelope"></i>
                     <div>
                         <span>Direct Email</span>
-                        <p>silentgames@proton.me</p>
+                        <p>refinesilent@gmail.com</p>
                     </div>
                 </div>
 
@@ -286,7 +286,7 @@
 
     // 1. UI Animation: Encrypting
     btn.disabled = true;
-    btn.textContent = "ENCRYPTING SIGNAL...";
+    btn.textContent = "SENDING SIGNAL...";
     btn.style.background = "#444";
 
     // 2. Prepare the Data for Discord
