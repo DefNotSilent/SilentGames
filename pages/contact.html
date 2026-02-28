@@ -61,12 +61,49 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* Layout Grid */
+        /* Layout Grid 
         .contact-grid {
             display: grid;
             grid-template-columns: 1.4fr 1fr;
             gap: 40px;
-        }
+        } */
+
+        /* Force the grid layout */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr; /* Adjusts the width of form vs info */
+    gap: 40px;
+    align-items: start;
+    margin-top: 30px;
+}
+
+/* Mobile Fix: Stack them when the screen is too small */
+@media (max-width: 850px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Clean up the notice box styles */
+.notice-box {
+    margin-top: 30px; 
+    padding: 20px; 
+    border-radius: 15px; 
+    background: rgba(255,0,85,0.05); 
+    border: 1px dashed var(--primary-color);
+}
+
+.notice-label {
+    color: var(--primary-color); 
+    text-transform: uppercase; 
+    font-weight: bold; 
+    display: block; 
+    margin-bottom: 5px;
+}
+
+.notice-text {
+    color: rgba(255,255,255,0.5);
+}
 
         /* Form Styling */
         .contact-form {
@@ -220,75 +257,75 @@
     <div id="particles-js"></div>
 
 
- <main>
-        <div class="contact-header">
-            <span class="version-badge">Secure Line</span>
-            <h2>Message Portal</h2>
-            <p>Send a message to the developer(s). All messages are end-to-end encrypted.</p>
-        </div>
-
-        <div class="contact-grid">
-            <form id="contact-form" action="https://formspree.io/f/maqdkpka" method="POST">
-    <div class="input-group">
-        <label>Alias / Codename</label>
-        <input type="text" name="Alias" id="alias" placeholder="Ghost_User_01" required>
-    </div>
-    
-    <div class="input-group">
-        <label>Transmission Type</label>
-        <select name="Category" id="type">
-            <option value="Game Request">Game Request</option>
-            <option value="Bug Report">Bug Report</option>
-            <option value="Mirror Request">Domain Mirror Request</option>
-            <option value="General Feedback">General Feedback</option>
-        </select>
+<main>
+    <div class="contact-header">
+        <span class="version-badge">Secure Line</span>
+        <h2>Message Portal</h2>
+        <p>Send a message to the developer(s). All messages are end-to-end encrypted.</p>
     </div>
 
-    <div class="input-group">
-        <label>Encrypted Message</label>
-        <div class="terminal-container">
-            <span class="terminal-prefix"></span>
-            <textarea name="Message" id="message" rows="6" placeholder="Awaiting input..." required></textarea>
-        </div>
-    </div>
+    <div class="contact-grid">
+        <form id="contact-form" action="https://formspree.io/f/maqdkpka" method="POST">
+            <div class="input-group">
+                <label>Alias / Codename</label>
+                <input type="text" name="Alias" id="alias" placeholder="Ghost_User_01" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Transmission Type</label>
+                <select name="Category" id="type">
+                    <option value="Game Request">Game Request</option>
+                    <option value="Bug Report">Bug Report</option>
+                    <option value="Mirror Request">Domain Mirror Request</option>
+                    <option value="General Feedback">General Feedback</option>
+                </select>
+            </div>
 
-    <button type="submit" class="game-btn" id="submit-btn">SEND SIGNAL</button>
-</form>
-          
-            <div class="contact-info">
-                <a href="#" class="info-card">
-                    <i class="fab fa-discord"></i>
-                    <div>
-                        <span>Discord Community (SOON)</span>
-                        <p>Join the secure hideout soon</p>
-                    </div>
-                </a>
-
-                <a href="https://github.com/DefNotSilent/SilentGames" class="info-card">
-                    <i class="fab fa-github"></i>
-                    <div>
-                        <span>Source Code</span>
-                        <p>Contribute on GitHub</p>
-                    </div>
-                </a>
-
-                <div class="info-card">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <span>Direct Email</span>
-                        <p>refinesilent@gmail.com</p>
-                    </div>
-                </div>
-
-                <div style="margin-top: 30px; padding: 20px; border-radius: 15px; background: rgba(255,0,85,0.05); border: 1px dashed var(--primary-color);">
-                    <small style="color: var(--primary-color); text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 5px;">Notice</small>
-                    <small style="color: rgba(255,255,255,0.5);">Messages are processed through our secure relay. Response times may vary depending on admin surveillance levels.</small>
+            <div class="input-group">
+                <label>Encrypted Message</label>
+                <div class="terminal-container">
+                    <span class="terminal-prefix">></span>
+                    <textarea name="Message" id="message" rows="6" placeholder="Awaiting input..." required></textarea>
                 </div>
             </div>
+
+            <button type="submit" class="game-btn" id="submit-btn">SEND SIGNAL</button>
+        </form>
+          
+        <div class="contact-info">
+            <a href="#" class="info-card">
+                <i class="fab fa-discord"></i>
+                <div>
+                    <span>Discord Community (SOON)</span>
+                    <p>Join the secure hideout soon</p>
+                </div>
+            </a>
+
+            <a href="https://github.com/DefNotSilent/SilentGames" class="info-card" target="_blank">
+                <i class="fab fa-github"></i>
+                <div>
+                    <span>Source Code</span>
+                    <p>Contribute on GitHub</p>
+                </div>
+            </a>
+
+            <div class="info-card">
+                <i class="fas fa-envelope"></i>
+                <div>
+                    <span>Direct Email</span>
+                    <p>refinesilent@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="notice-box">
+                <small class="notice-label">Notice</small>
+                <small class="notice-text">Messages are processed through our secure relay. Response times may vary depending on admin surveillance levels.</small>
+            </div>
         </div>
-     </div>
-  </main>
-<script>
+    </div>
+</main>
+
+  <script>
     const form = document.getElementById('contact-form');
 const btn = document.getElementById('submit-btn');
 const COOLDOWN_TIME = 60000; // 60 seconds
