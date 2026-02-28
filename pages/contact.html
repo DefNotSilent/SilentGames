@@ -61,30 +61,52 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* Layout Grid 
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            gap: 40px;
-        } */
-
-        /* Force the grid layout */
+        /* Layout Fix */
 .contact-grid {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr; /* Adjusts the width of form vs info */
+    grid-template-columns: 1.2fr 1fr; /* Form on left, Info on right */
     gap: 40px;
-    align-items: start;
-    margin-top: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-/* Mobile Fix: Stack them when the screen is too small */
-@media (max-width: 850px) {
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
+/* Form Container */
+.contact-form {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
 }
 
-/* Clean up the notice box styles */
+/* Terminal Message Box */
+.terminal-container {
+    display: flex;
+    background: #000;
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.terminal-prefix {
+    color: var(--primary-color);
+    margin-right: 10px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.terminal-container textarea {
+    background: transparent;
+    border: none;
+    color: #fff;
+    width: 100%;
+    outline: none;
+    resize: none;
+    font-family: 'Courier New', monospace;
+}
+
+/* Notice Box Helper */
 .notice-box {
     margin-top: 30px; 
     padding: 20px; 
@@ -105,14 +127,12 @@
     color: rgba(255,255,255,0.5);
 }
 
-        /* Form Styling */
-        .contact-form {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-        }
+/* Mobile Fix */
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
         .btn-locked {
     cursor: not-allowed !important;
@@ -265,7 +285,7 @@
     </div>
 
     <div class="contact-grid">
-        <form id="contact-form" action="https://formspree.io/f/maqdkpka" method="POST">
+        <form id="contact-form" action="https://formspree.io/f/maqdkpka" method="POST" class="contact-form">
             <div class="input-group">
                 <label>Alias / Codename</label>
                 <input type="text" name="Alias" id="alias" placeholder="Ghost_User_01" required>
@@ -284,7 +304,7 @@
             <div class="input-group">
                 <label>Encrypted Message</label>
                 <div class="terminal-container">
-                    <span class="terminal-prefix">></span>
+                    <span class="terminal-prefix"></span>
                     <textarea name="Message" id="message" rows="6" placeholder="Awaiting input..." required></textarea>
                 </div>
             </div>
@@ -301,7 +321,7 @@
                 </div>
             </a>
 
-            <a href="https://github.com/DefNotSilent/SilentGames" class="info-card" target="_blank">
+            <a href="https://github.com/DefNotSilent/SilentGames" class="info-card">
                 <i class="fab fa-github"></i>
                 <div>
                     <span>Source Code</span>
