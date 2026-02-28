@@ -1236,9 +1236,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   <script src="/js/script.js"></script>
-<script>function showUpdatePopup() {
+<script>
+  function showUpdatePopup() {
     // Check if user has already seen this specific version update
-    const updateVersion = "v2.1_silent_games_fix"; 
+    const updateVersion = "v2.1_silent_games_fixed"; 
     if (localStorage.getItem("seenUpdate") === updateVersion) return;
 
     // Get current theme color for the neon accents
@@ -1248,75 +1249,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.createElement('div');
     Object.assign(overlay.style, {
         position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', backdropFilter: 'blur(10px)',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)', backdropFilter: 'blur(12px)',
         zIndex: '2000000', display: 'flex', justifyContent: 'center', alignItems: 'center',
         opacity: '0', transition: 'opacity 0.4s ease'
     });
 
-    // 2. Notification Box
+    // 2. Notification Box (WIDER VERSION)
     const box = document.createElement('div');
     Object.assign(box.style, {
-        backgroundColor: 'rgba(15, 15, 15, 0.85)',
-        padding: '40px', borderRadius: '24px',
+        backgroundColor: 'rgba(15, 15, 15, 0.9)',
+        padding: '50px', borderRadius: '28px',
         border: `1px solid rgba(255, 255, 255, 0.1)`,
-        boxShadow: `0 30px 60px rgba(0,0,0,0.6), 0 0 20px ${themeColor}15`,
-        width: '90%', maxWidth: '450px', textAlign: 'center',
+        boxShadow: `0 40px 80px rgba(0,0,0,0.8), 0 0 30px ${themeColor}20`,
+        width: '90%', 
+        maxWidth: '600px', // Increased width here
+        textAlign: 'center',
         fontFamily: "'Fredoka', sans-serif", color: '#fff',
-        transform: 'translateY(20px)', transition: 'transform 0.4s ease'
+        transform: 'translateY(30px)', transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
     });
 
     box.innerHTML = `
-    <div style="font-size: 55px; margin-bottom: 10px; filter: drop-shadow(0 0 10px ${themeColor});">🚀</div>
+    <div style="font-size: 65px; margin-bottom: 15px; filter: drop-shadow(0 0 15px ${themeColor});">🚀</div>
     
-    <div style="display: inline-block; background: ${themeColor}22; color: ${themeColor}; border: 1px solid ${themeColor}; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">
-        Version 2.1 Deployment
+    <div style="display: inline-block; background: ${themeColor}22; color: ${themeColor}; border: 1px solid ${themeColor}; padding: 5px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">
+        System Update: v2.1 Ready
     </div>
 
-    <h2 style="color: ${themeColor}; text-shadow: 0 0 15px ${themeColor}; margin: 0 0 10px 0; font-size: 32px; font-family: 'Fredoka', sans-serif;">New Update!</h2>
-    <p style="font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 25px;">Silent Games has been optimized.</p>
+    <h2 style="color: ${themeColor}; text-shadow: 0 0 20px ${themeColor}; margin: 0 0 10px 0; font-size: 38px; font-family: 'Fredoka', sans-serif;">New Update!</h2>
+    <p style="font-size: 18px; color: rgba(255,255,255,0.7); margin-bottom: 30px;">Silent Games has been optimized.</p>
     
-    <div style="text-align: left; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 30px;">
-        <ul style="list-style: none; padding: 0; margin: 0; color: rgba(255,255,255,0.9); font-size: 15px; line-height: 2;">
-            <li><span style="color: ${themeColor};">✦</span> <b>Secure Comms:</b> Transmission Portal (Contacts) now live.</li>
-            <li><span style="color: ${themeColor};">✦</span> <b>10+ Games:</b> Added More Games To Cure Boredem.</li>
-            <li><span style="color: ${themeColor};">✦</span> <b>Soft Reset:</b> Settings now revert without refreshing.</li>
-            <li><span style="color: ${themeColor};">✦</span> <b>More In Updates</b> Check More Updates In The Updates Page.</li>
-        </ul>
+    <div style="text-align: left; background: rgba(0,0,0,0.4); padding: 25px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 35px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div style="color: rgba(255,255,255,0.9); font-size: 15px; line-height: 1.6;">
+            <span style="color: ${themeColor};">✦</span> <b>Secure Comms:</b><br><small style="opacity:0.7">Contacts now live.</small>
+        </div>
+        <div style="color: rgba(255,255,255,0.9); font-size: 15px; line-height: 1.6;">
+            <span style="color: ${themeColor};">✦</span> <b>20+ Games:</b><br><small style="opacity:0.7">New boredome cures.</small>
+        </div>
+        <div style="color: rgba(255,255,255,0.9); font-size: 15px; line-height: 1.6;">
+            <span style="color: ${themeColor};">✦</span> <b>Soft Reset:</b><br><small style="opacity:0.7">Instant settings.</small>
+        </div>
+        <div style="color: rgba(255,255,255,0.9); font-size: 15px; line-height: 1.6;">
+            <span style="color: ${themeColor};">✦</span> <b>More In Updates Page:</b><br><small style="opacity:0.7">Check Updates For More.</small>
+        </div>
     </div>
 
     <button id="close-update" style="
-        width: 100%; padding: 16px; border-radius: 12px; border: none; 
+        width: 100%; padding: 18px; border-radius: 15px; border: none; 
         background: ${themeColor}; color: #000; font-weight: bold; 
-        font-size: 18px; cursor: pointer; transition: all 0.3s ease;
-        box-shadow: 0 10px 20px ${themeColor}33;
+        font-size: 20px; cursor: pointer; transition: all 0.3s ease;
+        box-shadow: 0 10px 25px ${themeColor}44;
         font-family: 'Fredoka', sans-serif;
         text-transform: uppercase;
-        letter-spacing: 1px;
-    " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 25px ${themeColor}55'" 
-       onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 20px ${themeColor}33'">
+        letter-spacing: 2px;
+    " onmouseover="this.style.transform='translateY(-5px) scale(1.02)'; this.style.boxShadow='0 20px 35px ${themeColor}66'" 
+       onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 25px ${themeColor}44'">
         Initialize Access
     </button>
-`;
-
-  /* box.innerHTML = `
-        <div style="font-size: 50px; margin-bottom: 20px;">🚀</div>
-        <h2 style="color: ${themeColor}; text-shadow: 0 0 10px ${themeColor}; margin-bottom: 10px; font-size: 28px;">New Update!</h2>
-        <p style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Silent Games Just Got Better 🎮</p>
-        
-        <ul style="text-align: left; list-style: none; padding: 0; margin: 0 auto 30px; display: inline-block; color: rgba(255,255,255,0.7); line-height: 1.8;">
-            <li>✨ <b>New Games:</b> Added 10+ fun games.</li>
-            <li>🎨 <b>Custom Themes:</b> Full Silent Games palette support.</li>
-            <li>⚡ <b>Speed:</b> Faster loading with SPA iframes.</li>
-            <li>🛡️ <b>Privacy:</b> Enhanced Stealth & Panic modes.</li>
-        </ul>
-
-        <button id="close-update" style="
-            width: 100%; padding: 15px; border-radius: 12px; border: none; 
-            background: ${themeColor}; color: #000; font-weight: bold; 
-            font-size: 16px; cursor: pointer; transition: 0.3s;
-            box-shadow: 0 5px 15px ${themeColor}44;
-        ">Got it!</button>
-    `; */
+    `;
 
     overlay.appendChild(box);
     document.body.appendChild(overlay);
@@ -1330,8 +1319,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close logic
     document.getElementById('close-update').onclick = () => {
         overlay.style.opacity = '0';
-        box.style.transform = 'translateY(20px)';
-        localStorage.setItem("seenUpdate", updateVersion); // Save that they saw it
+        box.style.transform = 'translateY(30px) scale(0.95)';
+        localStorage.setItem("seenUpdate", updateVersion);
         setTimeout(() => document.body.removeChild(overlay), 400);
     };
 }
