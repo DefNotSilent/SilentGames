@@ -376,7 +376,7 @@ footer {
   transition: background 0.4s, color 0.4s;
 }
 
-/* Settings Panel */
+/* Settings Panel 
 #settings-panel {
   position: fixed;
   top: 0;
@@ -436,6 +436,127 @@ footer {
   border-radius: 10px;
   margin-top: 10px;
   cursor: pointer;
+} */
+
+/* Darkens background when settings are open */
+#settings-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 199;
+    display: none;
+}
+
+#settings-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9); /* Starts slightly smaller */
+    width: 90%;
+    max-width: 550px; /* Wider window */
+    height: auto;
+    max-height: 85vh;
+    background-color: #0d0221; /* Dark theme bg */
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 15px var(--primary-color)33;
+    padding: 0; /* Padding moved to body */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 200;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 12px;
+}
+
+#settings-panel.open {
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Window Title Bar */
+.window-header {
+    background: var(--primary-color);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #000;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.win-close {
+    background: rgba(0,0,0,0.2);
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 25px; height: 25px;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.window-body {
+    padding: 30px;
+    overflow-y: auto;
+    max-height: calc(85vh - 50px);
+}
+
+/* Sections */
+.setting-section {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.section-label {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    display: block;
+    opacity: 0.8;
+}
+
+/* UI Elements */
+.setting-item { margin-bottom: 15px; }
+.setting-item.horizontal { display: flex; justify-content: space-between; align-items: center; }
+
+.flex-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.input-row { display: flex; gap: 10px; }
+.confirm-btn { width: auto !important; margin: 0 !important; white-space: nowrap; }
+
+#settings-panel select, #settings-panel input {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+#settings-panel button {
+    background: #222;
+    color: white;
+    border: 1px solid #444;
+    transition: 0.3s;
+}
+
+#settings-panel button:hover {
+    border-color: var(--primary-color);
+    background: #2a2a2a;
+}
+
+#reset-settings {
+    background: var(--primary-color) !important;
+    color: black !important;
+    font-weight: bold;
 }
 
 /* Small Settings Button */
