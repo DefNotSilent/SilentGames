@@ -438,125 +438,125 @@ footer {
   cursor: pointer;
 } */
 
-/* Darkens background when settings are open */
+/* 1. The Dimmer Overlay */
 #settings-overlay {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    z-index: 199;
-    display: none;
+    backdrop-filter: blur(8px);
+    z-index: 9998; /* Just below the panel */
+    display: none; /* Controlled by JS */
 }
 
+/* 2. The Main Window */
 #settings-panel {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.9); /* Starts slightly smaller */
-    width: 90%;
-    max-width: 550px; /* Wider window */
-    height: auto;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important; /* Disables the old sidebar 'right' rule */
+    transform: translate(-50%, -50%) scale(0.9) !important;
+    
+    width: 95%;
+    max-width: 500px;
     max-height: 85vh;
-    background-color: #0d0221; /* Dark theme bg */
-    border: 1px solid var(--primary-color);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 15px var(--primary-color)33;
-    padding: 0; /* Padding moved to body */
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 200;
-    overflow: hidden;
+    
+    background-color: #0d0221 !important; /* Deep dark purple/black */
+    border: 1px solid var(--primary-color) !important;
+    border-radius: 16px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.9), 0 0 20px var(--primary-color)33;
+    
+    z-index: 9999 !important;
     opacity: 0;
     pointer-events: none;
-    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
+/* 3. The Open State */
 #settings-panel.open {
-    opacity: 1;
-    pointer-events: all;
-    transform: translate(-50%, -50%) scale(1);
+    opacity: 1 !important;
+    pointer-events: all !important;
+    transform: translate(-50%, -50%) scale(1) !important;
 }
 
-/* Window Title Bar */
+/* 4. Internal Layout */
 .window-header {
     background: var(--primary-color);
-    padding: 10px 20px;
+    padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #000;
-    font-family: monospace;
     font-weight: bold;
-}
-
-.win-close {
-    background: rgba(0,0,0,0.2);
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    border-radius: 4px;
-    width: 25px; height: 25px;
-    display: flex; align-items: center; justify-content: center;
+    font-family: monospace;
 }
 
 .window-body {
-    padding: 30px;
+    padding: 25px;
     overflow-y: auto;
-    max-height: calc(85vh - 50px);
+    color: white;
 }
 
-/* Sections */
+/* 5. Item Styling Fixes */
 .setting-section {
     background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
     padding: 15px;
-    border-radius: 10px;
     margin-bottom: 20px;
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.section-label {
-    text-transform: uppercase;
-    font-size: 11px;
-    letter-spacing: 1px;
-    color: var(--primary-color);
-    margin-bottom: 15px;
-    display: block;
-    opacity: 0.8;
+.setting-item {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-/* UI Elements */
-.setting-item { margin-bottom: 15px; }
-.setting-item.horizontal { display: flex; justify-content: space-between; align-items: center; }
+.setting-item.horizontal {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 
-.flex-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.setting-item label {
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
-.input-row { display: flex; gap: 10px; }
-.confirm-btn { width: auto !important; margin: 0 !important; white-space: nowrap; }
-
-#settings-panel select, #settings-panel input {
+#settings-panel select, 
+#settings-panel input[type="text"] {
+    width: 100%;
+    padding: 10px;
     background: #1a1a1a;
     border: 1px solid #333;
     color: white;
-    padding: 8px;
-    border-radius: 6px;
+    border-radius: 8px;
+    outline: none;
 }
 
 #settings-panel button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
     background: #222;
     color: white;
-    border: 1px solid #444;
-    transition: 0.3s;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 #settings-panel button:hover {
     border-color: var(--primary-color);
     background: #2a2a2a;
-}
-
-#reset-settings {
-    background: var(--primary-color) !important;
-    color: black !important;
-    font-weight: bold;
 }
 
 /* Small Settings Button */
