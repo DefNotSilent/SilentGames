@@ -1,13 +1,13 @@
 /**
- * SilentGames Unified Script v2.2
+ * SilentGames Unified Script v2.3
  * Features: Persistent Themes, Smooth Particles, Privacy Tools, Windowed Settings
- * Includes: Live Slider Value Display
+ * Includes: Live Slider Values for Velocity & Density
  */
 
 // --- CONFIGURATION & GLOBALS ---
 const STORAGE_KEY = 'nightbyte-settings';
-const UPDATE_VERSION = "v2.2_silent_games";
-var win; // For about:blank cloak
+const UPDATE_VERSION = "v2.3_silent_games";
+var win; 
 
 // --- 1. CORE UTILITIES ---
 
@@ -52,12 +52,9 @@ function setParticleOpacity(enabled) {
 function toggleSettings() {
     const panel = document.getElementById('settings-panel');
     const overlay = document.getElementById('settings-overlay');
-    
     if (!panel || !overlay) return;
 
-    const isOpen = panel.classList.contains('open');
-    
-    if (isOpen) {
+    if (panel.classList.contains('open')) {
         panel.classList.remove('open');
         overlay.style.display = 'none';
     } else {
@@ -71,6 +68,7 @@ function saveSettings() {
         theme: document.getElementById('theme-selector')?.value || "",
         particlesEnabled: document.getElementById('particles-toggle')?.checked ?? true,
         particleSpeed: document.getElementById('particle-speed')?.value || "9",
+        particleCount: document.getElementById('particle-count')?.value || "80", // NEW
         panicUrl: document.getElementById('tabselect')?.value || "https://classroom.google.com",
         customPanic: document.getElementById('custom-panic-input')?.value || ""
     };
@@ -83,133 +81,125 @@ function loadSettings() {
 
     const config = JSON.parse(saved);
     
-    const themeEl = document.getElementById('theme-selector');
-    const partToggle = document.getElementById('particles-toggle');
-    const speedInput = document.getElementById('particle-speed');
-    const speedVal = document.getElementById('speed-val'); // New number display
-    const panicSelect = document.getElementById('tabselect');
-    const customInput = document.getElementById('custom-panic-input');
+    // Sync Elements
+    const elements = {
+        'theme-selector': config.theme,
+        'particles-toggle': config.particlesEnabled,
+        'particle-speed': config.particleSpeed,
+        'speed-val': config.particleSpeed,
+        'particle-count': config.particleCount || "80",
+        'count-val': config.particleCount || "80",
+        'tabselect': config.panicUrl,
+        'custom-panic-input': config.customPanic
+    };
 
-    if (themeEl) themeEl.value = config.theme;
-    if (partToggle) partToggle.checked = config.particlesEnabled;
-    if (speedInput) speedInput.value = config.particleSpeed;
-    if (speedVal) speedVal.textContent = config.particleSpeed; // Sync text on load
-    if (panicSelect) panicSelect.value = config.panicUrl;
-    if (customInput) customInput.value = config.customPanic || "";
+    for (const [id, val] of Object.entries(elements)) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (el.type === 'checkbox') el.checked = val;
+        else if (el.tagName === 'SPAN') el.textContent = val;
+        else el.value = val;
+    }
 
-    if (config.theme && config.theme.includes(',')) {
+    // Apply Themes
+    if (config.theme?.includes(',')) {
         const [primary, bg, header] = config.theme.split(',');
         document.documentElement.style.setProperty('--primary-color', primary);
         document.documentElement.style.setProperty('--bg-color', bg);
         document.documentElement.style.setProperty('--header-bg', header);
     }
 
+    // Initialize Particles with saved count/speed
     setTimeout(() => {
-        if (window.pJSDom && window.pJSDom.length) {
+        if (window.pJSDom?.[0]) {
             const pJS = window.pJSDom[0].pJS;
-            updateParticlesColorSmooth(getCurrentPrimaryColor());
             pJS.particles.move.speed = parseFloat(config.particleSpeed);
+            pJS.particles.number.value = parseInt(config.particleCount || 80);
+            updateParticlesColorSmooth(getCurrentPrimaryColor());
+            pJS.fn.particlesRefresh();
             setParticleOpacity(config.particlesEnabled);
         }
-    }, 500);
+    }, 600);
 }
 
 // --- 4. INITIALIZATION ---
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Hamburger Menu Logic
+    // Hamburger Logic
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('nav-links');
-
     hamburger?.addEventListener('click', () => {
         navLinks.classList.toggle('show');
         hamburger.classList.toggle('active');
         const icon = hamburger.querySelector('i');
-        if (icon) {
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
-        }
+        if (icon) { icon.classList.toggle('fa-bars'); icon.classList.toggle('fa-times'); }
     });
 
-    // Theme Change Listener
+    // Theme Change
     document.getElementById('theme-selector')?.addEventListener('change', (e) => {
         if (e.target.value.includes(',')) {
-            const [primary, bg, header] = e.target.value.split(',');
-            document.documentElement.style.setProperty('--primary-color', primary);
-            document.documentElement.style.setProperty('--bg-color', bg);
-            document.documentElement.style.setProperty('--header-bg', header);
-            updateParticlesColorSmooth(primary);
+            const [p, b, h] = e.target.value.split(',');
+            document.documentElement.style.setProperty('--primary-color', p);
+            document.documentElement.style.setProperty('--bg-color', b);
+            document.documentElement.style.setProperty('--header-bg', h);
+            updateParticlesColorSmooth(p);
         }
         saveSettings();
     });
 
-    // Particle Toggle Listener
+    // Particles Toggle
     document.getElementById('particles-toggle')?.addEventListener('change', (e) => {
         setParticleOpacity(e.target.checked);
         saveSettings();
     });
 
-    // Speed Slider Listener (Updated with Display Logic)
+    // Speed Slider
     const speedInput = document.getElementById('particle-speed');
     const speedVal = document.getElementById('speed-val');
-
     speedInput?.addEventListener('input', (e) => {
-        // 1. Update the number text next to the label
         if (speedVal) speedVal.textContent = e.target.value;
-
-        // 2. Update the actual particles
-        if (window.pJSDom?.[0]) {
-            window.pJSDom[0].pJS.particles.move.speed = parseFloat(e.target.value);
-        }
-        
-        // 3. Auto-save
+        if (window.pJSDom?.[0]) window.pJSDom[0].pJS.particles.move.speed = parseFloat(e.target.value);
         saveSettings();
     });
 
-    // Reset Button Logic
+    // Density Slider (Count)
+    const countInput = document.getElementById('particle-count');
+    const countVal = document.getElementById('count-val');
+    
+    countInput?.addEventListener('input', (e) => {
+        if (countVal) countVal.textContent = e.target.value;
+    });
+
+    countInput?.addEventListener('change', (e) => {
+        if (window.pJSDom?.[0]) {
+            window.pJSDom[0].pJS.particles.number.value = parseInt(e.target.value);
+            window.pJSDom[0].pJS.fn.particlesRefresh();
+            updateParticlesColorSmooth(getCurrentPrimaryColor());
+        }
+        saveSettings();
+    });
+
+    // Reset Button
     document.getElementById('reset-settings')?.addEventListener('click', () => {
         localStorage.removeItem(STORAGE_KEY);
-        localStorage.removeItem('keybind');
         const resetBtn = document.getElementById('reset-settings');
         resetBtn.textContent = "REBOOTING...";
-        resetBtn.style.background = "#2ecc71";
         setTimeout(() => location.reload(), 800);
     });
 
-    // Run Startup Functions
-    if (typeof loadThemes === "function") loadThemes();
     loadSettings();
-    if (typeof loadPanicSites === "function") loadPanicSites();
-    if (typeof initPanicSystem === "function") initPanicSystem();
-    
-    if (typeof showUpdatePopup === "function") {
-        setTimeout(showUpdatePopup, 1500);
-    }
 });
 
-// --- 5. LOADER & EXTERNAL ASSETS ---
-
+// --- 5. LOADER ---
 window.addEventListener('load', async () => {
     const loader = document.getElementById('loader-wrapper');
     const tipDisplay = document.getElementById('loader-tip');
-
     if (tipDisplay) {
         try {
-            const response = await fetch('/json/quotes.json');
-            const tips = await response.json();
+            const res = await fetch('/json/quotes.json');
+            const tips = await res.json();
             tipDisplay.textContent = tips[Math.floor(Math.random() * tips.length)];
-        } catch (e) {
-            tipDisplay.textContent = "Protocol Initialized.";
-        }
+        } catch (e) { tipDisplay.textContent = "Protocol Initialized."; }
     }
-
-    setTimeout(() => {
-        if (loader) loader.classList.add('loader-hidden');
-    }, 800); 
-});
-
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        updateParticlesColorSmooth(getCurrentPrimaryColor());
-    }, 1000);
+    setTimeout(() => loader?.classList.add('loader-hidden'), 800); 
 });
