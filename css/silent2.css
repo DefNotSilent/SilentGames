@@ -437,36 +437,35 @@ footer {
   margin-top: 10px;
   cursor: pointer;
 } */
-
-/* 1. The Dimmer Overlay */
+/* --- SETTINGS OVERLAY (The Blur Behind) --- */
 #settings-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(8px);
-    z-index: 9998; /* Just below the panel */
-    display: none; /* Controlled by JS */
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9998;
+    display: none; /* Controlled by JS toggleSettings() */
 }
 
-/* 2. The Main Window */
+/* --- THE MAIN SETTINGS WINDOW --- */
 #settings-panel {
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    right: auto !important; /* Disables the old sidebar 'right' rule */
-    transform: translate(-50%, -50%) scale(0.9) !important;
+    transform: translate(-50%, -50%) scale(0.85) !important;
     
-    width: 95%;
+    width: 90%;
     max-width: 500px;
-    max-height: 85vh;
+    max-height: 85vh; /* Prevents overflow on short screens */
     
-    background-color: #0d0221 !important; /* Deep dark purple/black */
+    background-color: #0d0221 !important; /* Deep space purple/black */
     border: 1px solid var(--primary-color) !important;
     border-radius: 16px;
-    box-shadow: 0 0 40px rgba(0,0,0,0.9), 0 0 20px var(--primary-color)33;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px var(--primary-color)44;
     
     z-index: 9999 !important;
     opacity: 0;
@@ -475,16 +474,18 @@ footer {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    color: #ffffff;
+    font-family: 'Fredoka', sans-serif;
 }
 
-/* 3. The Open State */
+/* Open State Triggered by JS */
 #settings-panel.open {
     opacity: 1 !important;
     pointer-events: all !important;
     transform: translate(-50%, -50%) scale(1) !important;
 }
 
-/* 4. Internal Layout */
+/* --- WINDOW HEADER (The .EXE Bar) --- */
 .window-header {
     background: var(--primary-color);
     padding: 12px 20px;
@@ -492,27 +493,62 @@ footer {
     justify-content: space-between;
     align-items: center;
     color: #000;
-    font-weight: bold;
     font-family: monospace;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1px;
 }
 
+.win-close {
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.win-close:hover {
+    background: rgba(255, 0, 0, 0.6);
+}
+
+/* --- WINDOW CONTENT --- */
 .window-body {
     padding: 25px;
-    overflow-y: auto;
-    color: white;
+    overflow-y: auto; /* Adds scrollbar for small screens */
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) rgba(0,0,0,0.2);
 }
 
-/* 5. Item Styling Fixes */
+/* Section Grouping */
 .setting-section {
     background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.section-label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+/* Individual Items */
 .setting-item {
-    margin-bottom: 18px;
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -525,60 +561,110 @@ footer {
 }
 
 .setting-item label {
-    color: var(--primary-color);
     font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
 }
 
+/* --- INPUT STYLING --- */
 #settings-panel select, 
-#settings-panel input[type="text"] {
-    width: 100%;
-    padding: 10px;
+#settings-panel input[type="text"],
+#settings-panel input[type="range"] {
     background: #1a1a1a;
     border: 1px solid #333;
-    color: white;
+    color: #fff;
+    padding: 10px;
     border-radius: 8px;
+    font-family: 'Fredoka', sans-serif;
     outline: none;
+    transition: border 0.3s;
+}
+
+#settings-panel select:focus, 
+#settings-panel input[type="text"]:focus {
+    border-color: var(--primary-color);
+}
+
+/* Buttons inside Settings */
+.flex-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
 #settings-panel button {
-    width: 100%;
+    background: #222;
+    color: #fff;
+    border: 1px solid #444;
     padding: 12px;
     border-radius: 8px;
-    border: 1px solid #444;
-    background: #222;
-    color: white;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.3s;
+    font-family: 'Fredoka', sans-serif;
 }
 
 #settings-panel button:hover {
-    border-color: var(--primary-color);
     background: #2a2a2a;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color)33;
 }
 
-/* Small Settings Button */
+/* Reset Button Highlight */
+#reset-settings {
+    margin-top: 10px;
+    background: var(--primary-color) !important;
+    color: #000 !important;
+    border: none !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Custom Panic Input (hidden by default) */
+#custom-panic-input {
+    margin-top: 10px;
+    border-style: dashed !important;
+}
+
+/* --- FLOATING TOGGLE BUTTON --- */
 #open-settings {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--primary-color);
-  color: #000;
-  cursor: pointer;
-  z-index: 201;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.3s;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 55px;
+    height: 55px;
+    background: var(--primary-color);
+    color: #000;
+    border: none;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 0 20px var(--primary-color)66;
+    transition: transform 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+#open-settings:hover {
+    transform: rotate(45deg) scale(1.1);
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 600px) {
+    #settings-panel {
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .window-body {
+        padding: 15px;
+    }
+
+    .flex-btns {
+        grid-template-columns: 1fr; /* Stack buttons on mobile */
+    }
+}
 #open-settings:hover {
   background-color: var(--secondary-color);
   color: #000;
