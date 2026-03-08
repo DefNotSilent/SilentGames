@@ -1,12 +1,12 @@
 /**
- * SilentGames Unified Script v2.5
+ * SilentGames Unified Script v2.2
  * Features: Persistent Themes, Smooth Particles, Privacy Tools, Windowed Settings
- * FIX: Particle Speed/Count Sync Bug (State Persistence)
+ * FIX: Hard-Sync Logic for Particle Speed & Density
  */
 
 // --- CONFIGURATION & GLOBALS ---
 const STORAGE_KEY = 'nightbyte-settings';
-const UPDATE_VERSION = "v2.5_silent_games_stable";
+const UPDATE_VERSION = "v2.6_silent_games_stable";
 var win; 
 
 // --- 1. CORE UTILITIES ---
@@ -109,12 +109,12 @@ function loadSettings() {
         document.documentElement.style.setProperty('--header-bg', header);
     }
 
-    // Initial Engine Boot (Syncing Speed + Count Blueprint)
+    // Hard-Sync Initial Boot
     setTimeout(() => {
         if (window.pJSDom?.[0]) {
             const pJS = window.pJSDom[0].pJS;
             
-            // Set Blueprint values before starting
+            // Overwrite the engine's internal config object
             pJS.particles.move.speed = parseFloat(config.particleSpeed || 9);
             pJS.particles.number.value = parseInt(config.particleCount || 80);
             
@@ -122,7 +122,7 @@ function loadSettings() {
             updateParticlesColorSmooth(getCurrentPrimaryColor());
             setParticleOpacity(config.particlesEnabled);
         }
-    }, 600);
+    }, 800);
 }
 
 // --- 4. INITIALIZATION & LISTENERS ---
@@ -156,19 +156,21 @@ document.addEventListener('DOMContentLoaded', () => {
         saveSettings();
     });
 
-    // Velocity Slider (Blueprint Update)
+    // Velocity Slider
     const speedInput = document.getElementById('particle-speed');
     const speedVal = document.getElementById('speed-val');
     speedInput?.addEventListener('input', (e) => {
-        if (speedVal) speedVal.textContent = e.target.value;
+        const val = parseFloat(e.target.value);
+        if (speedVal) speedVal.textContent = val;
+        
         if (window.pJSDom?.[0]) {
-            // Update BOTH the live speed and the Blueprint for future refreshes
-            window.pJSDom[0].pJS.particles.move.speed = parseFloat(e.target.value);
+            // Update live particles AND the internal config object
+            window.pJSDom[0].pJS.particles.move.speed = val;
         }
         saveSettings();
     });
 
-    // Density Slider (Blueprint Sync)
+    // Density Slider (The "Safe-Refresh" Fix)
     const countInput = document.getElementById('particle-count');
     const countVal = document.getElementById('count-val');
     
@@ -179,20 +181,20 @@ document.addEventListener('DOMContentLoaded', () => {
     countInput?.addEventListener('change', (e) => {
         if (window.pJSDom?.[0]) {
             const pJS = window.pJSDom[0].pJS;
-            
-            // 1. Update Count Blueprint
-            pJS.particles.number.value = parseInt(e.target.value);
-            
-            // 2. IMPORTANT: Re-sync Speed Blueprint from slider before refresh
-            if (speedInput) {
-                pJS.particles.move.speed = parseFloat(speedInput.value);
-            }
+            const currentSpeed = parseFloat(speedInput?.value || 9);
+            const currentCount = parseInt(e.target.value || 80);
 
-            // 3. Refresh engine with updated blueprint
+            // 1. Force both values into the "Blueprint"
+            pJS.particles.move.speed = currentSpeed;
+            pJS.particles.number.value = currentCount;
+
+            // 2. Refresh with the new hard-coded config
             pJS.fn.particlesRefresh();
             
-            // 4. Re-apply color
-            updateParticlesColorSmooth(getCurrentPrimaryColor());
+            // 3. Re-apply colors after the brief refresh blink
+            setTimeout(() => {
+                updateParticlesColorSmooth(getCurrentPrimaryColor());
+            }, 50);
         }
         saveSettings();
     });
@@ -201,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('reset-settings')?.addEventListener('click', () => {
         localStorage.removeItem(STORAGE_KEY);
         const resetBtn = document.getElementById('reset-settings');
-        resetBtn.textContent = "CLEARING CACHE...";
+        resetBtn.textContent = "DELETING PROTOCOLS...";
         setTimeout(() => location.reload(), 800);
     });
 
@@ -218,14 +220,7 @@ window.addEventListener('load', async () => {
             const res = await fetch('/json/quotes.json');
             const tips = await res.json();
             tipDisplay.textContent = tips[Math.floor(Math.random() * tips.length)];
-        } catch (e) { tipDisplay.textContent = "Encrypted Tunnel Open."; }
+        } catch (e) { tipDisplay.textContent = "Neural Link Established."; }
     }
     setTimeout(() => loader?.classList.add('loader-hidden'), 800); 
-});
-
-// Final Sync for particles
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        updateParticlesColorSmooth(getCurrentPrimaryColor());
-    }, 1200);
 });
