@@ -158,10 +158,27 @@
         
             <h1>Patch Notes</h1>
             <p>Tracking the evolution of Silent Games</p>
-
+<div class="update-card" style="border-color: var(--primary-color); box-shadow: 0 0 15px rgba(255, 0, 85, 0.1);">
+    <span class="version-badge">V2.2</span>
+    <h2>The Particle & UI Update</h2>
+    <div class="update-date">March 7, 2026</div>
+    <ul class="feature-list">
+        <li><i class="fas fa-circle"></i> Launched the <b>Windowed Settings Panel</b>, replacing the sidebar with a centered, modern terminal UI.</li>
+        <li><i class="fas fa-circle"></i> Added <b>System Density</b> slider to control the exact amount of particles for better performance.</li>
+        <li><i class="fas fa-circle"></i> Integrated <b>Live Velocity Tracking</b> with a real-time number display next to the sliders.</li>
+        <li><i class="fa-solid fa-rocket"></i> Optimized <b>Particle Refresh Logic</b> to prevent lag on lower-end Chromebooks.</li>
+        <li><i class="fa-solid fa-plus"></i> Added <b>Settings Persistence</b> so density and speed preferences save automatically across sessions.</li>
+        <li><i class="fa-solid fa-plus"></i> Implemented <b>Backdrop Blur (Glassmorphism)</b> on the settings overlay for better visual focus.</li>
+        <li><i class="fa-solid fa-plus"></i> New <b>Modular Settings Script</b> allow for the settings menu to be injected into any page via JS.</li>
+        <li><i class="fa-solid fa-hammer"></i> Fixed <b>Slider "Ugliness"</b> with custom Webkit-styled neon handles and glowing tracks.</li>
+        <li><i class="fa-solid fa-hammer"></i> Fixed <b>Z-Index Clipping</b> where game iframes would sometimes overlap the settings menu.</li>
+        <li><i class="fa-solid fa-hammer"></i> Fixed <b>Input Desync</b> where settings wouldn't visually update when loading from LocalStorage.</li>
+        <li><i class="fa-solid fa-hammer"></i> Fixed <b>Mobile Scaling</b> for the settings window on small vertical screens.</li>
+    </ul>
+</div>
 
         
-    <div class="update-card" style="border-color: var(--primary-color); box-shadow: 0 0 15px rgba(255, 0, 85, 0.1);">
+    <div class="update-card">
         <span class="version-badge">V2.1</span>
         <h2>The Silent Update</h2>
         <div class="update-date">February 26, 2026</div>
@@ -206,57 +223,7 @@
     </div>
 
    <footer>&copy; 2026 Silent Games All rights reserved.</footer>
-
-<!-- Settings Panel -->
-<div id="settings-panel">
-  <h2>Settings</h2>
-  <div class="setting-item">
-    <label for="theme-selector">Choose Theme:</label>
-    <select id="theme-selector">
-</select>
-
-  </div>
-  <div class="setting-item">
-    <label for="particles-toggle">Enable Particle Effects:</label>
-    <input type="checkbox" id="particles-toggle" checked>
-  </div>
-  <div class="setting-item">
-    <label for="particle-speed">Particle Animation Speed:</label>
-    <input type="range" id="particle-speed" min="1" max="20" value="9">
-  </div>
-  <div class="setting-item">
-        <label>Privacy Tools</label>
-        <button id="abdisguise" style="background: #333; color: white; border: none;">Open in about:blank</button>
-        <button onclick="datalink()" style="background: #333; color: white; border: none;">Data Link</button>
-    </div>
-
-    <div class="setting-item">
-        <label>Tab Disguise</label>
-        <select id="faviconDropdown">
-            <option disabled selected>Select Disguise</option>
-        </select>
-    </div>
-
-    <div class="setting-item">
-        <label>Panic Redirect</label>
-        <select id="tabselect">
-            <option value="https://classroom.google.com">Google Classroom</option>
-            <option value="https://canvas.instructure.com">Canvas</option>
-            <option value="https://google.com">Google</option>
-        </select>
-        <button onclick="confirmtab()" style="background: var(--primary-color); color: black; border: none; font-weight: bold;">Confirm Panic Site</button>
-    </div>
-
-    <div class="setting-item">
-        <label>Panic Keybind</label>
-        <button id="setkeybind" style="background: #444; color: white; border: none;">Set Keybind</button>
-        <div id="output" style="color: #aaa; font-size: 12px; margin-top: 5px; text-align: center;">Current key: none</div>
-    </div>
-  <button id="reset-settings">Reset to Default</button>
-</div>
-
-<!-- Small Settings Button -->
-<button id="open-settings"><i class="fas fa-cog"></i></button>
+  
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script src="/js/silent2.js"></script>
        <script>
