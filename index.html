@@ -120,7 +120,71 @@
 <footer>&copy; 2026 Silent Games All rights reserved.</footer>
 
 
-<!-- Settings Panel -->
+  <div id="settings-overlay" onclick="toggleSettings()"></div>
+
+<div id="settings-panel">
+    <div class="window-header">
+        <div class="header-title"><i class="fas fa-microchip"></i> SYSTEM_CONFIG.EXE</div>
+        <button onclick="toggleSettings()" class="win-close">×</button>
+    </div>
+
+    <div class="window-body">
+        <h2 style="font-size: 24px; margin-top: 0;">System Configuration</h2>
+
+        <div class="setting-section">
+            <label class="section-label">Interface Appearance</label>
+            <div class="setting-item">
+                <label for="theme-selector">Ghost Signal Theme:</label>
+                <select id="theme-selector"></select>
+            </div>
+            <div class="setting-item horizontal">
+                <label for="particles-toggle">Particle Engine:</label>
+                <input type="checkbox" id="particles-toggle" checked>
+            </div>
+            <div class="setting-item">
+                <label for="particle-speed">Animation Velocity:</label>
+                <input type="range" id="particle-speed" min="1" max="20" value="9">
+            </div>
+        </div>
+
+        <div class="setting-section">
+            <label class="section-label">Stealth Protocols</label>
+            <div class="setting-item flex-btns">
+                <button id="abdisguise">Open in about:blank</button>
+                <button onclick="datalink()">Data Link</button>
+            </div>
+
+            <div class="setting-item">
+                <label>Tab Disguise (Favicon)</label>
+                <select id="faviconDropdown">
+                    <option disabled selected>Select Disguise</option>
+                </select>
+            </div>
+
+            <div class="setting-item">
+                <label>Panic Redirect URL</label>
+                <div class="input-row">
+                    <select id="tabselect" onchange="checkCustomPanic(this.value)">
+                        <option value="custom">-- Custom URL --</option>
+                    </select>
+                    <button onclick="confirmtab()" class="confirm-btn">Confirm</button>
+                </div>
+                <input type="text" id="custom-panic-input" placeholder="Paste school link here...">
+            </div>
+
+            <div class="setting-item">
+                <label>Emergency Keybind</label>
+                <button id="setkeybind" class="keybind-btn">Set Panic Key</button>
+                <div id="output">Current key: none</div>
+            </div>
+        </div>
+
+        <button id="reset-settings">RESET SYSTEM TO DEFAULT</button>
+    </div>
+</div>
+
+  
+<!-- Settings Panel 
 <div id="settings-panel">
   <h2>Settings</h2>
   <div class="setting-item">
@@ -167,7 +231,7 @@
         <div id="output" style="color: #aaa; font-size: 12px; margin-top: 5px; text-align: center;">Current key: none</div>
     </div>
   <button id="reset-settings">Reset to Default</button>
-</div>
+</div> -->
 
 <!-- Small Settings Button -->
 <button id="open-settings"><i class="fas fa-cog"></i></button>
@@ -312,6 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
 
 
 
