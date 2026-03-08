@@ -1,16 +1,16 @@
 /**
- * SilentGames Unified Script v2.1
+ * SilentGames Unified Script v2.2
  * Features: Persistent Themes, Smooth Particles, Privacy Tools, Windowed Settings
+ * Includes: Live Slider Value Display
  */
 
 // --- CONFIGURATION & GLOBALS ---
 const STORAGE_KEY = 'nightbyte-settings';
-const UPDATE_VERSION = "v2.1_silent_games_fix";
+const UPDATE_VERSION = "v2.2_silent_games";
 var win; // For about:blank cloak
 
 // --- 1. CORE UTILITIES ---
 
-// Converts Hex to RGB for smooth particle transitions
 function hexToRgb(hex) {
     hex = hex.replace('#', '');
     if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
@@ -18,23 +18,20 @@ function hexToRgb(hex) {
     return { r: (bigint >> 16) & 255, g: (bigint >> 8) & 255, b: bigint & 255 };
 }
 
-// Gets the current primary color from CSS variables
 function getCurrentPrimaryColor() {
     return getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ff0055';
 }
 
-// --- 2. PARTICLE ENGINE (Smooth Transitions) ---
+// --- 2. PARTICLE ENGINE ---
 
 function updateParticlesColorSmooth(colorHex) {
     if (!window.pJSDom || !window.pJSDom.length) return;
     const pJS = window.pJSDom[0].pJS;
     const target = hexToRgb(colorHex);
 
-    // Update internal config
     pJS.particles.color.value = colorHex;
     if (pJS.particles.line_linked) pJS.particles.line_linked.color = colorHex;
 
-    // Update existing particles instantly
     pJS.particles.array.forEach(p => {
         if (p.color && p.color.rgb) {
             p.color.rgb = { r: target.r, g: target.g, b: target.b };
@@ -70,18 +67,12 @@ function toggleSettings() {
 }
 
 function saveSettings() {
-    const themeVal = document.getElementById('theme-selector')?.value || "";
-    const particlesEnabled = document.getElementById('particles-toggle')?.checked ?? true;
-    const particleSpeed = document.getElementById('particle-speed')?.value || "9";
-    const panicUrl = document.getElementById('tabselect')?.value || "https://classroom.google.com";
-    const customPanic = document.getElementById('custom-panic-input')?.value || "";
-
     const settings = {
-        theme: themeVal,
-        particlesEnabled: particlesEnabled,
-        particleSpeed: particleSpeed,
-        panicUrl: panicUrl,
-        customPanic: customPanic
+        theme: document.getElementById('theme-selector')?.value || "",
+        particlesEnabled: document.getElementById('particles-toggle')?.checked ?? true,
+        particleSpeed: document.getElementById('particle-speed')?.value || "9",
+        panicUrl: document.getElementById('tabselect')?.value || "https://classroom.google.com",
+        customPanic: document.getElementById('custom-panic-input')?.value || ""
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
 }
@@ -92,20 +83,20 @@ function loadSettings() {
 
     const config = JSON.parse(saved);
     
-    // Sync UI elements safely
     const themeEl = document.getElementById('theme-selector');
     const partToggle = document.getElementById('particles-toggle');
     const speedInput = document.getElementById('particle-speed');
+    const speedVal = document.getElementById('speed-val'); // New number display
     const panicSelect = document.getElementById('tabselect');
     const customInput = document.getElementById('custom-panic-input');
 
     if (themeEl) themeEl.value = config.theme;
     if (partToggle) partToggle.checked = config.particlesEnabled;
     if (speedInput) speedInput.value = config.particleSpeed;
+    if (speedVal) speedVal.textContent = config.particleSpeed; // Sync text on load
     if (panicSelect) panicSelect.value = config.panicUrl;
     if (customInput) customInput.value = config.customPanic || "";
 
-    // Apply CSS variables if theme exists
     if (config.theme && config.theme.includes(',')) {
         const [primary, bg, header] = config.theme.split(',');
         document.documentElement.style.setProperty('--primary-color', primary);
@@ -113,7 +104,6 @@ function loadSettings() {
         document.documentElement.style.setProperty('--header-bg', header);
     }
 
-    // Apply Particles
     setTimeout(() => {
         if (window.pJSDom && window.pJSDom.length) {
             const pJS = window.pJSDom[0].pJS;
@@ -159,11 +149,20 @@ document.addEventListener('DOMContentLoaded', () => {
         saveSettings();
     });
 
-    // Speed Slider Listener
-    document.getElementById('particle-speed')?.addEventListener('input', (e) => {
+    // Speed Slider Listener (Updated with Display Logic)
+    const speedInput = document.getElementById('particle-speed');
+    const speedVal = document.getElementById('speed-val');
+
+    speedInput?.addEventListener('input', (e) => {
+        // 1. Update the number text next to the label
+        if (speedVal) speedVal.textContent = e.target.value;
+
+        // 2. Update the actual particles
         if (window.pJSDom?.[0]) {
             window.pJSDom[0].pJS.particles.move.speed = parseFloat(e.target.value);
         }
+        
+        // 3. Auto-save
         saveSettings();
     });
 
@@ -172,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem(STORAGE_KEY);
         localStorage.removeItem('keybind');
         const resetBtn = document.getElementById('reset-settings');
-        resetBtn.textContent = "SYSTEM RESETTING...";
+        resetBtn.textContent = "REBOOTING...";
         resetBtn.style.background = "#2ecc71";
         setTimeout(() => location.reload(), 800);
     });
@@ -183,7 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof loadPanicSites === "function") loadPanicSites();
     if (typeof initPanicSystem === "function") initPanicSystem();
     
-    // Show update popup after a delay
     if (typeof showUpdatePopup === "function") {
         setTimeout(showUpdatePopup, 1500);
     }
@@ -210,7 +208,6 @@ window.addEventListener('load', async () => {
     }, 800); 
 });
 
-// Final Particle Sync for Sub-folders
 window.addEventListener('load', () => {
     setTimeout(() => {
         updateParticlesColorSmooth(getCurrentPrimaryColor());
