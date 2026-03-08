@@ -16,6 +16,7 @@
   <script src="js/themes.js"></script>
   <script src="/js/tabconfirm.js"></script>
   <script src="/js/usesettings.js"></script>
+  <script src="/js/settings-component.js" defer></script>
   <style>
  main {
       max-width: 1100px;
@@ -149,59 +150,7 @@
     }
 </script>
 
-  
-<!-- Settings Panel -->
-<div id="settings-panel">
-  <h2>Settings</h2>
-  <div class="setting-item">
-    <label for="theme-selector">Choose Theme:</label>
-    <select id="theme-selector">
-</select>
 
-  </div>
-  <div class="setting-item">
-    <label for="particles-toggle">Enable Particle Effects:</label>
-    <input type="checkbox" id="particles-toggle" checked>
-  </div>
-  <div class="setting-item">
-    <label for="particle-speed">Particle Animation Speed:</label>
-    <input type="range" id="particle-speed" min="1" max="20" value="9">
-  </div>
-  <div class="setting-item">
-        <label>Privacy Tools</label>
-        <button id="abdisguise" style="background: #333; color: white; border: none;">Open in about:blank</button>
-        <button onclick="datalink()" style="background: #333; color: white; border: none;">Data Link</button>
-    </div>
-
-    <div class="setting-item">
-        <label>Tab Disguise</label>
-        <select id="faviconDropdown">
-            <option disabled selected>Select Disguise</option>
-        </select>
-    </div>
-
-    <div class="setting-item">
-        <label>Panic Redirect</label>
-        <select id="tabselect">
-            <option value="https://lms.lausd.net">Schoology</option>
-            <option value="https://classroom.google.com">Google Classroom</option>
-            <option value="https://clever.com">Clever</option>
-            <option value="https://canvas.instructure.com">Canvas</option>
-            <option value="https://google.com">Google</option>
-        </select>
-        <button onclick="confirmtab()" style="background: var(--primary-color); color: black; border: none; font-weight: bold;">Confirm Panic Site</button>
-    </div>
-
-    <div class="setting-item">
-        <label>Panic Keybind</label>
-        <button id="setkeybind" style="background: #444; color: white; border: none;">Set Keybind</button>
-        <div id="output" style="color: #aaa; font-size: 12px; margin-top: 5px; text-align: center;">Current key: none</div>
-    </div>
-  <button id="reset-settings">Reset to Default</button>
-</div>
-
-<!-- Small Settings Button -->
-<button id="open-settings"><i class="fas fa-cog"></i></button>
   <script src="/particles.min.js"></script>
  <script src="/js/silent2.js"></script>
        <script>
