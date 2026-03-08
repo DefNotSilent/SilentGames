@@ -1,13 +1,13 @@
 /**
- * SilentGames Unified Script v2.3
+ * SilentGames Unified Script v2.4
  * Features: Persistent Themes, Smooth Particles, Privacy Tools, Windowed Settings
- * Includes: Live Slider Values for Velocity & Density
+ * Includes: Live Sync Sliders for Velocity & Density
  */
 
 // --- CONFIGURATION & GLOBALS ---
 const STORAGE_KEY = 'nightbyte-settings';
-const UPDATE_VERSION = "v2.3_silent_games";
-var win; 
+const UPDATE_VERSION = "v2.4_silent_games";
+var win; // Global for about:blank cloak
 
 // --- 1. CORE UTILITIES ---
 
@@ -68,7 +68,7 @@ function saveSettings() {
         theme: document.getElementById('theme-selector')?.value || "",
         particlesEnabled: document.getElementById('particles-toggle')?.checked ?? true,
         particleSpeed: document.getElementById('particle-speed')?.value || "9",
-        particleCount: document.getElementById('particle-count')?.value || "80", // NEW
+        particleCount: document.getElementById('particle-count')?.value || "80",
         panicUrl: document.getElementById('tabselect')?.value || "https://classroom.google.com",
         customPanic: document.getElementById('custom-panic-input')?.value || ""
     };
@@ -81,7 +81,7 @@ function loadSettings() {
 
     const config = JSON.parse(saved);
     
-    // Sync Elements
+    // Sync all UI elements (Inputs, Checkboxes, and Labels)
     const elements = {
         'theme-selector': config.theme,
         'particles-toggle': config.particlesEnabled,
@@ -109,11 +109,11 @@ function loadSettings() {
         document.documentElement.style.setProperty('--header-bg', header);
     }
 
-    // Initialize Particles with saved count/speed
+    // Boot Particles Engine
     setTimeout(() => {
         if (window.pJSDom?.[0]) {
             const pJS = window.pJSDom[0].pJS;
-            pJS.particles.move.speed = parseFloat(config.particleSpeed);
+            pJS.particles.move.speed = parseFloat(config.particleSpeed || 9);
             pJS.particles.number.value = parseInt(config.particleCount || 80);
             updateParticlesColorSmooth(getCurrentPrimaryColor());
             pJS.fn.particlesRefresh();
@@ -122,10 +122,10 @@ function loadSettings() {
     }, 600);
 }
 
-// --- 4. INITIALIZATION ---
+// --- 4. INITIALIZATION & EVENT LISTENERS ---
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Hamburger Logic
+    // 1. Navigation / Hamburger
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('nav-links');
     hamburger?.addEventListener('click', () => {
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (icon) { icon.classList.toggle('fa-bars'); icon.classList.toggle('fa-times'); }
     });
 
-    // Theme Change
+    // 2. Theme Control
     document.getElementById('theme-selector')?.addEventListener('change', (e) => {
         if (e.target.value.includes(',')) {
             const [p, b, h] = e.target.value.split(',');
@@ -147,22 +147,24 @@ document.addEventListener('DOMContentLoaded', () => {
         saveSettings();
     });
 
-    // Particles Toggle
+    // 3. Toggle Control
     document.getElementById('particles-toggle')?.addEventListener('change', (e) => {
         setParticleOpacity(e.target.checked);
         saveSettings();
     });
 
-    // Speed Slider
+    // 4. Velocity Slider (Real-time speed update)
     const speedInput = document.getElementById('particle-speed');
     const speedVal = document.getElementById('speed-val');
     speedInput?.addEventListener('input', (e) => {
         if (speedVal) speedVal.textContent = e.target.value;
-        if (window.pJSDom?.[0]) window.pJSDom[0].pJS.particles.move.speed = parseFloat(e.target.value);
+        if (window.pJSDom?.[0]) {
+            window.pJSDom[0].pJS.particles.move.speed = parseFloat(e.target.value);
+        }
         saveSettings();
     });
 
-    // Density Slider (Count)
+    // 5. Density Slider (Count update with refresh)
     const countInput = document.getElementById('particle-count');
     const countVal = document.getElementById('count-val');
     
@@ -172,25 +174,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     countInput?.addEventListener('change', (e) => {
         if (window.pJSDom?.[0]) {
-            window.pJSDom[0].pJS.particles.number.value = parseInt(e.target.value);
-            window.pJSDom[0].pJS.fn.particlesRefresh();
+            const pJS = window.pJSDom[0].pJS;
+            pJS.particles.number.value = parseInt(e.target.value);
+            pJS.fn.particlesRefresh();
             updateParticlesColorSmooth(getCurrentPrimaryColor());
         }
         saveSettings();
     });
 
-    // Reset Button
+    // 6. Reset System
     document.getElementById('reset-settings')?.addEventListener('click', () => {
         localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem('keybind');
         const resetBtn = document.getElementById('reset-settings');
-        resetBtn.textContent = "REBOOTING...";
+        resetBtn.textContent = "SYSTEM REBOOT...";
+        resetBtn.style.backgroundColor = "#2ecc71";
         setTimeout(() => location.reload(), 800);
     });
 
+    // 7. Load external assets & functions
+    if (typeof loadThemes === "function") loadThemes();
     loadSettings();
+    if (typeof loadPanicSites === "function") loadPanicSites();
+    if (typeof initPanicSystem === "function") initPanicSystem();
 });
 
-// --- 5. LOADER ---
+// --- 5. ASSETS & LOADER ---
+
 window.addEventListener('load', async () => {
     const loader = document.getElementById('loader-wrapper');
     const tipDisplay = document.getElementById('loader-tip');
@@ -199,7 +209,16 @@ window.addEventListener('load', async () => {
             const res = await fetch('/json/quotes.json');
             const tips = await res.json();
             tipDisplay.textContent = tips[Math.floor(Math.random() * tips.length)];
-        } catch (e) { tipDisplay.textContent = "Protocol Initialized."; }
+        } catch (e) { 
+            tipDisplay.textContent = "Secure connection established."; 
+        }
     }
     setTimeout(() => loader?.classList.add('loader-hidden'), 800); 
+});
+
+// Final Sync for particles if they take extra time to init
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        updateParticlesColorSmooth(getCurrentPrimaryColor());
+    }, 1200);
 });
