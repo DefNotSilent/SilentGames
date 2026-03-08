@@ -1,13 +1,13 @@
 /**
- * SilentGames Unified Script v2.4
+ * SilentGames Unified Script v2.5
  * Features: Persistent Themes, Smooth Particles, Privacy Tools, Windowed Settings
- * Includes: Live Sync Sliders for Velocity & Density
+ * FIX: Particle Speed/Count Sync Bug (State Persistence)
  */
 
 // --- CONFIGURATION & GLOBALS ---
 const STORAGE_KEY = 'nightbyte-settings';
-const UPDATE_VERSION = "v2.4_silent_games";
-var win; // Global for about:blank cloak
+const UPDATE_VERSION = "v2.5_silent_games_stable";
+var win; 
 
 // --- 1. CORE UTILITIES ---
 
@@ -81,7 +81,7 @@ function loadSettings() {
 
     const config = JSON.parse(saved);
     
-    // Sync all UI elements (Inputs, Checkboxes, and Labels)
+    // UI Sync Logic
     const elements = {
         'theme-selector': config.theme,
         'particles-toggle': config.particlesEnabled,
@@ -109,23 +109,26 @@ function loadSettings() {
         document.documentElement.style.setProperty('--header-bg', header);
     }
 
-    // Boot Particles Engine
+    // Initial Engine Boot (Syncing Speed + Count Blueprint)
     setTimeout(() => {
         if (window.pJSDom?.[0]) {
             const pJS = window.pJSDom[0].pJS;
+            
+            // Set Blueprint values before starting
             pJS.particles.move.speed = parseFloat(config.particleSpeed || 9);
             pJS.particles.number.value = parseInt(config.particleCount || 80);
-            updateParticlesColorSmooth(getCurrentPrimaryColor());
+            
             pJS.fn.particlesRefresh();
+            updateParticlesColorSmooth(getCurrentPrimaryColor());
             setParticleOpacity(config.particlesEnabled);
         }
     }, 600);
 }
 
-// --- 4. INITIALIZATION & EVENT LISTENERS ---
+// --- 4. INITIALIZATION & LISTENERS ---
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Navigation / Hamburger
+    // Hamburger Logic
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('nav-links');
     hamburger?.addEventListener('click', () => {
@@ -135,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (icon) { icon.classList.toggle('fa-bars'); icon.classList.toggle('fa-times'); }
     });
 
-    // 2. Theme Control
+    // Theme Switch
     document.getElementById('theme-selector')?.addEventListener('change', (e) => {
         if (e.target.value.includes(',')) {
             const [p, b, h] = e.target.value.split(',');
@@ -147,24 +150,25 @@ document.addEventListener('DOMContentLoaded', () => {
         saveSettings();
     });
 
-    // 3. Toggle Control
+    // Toggle Particles
     document.getElementById('particles-toggle')?.addEventListener('change', (e) => {
         setParticleOpacity(e.target.checked);
         saveSettings();
     });
 
-    // 4. Velocity Slider (Real-time speed update)
+    // Velocity Slider (Blueprint Update)
     const speedInput = document.getElementById('particle-speed');
     const speedVal = document.getElementById('speed-val');
     speedInput?.addEventListener('input', (e) => {
         if (speedVal) speedVal.textContent = e.target.value;
         if (window.pJSDom?.[0]) {
+            // Update BOTH the live speed and the Blueprint for future refreshes
             window.pJSDom[0].pJS.particles.move.speed = parseFloat(e.target.value);
         }
         saveSettings();
     });
 
-    // 5. Density Slider (Count update with refresh)
+    // Density Slider (Blueprint Sync)
     const countInput = document.getElementById('particle-count');
     const countVal = document.getElementById('count-val');
     
@@ -175,28 +179,33 @@ document.addEventListener('DOMContentLoaded', () => {
     countInput?.addEventListener('change', (e) => {
         if (window.pJSDom?.[0]) {
             const pJS = window.pJSDom[0].pJS;
+            
+            // 1. Update Count Blueprint
             pJS.particles.number.value = parseInt(e.target.value);
+            
+            // 2. IMPORTANT: Re-sync Speed Blueprint from slider before refresh
+            if (speedInput) {
+                pJS.particles.move.speed = parseFloat(speedInput.value);
+            }
+
+            // 3. Refresh engine with updated blueprint
             pJS.fn.particlesRefresh();
+            
+            // 4. Re-apply color
             updateParticlesColorSmooth(getCurrentPrimaryColor());
         }
         saveSettings();
     });
 
-    // 6. Reset System
+    // Reset Logic
     document.getElementById('reset-settings')?.addEventListener('click', () => {
         localStorage.removeItem(STORAGE_KEY);
-        localStorage.removeItem('keybind');
         const resetBtn = document.getElementById('reset-settings');
-        resetBtn.textContent = "SYSTEM REBOOT...";
-        resetBtn.style.backgroundColor = "#2ecc71";
+        resetBtn.textContent = "CLEARING CACHE...";
         setTimeout(() => location.reload(), 800);
     });
 
-    // 7. Load external assets & functions
-    if (typeof loadThemes === "function") loadThemes();
     loadSettings();
-    if (typeof loadPanicSites === "function") loadPanicSites();
-    if (typeof initPanicSystem === "function") initPanicSystem();
 });
 
 // --- 5. ASSETS & LOADER ---
@@ -209,14 +218,12 @@ window.addEventListener('load', async () => {
             const res = await fetch('/json/quotes.json');
             const tips = await res.json();
             tipDisplay.textContent = tips[Math.floor(Math.random() * tips.length)];
-        } catch (e) { 
-            tipDisplay.textContent = "Secure connection established."; 
-        }
+        } catch (e) { tipDisplay.textContent = "Encrypted Tunnel Open."; }
     }
     setTimeout(() => loader?.classList.add('loader-hidden'), 800); 
 });
 
-// Final Sync for particles if they take extra time to init
+// Final Sync for particles
 window.addEventListener('load', () => {
     setTimeout(() => {
         updateParticlesColorSmooth(getCurrentPrimaryColor());
