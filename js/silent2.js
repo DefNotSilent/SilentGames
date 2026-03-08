@@ -1,13 +1,13 @@
 /**
- * SilentGames Unified Script v2.2
+ * SilentGames Unified Script v2.4
  * Features: Persistent Themes, Smooth Particles, Privacy Tools, Windowed Settings
- * FIX: Hard-Sync Logic for Particle Speed & Density
+ * Includes: Live Sync Sliders for Velocity & Density
  */
 
 // --- CONFIGURATION & GLOBALS ---
 const STORAGE_KEY = 'nightbyte-settings';
-const UPDATE_VERSION = "v2.6_silent_games_stable";
-var win; 
+const UPDATE_VERSION = "v2.4_silent_games";
+var win; // Global for about:blank cloak
 
 // --- 1. CORE UTILITIES ---
 
@@ -81,7 +81,7 @@ function loadSettings() {
 
     const config = JSON.parse(saved);
     
-    // UI Sync Logic
+    // Sync all UI elements (Inputs, Checkboxes, and Labels)
     const elements = {
         'theme-selector': config.theme,
         'particles-toggle': config.particlesEnabled,
@@ -109,26 +109,23 @@ function loadSettings() {
         document.documentElement.style.setProperty('--header-bg', header);
     }
 
-    // Hard-Sync Initial Boot
+    // Boot Particles Engine
     setTimeout(() => {
         if (window.pJSDom?.[0]) {
             const pJS = window.pJSDom[0].pJS;
-            
-            // Overwrite the engine's internal config object
             pJS.particles.move.speed = parseFloat(config.particleSpeed || 9);
             pJS.particles.number.value = parseInt(config.particleCount || 80);
-            
-            pJS.fn.particlesRefresh();
             updateParticlesColorSmooth(getCurrentPrimaryColor());
+            pJS.fn.particlesRefresh();
             setParticleOpacity(config.particlesEnabled);
         }
-    }, 800);
+    }, 600);
 }
 
-// --- 4. INITIALIZATION & LISTENERS ---
+// --- 4. INITIALIZATION & EVENT LISTENERS ---
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Hamburger Logic
+    // 1. Navigation / Hamburger
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('nav-links');
     hamburger?.addEventListener('click', () => {
@@ -138,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (icon) { icon.classList.toggle('fa-bars'); icon.classList.toggle('fa-times'); }
     });
 
-    // Theme Switch
+    // 2. Theme Control
     document.getElementById('theme-selector')?.addEventListener('change', (e) => {
         if (e.target.value.includes(',')) {
             const [p, b, h] = e.target.value.split(',');
@@ -150,27 +147,24 @@ document.addEventListener('DOMContentLoaded', () => {
         saveSettings();
     });
 
-    // Toggle Particles
+    // 3. Toggle Control
     document.getElementById('particles-toggle')?.addEventListener('change', (e) => {
         setParticleOpacity(e.target.checked);
         saveSettings();
     });
 
-    // Velocity Slider
+    // 4. Velocity Slider (Real-time speed update)
     const speedInput = document.getElementById('particle-speed');
     const speedVal = document.getElementById('speed-val');
     speedInput?.addEventListener('input', (e) => {
-        const val = parseFloat(e.target.value);
-        if (speedVal) speedVal.textContent = val;
-        
+        if (speedVal) speedVal.textContent = e.target.value;
         if (window.pJSDom?.[0]) {
-            // Update live particles AND the internal config object
-            window.pJSDom[0].pJS.particles.move.speed = val;
+            window.pJSDom[0].pJS.particles.move.speed = parseFloat(e.target.value);
         }
         saveSettings();
     });
 
-    // Density Slider (The "Safe-Refresh" Fix)
+    // 5. Density Slider (Count update with refresh)
     const countInput = document.getElementById('particle-count');
     const countVal = document.getElementById('count-val');
     
@@ -181,33 +175,28 @@ document.addEventListener('DOMContentLoaded', () => {
     countInput?.addEventListener('change', (e) => {
         if (window.pJSDom?.[0]) {
             const pJS = window.pJSDom[0].pJS;
-            const currentSpeed = parseFloat(speedInput?.value || 9);
-            const currentCount = parseInt(e.target.value || 80);
-
-            // 1. Force both values into the "Blueprint"
-            pJS.particles.move.speed = currentSpeed;
-            pJS.particles.number.value = currentCount;
-
-            // 2. Refresh with the new hard-coded config
+            pJS.particles.number.value = parseInt(e.target.value);
             pJS.fn.particlesRefresh();
-            
-            // 3. Re-apply colors after the brief refresh blink
-            setTimeout(() => {
-                updateParticlesColorSmooth(getCurrentPrimaryColor());
-            }, 50);
+            updateParticlesColorSmooth(getCurrentPrimaryColor());
         }
         saveSettings();
     });
 
-    // Reset Logic
+    // 6. Reset System
     document.getElementById('reset-settings')?.addEventListener('click', () => {
         localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem('keybind');
         const resetBtn = document.getElementById('reset-settings');
-        resetBtn.textContent = "DELETING PROTOCOLS...";
+        resetBtn.textContent = "SYSTEM REBOOT...";
+        resetBtn.style.backgroundColor = "#2ecc71";
         setTimeout(() => location.reload(), 800);
     });
 
+    // 7. Load external assets & functions
+    if (typeof loadThemes === "function") loadThemes();
     loadSettings();
+    if (typeof loadPanicSites === "function") loadPanicSites();
+    if (typeof initPanicSystem === "function") initPanicSystem();
 });
 
 // --- 5. ASSETS & LOADER ---
@@ -220,7 +209,16 @@ window.addEventListener('load', async () => {
             const res = await fetch('/json/quotes.json');
             const tips = await res.json();
             tipDisplay.textContent = tips[Math.floor(Math.random() * tips.length)];
-        } catch (e) { tipDisplay.textContent = "Neural Link Established."; }
+        } catch (e) { 
+            tipDisplay.textContent = "Secure connection established."; 
+        }
     }
     setTimeout(() => loader?.classList.add('loader-hidden'), 800); 
+});
+
+// Final Sync for particles if they take extra time to init
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        updateParticlesColorSmooth(getCurrentPrimaryColor());
+    }, 1200);
 });
