@@ -51,6 +51,21 @@ function setParticleOpacity(enabled) {
 
 // --- 3. SETTINGS & PERSISTENCE ---
 
+function toggleSettings() {
+    const panel = document.getElementById('settings-panel');
+    const overlay = document.getElementById('settings-overlay');
+    
+    const isOpen = panel.classList.contains('open');
+    
+    if (isOpen) {
+        panel.classList.remove('open');
+        overlay.style.display = 'none';
+    } else {
+        panel.classList.add('open');
+        overlay.style.display = 'block';
+    }
+}
+
 function saveSettings() {
     const settings = {
         theme: document.getElementById('theme-selector').value,
