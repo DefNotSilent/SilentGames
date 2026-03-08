@@ -17,7 +17,7 @@ function injectSettings() {
         <div class="setting-section">
             <label class="section-label">Interface Appearance</label>
             <div class="setting-item">
-                <label for="theme-selector">Ghost Signal Theme:</label>
+                <label for="theme-selector">Choose Theme:</label>
                 <select id="theme-selector"></select>
             </div>
             <div class="setting-item horizontal">
@@ -44,7 +44,9 @@ function injectSettings() {
             </div>
             <div class="setting-item">
                 <label>Tab Disguise</label>
-                <select id="faviconDropdown"></select>
+                <select id="faviconDropdown">
+                <option disabled selected>Select Disguise</option>
+                </select>
             </div>
             <div class="setting-item">
                 <label>Panic Redirect</label>
