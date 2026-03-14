@@ -22,6 +22,46 @@ function getCurrentPrimaryColor() {
     return getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#ff0055';
 }
 
+// --- PROXY ENGINE ---
+
+function launchProxy() {
+    const input = document.getElementById('proxy-input').value;
+    if (!input) return;
+
+    // 1. Ensure UV scripts are loaded
+    if (typeof __uv$config === 'undefined') {
+        alert("Proxy Engine not initialized. Please wait...");
+        return;
+    }
+
+    // 2. Encode the URL using UV's XOR algorithm
+    const url = input.trim();
+    const searchUrl = 'https://www.google.com/search?q=';
+    
+    let finalUrl = "";
+    if (!(url.startsWith('https://') || url.startsWith('http://'))) {
+        if (url.includes('.') && !url.includes(' ')) {
+            finalUrl = 'https://' + url;
+        } else {
+            finalUrl = searchUrl + encodeURIComponent(url);
+        }
+    } else {
+        finalUrl = url;
+    }
+
+    // 3. Open in a new frame or About:Blank
+    const proxiedUrl = window.location.origin + __uv$config.prefix + __uv$config.encodeUrl(finalUrl);
+    
+    // Use your existing AB Cloak logic
+    let win = window.open();
+    win.document.body.style.margin = '0';
+    win.document.body.style.height = '100vh';
+    let iframe = win.document.createElement('iframe');
+    Object.assign(iframe.style, { border: 'none', width: '100%', height: '100%' });
+    iframe.src = proxiedUrl;
+    win.document.body.appendChild(iframe);
+}
+
 // --- 2. PARTICLE ENGINE ---
 
 function updateParticlesColorSmooth(colorHex) {

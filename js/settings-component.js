@@ -35,6 +35,19 @@ function injectSettings() {
             <input type="range" id="particle-speed" min="1" max="50" value="9">
         </div>
         </div>
+        <div class="setting-section">
+    <label class="section-label">Stealth Proxy (Ultraviolet)</label>
+    <div class="setting-item">
+        <label>Enter URL or Search Query:</label>
+        <div class="input-row" style="display: flex; gap: 10px;">
+            <input type="text" id="proxy-input" placeholder="discord.com" style="flex: 1; padding: 10px; border-radius: 8px; background: #1a1a1a; border: 1px solid #333; color: #fff;">
+            <button onclick="launchProxy()" class="proxy-go-btn" style="background: var(--primary-color); color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">GO</button>
+        </div>
+    </div>
+    <p style="font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 10px;">
+        <i class="fas fa-info-circle"></i> Uses Ultraviolet v3 with XOR encoding to bypass network filters.
+    </p>
+</div>
 
         <div class="setting-section">
             <label class="section-label">Stealth Protocols</label>
